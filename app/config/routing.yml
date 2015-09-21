@@ -1,0 +1,7 @@
+sensio_labs_job_board:
+    resource: "@SensioLabsJobBoardBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+_sensiolabs_connect:
+    resource: "@SensioLabsConnectBundle/Resources/config/routing.xml"

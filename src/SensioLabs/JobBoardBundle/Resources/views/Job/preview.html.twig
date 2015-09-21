@@ -1,0 +1,29 @@
+{% extends "SensioLabsJobBoardBundle::layout.html.twig" %}
+
+{% from 'SensioLabsJobBoardBundle:Includes:breadcrumb.html.twig' import breadcrumb %}
+
+{% block page_class 'preview' %}
+
+{% block title 'Developer @ SensioLabs' %}
+
+{% block content %}
+    {{ breadcrumb({
+        'Manage':   path('manage'),
+        'Preview':  path('job_preview'),
+    }) }}
+
+    {% embed 'SensioLabsJobBoardBundle:Includes:job.html.twig' %}
+        {% block job_steps %}
+            <div class="padding clearfix">
+                <a href="{{ path('job_update') }}" class="green-button left"><span class="sprite-icon-light-arrow-left"></span>
+                    <span>Make changes</span>
+                </a>
+                <a href="#" class="green-button right"><img src="{{ asset('bundles/sensiolabsjobboard/images/blank.png') }}" class="sprite-icon-cloud-upload" />
+                    <span>Publish</span>
+                </a>
+            </div>
+        {% endblock %}
+    {% endembed %}
+
+    <div class="clear"></div>
+{% endblock %}

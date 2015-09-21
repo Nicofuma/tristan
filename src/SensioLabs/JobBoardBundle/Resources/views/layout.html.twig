@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% if block('title') is not empty %}{% block title %}{% endblock %} - {% endif %}SensioLabs Jobs</title>
+
+        {% block metadata %}
+            {% stylesheets filter='cssrewrite' output='css/compiled/main_layout.css'
+                'bundles/sensiolabsjobboard/css/style.css'
+                'bundles/sensiolabsjobboard/css/backend.css'
+                'bundles/sensiolabsjobboard/css/jquery/jquery-ui-1.9.2.custom.css'
+            %}
+                <link rel="stylesheet" href="{{ asset_url }}" />
+            {% endstylesheets %}
+            <link rel="icon" type="image/png" href="/favicon.png" />
+            <!--[if IE]><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" /><![endif]-->
+            <link href="http://connect.sensiolabs.com/css/sln.css" rel="stylesheet" type="text/css" media="all" />
+            <script type="text/javascript">
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+                ga('create', 'UA-1221949-12', 'sensiolabs.com');
+                ga('send', 'pageview');
+            </script>
+        {% endblock %}
+    </head>
+
+    <body class="{% block page_class '' %}">
+        <div id="sln"></div>
+
+        <div id="container">
+            <header class="clearfix">
+                <div class="logo"><h1><a href="{{ path('homepage') }}">SensioLabs Jobs</a></h1></div>
+                {% include 'SensioLabsJobBoardBundle:Includes:menu.html.twig' %}
+            </header>
+
+            {% block splash '<div id="splash" class="empty-splash"></div>' %}
+            <div id="content">{% block content '' %}</div>
+        </div>
+
+        <footer class="footer">
+            <div class="footer_content_wrapper clear_fix">
+                <div class="footer_symfony_creator">
+                    <a target="_blank" href="http://www.symfony.com/">
+                        <span class="symfony_creator_text">Créateur de</span>
+                        <span class="symfony_creator_picto"><img alt="Créateur du Framework Symfony" src="{{ asset('bundles/sensiolabsjobboard/images/footer_symfony_creator.gif') }}"></span>
+                    </a>
+                </div>
+
+                <section class="footer_contact">
+                    <h2 class="footer_title">Contact</h2>
+
+                    <ul class="contact_list">
+                        {% for email in ['contact@sensiolabs.com', 'sales@sensiolabs.com', 'job@sensiolabs.com'] %}
+                            <li class="mail clear_fix">
+                                <a href="mailto:contact@sensiolabs.com">
+                                    <span class="non_extensible_button non_extensible_button_01">
+                                        <span class="border_l png_fix">
+                                            <span class="border_r png_fix">
+                                                <span class="btn_bg png_fix">{{ email }}</span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </section>
+            </div>
+        </footer>
+
+        {% block javascript %}
+            {% javascripts output='js/common.js'
+                '@SensioLabsJobBoardBundle/Resources/assets/jquery.js'
+                '@SensioLabsJobBoardBundle/Resources/assets/common.js'
+            %}
+                <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+            <!--[if lt IE 9]><script src="{{ asset('bundles/sensiolabsjobboard/js/html5.js') }}"></script><![endif]-->
+            {{ include('SensioLabsJobBoardBundle:Connect:include.html.twig') }}
+        {% endblock %}
+    </body>
+</html>

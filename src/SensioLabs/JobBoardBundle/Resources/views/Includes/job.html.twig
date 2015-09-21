@@ -1,0 +1,28 @@
+{% extends "SensioLabsJobBoardBundle:Includes:box.html.twig" %}
+
+{% block box_content %}
+    {% block job_header %}
+        {% include "SensioLabsJobBoardBundle:Includes:full_job_header.html.twig" %}
+    {% endblock %}
+
+    {% block job_description %}
+        <div class="clear"></div>
+        <div id="job-description" class="padding description">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In quis nulla augue. Phasellus enim eros, luctus a dapibus ut, auctor et urna. Donec eget egestas mi. Sed auctor semper elit, quis elementum orci pulvinar ut. Donec leo quam, elementum non vulputate ut, laoreet eu augue. Pellentesque tempus luctus porttitor. In id orci enim, quis gravida massa. Praesent consequat hendrerit consequat. Cras nulla elit, pulvinar a dapibus vitae, pellentesque vel orci. Fusce tellus turpis, tempor eu convallis sed, scelerisque bibendum turpis. Fusce pharetra venenatis augue at condimentum. Duis lectus arcu, aliquam ut euismod non, gravida id nisl. Nullam hendrerit condimentum lacus in egestas. Morbi lobortis nibh ac lacus convallis adipiscing. Integer lacinia justo et nunc faucibus in pellentesque dui sagittis. Mauris mi felis, consequat ac laoreet pretium, tempor quis enim. Fusce arcu massa, posuere ut luctus ut, pellentesque a augue. 
+        </div>
+    {% endblock %}
+
+    {% block job_apply %}
+        <div class="padding how-to-apply">
+            <h3>How to apply?</h3><br/>
+            <div id="howToApply">Send your resumé at <a href="mailto:career@company.com">career@company.com</a></div>
+        </div>
+        <br/><br/>
+    {% endblock %}
+
+    {% block job_steps %}
+    {% endblock %}
+
+    {% block box_clear %}
+    {% endblock %}
+{% endblock %}

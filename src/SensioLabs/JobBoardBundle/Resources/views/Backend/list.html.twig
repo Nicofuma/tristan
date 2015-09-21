@@ -1,0 +1,81 @@
+{% extends "SensioLabsJobBoardBundle:Backend:layout.html.twig" %}
+
+{% block title 'Backend - List' %}
+
+{% block content %}
+    <ul id="breadcrumb">
+            <li class="active">
+                <a href="#">Published ads</a> |
+            </li>
+            <li>
+                <a href="#">Archived ads</a> |
+            </li>
+            <li>
+                <a href="#">Deleted ads</a>
+            </li>
+    </ul>
+
+    {% embed 'SensioLabsJobBoardBundle:Includes:box.html.twig' %}
+        {% block box_content %}
+            <div class="padding-table">
+                <div id="backend-job-container">
+
+                    <ul class="backend-flashes">
+                        <li class="error">Example of an error message</li>
+                        <li class="success">Example of an error message</li>
+                    </ul>
+
+                    <h2 class="big-title">Published ads</h2>
+
+                    <table class="table table-striped backend-list">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <a href="#"> Company </a> ▼
+                                </th>
+                                <th>
+                                    <a href="#"> Title </a> ▲
+                                </th>
+                                <th> 
+                                    <a href="#"> CreatedAt </a> 
+                                </th>
+                                <th>List Displays</th>
+                                <th>View Displays</th>
+                                <th>Ext Displays</th>
+                                <th> Actions </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in 0..5 %}
+                                <tr>
+                                    <td> SensioLabs </td>
+                                    <td> Developer </td>
+                                    <td> 03/01/2014 </td>
+                                    <td> 100 </td>
+                                    <td> 60 </td>
+                                    <td> 40 </td>
+                                    <td>
+                                        <a href="{{ path('backend_edit') }}"> Edit </a>
+                                        <button> Delete </button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                    <ul class="backend-pager">
+                        <li class="page active">
+                            <a href="#"> 1 </a>
+                        </li>
+                        <li class="page">
+                            <a href="#"> 2 </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="clear"></div>
+            </div>
+
+            {% block box_clear '' %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

@@ -1,0 +1,77 @@
+.backend-list td {
+    line-height: 25px;
+}
+
+.backend-list form {
+    display: inline;
+    margin: 0;
+}
+
+.backend-list button {
+    margin-left: 10px;
+}
+
+.backend-list a[href] {
+    text-decoration: underline;
+}
+
+.backend-flashes {
+    margin: 0 0 10px 0;
+    font-weight: bold;
+    list-style-type: none;
+    float: right;
+}
+
+.backend-flashes .error {
+    color: #b94a48;
+}
+
+.backend-flashes .success {
+    color: #468847;
+}
+
+.backend-job-dates {
+    margin-bottom: 30px;
+    line-height: 30px;
+    font-size: 24px;
+    text-align: center;
+}
+
+.backend-job-dates input {
+    width: 150px;
+    height: 30px;
+    padding: 5px;
+    margin: 0 5px;
+    font-size: 24px;
+    text-align: center;
+    background: white url(/bundles/sensiolabsjobboard/images/form-background.png) repeat-x;
+}
+
+.backend-pager {
+    display: block;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    text-align: center;
+}
+
+.backend-pager li {
+    display: inline;
+}
+
+.backend-pager a {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 0 2px;
+    background: #f2f2f2;
+    border: 1px solid #e0e0e0;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.backend-pager .active a {
+    background: #82e83e;
+    border-color: #82e83e;
+    color: white;
+}

@@ -1,0 +1,68 @@
+{
+    "name": "SensioLabs Job Board",
+    "description": "The official job board for Symfony talent.",
+    "license": "proprietary",
+    "autoload": {
+        "psr-0": { "": "src/" }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://satis.buildrd.sensio.net"
+        }
+    ],
+    "require": {
+        "doctrine/data-fixtures": "1.0.*@dev",
+        "doctrine/doctrine-bundle": "1.2.*",
+        "doctrine/doctrine-fixtures-bundle": "2.1.*@dev",
+        "doctrine/orm": ">=2.2.3,<2.4-dev",
+        "incenteev/composer-parameter-handler": "2.0.*",
+        "sensio/buzz-bundle": "0.2.*@dev",
+        "sensio/distribution-bundle": "2.3.*",
+        "sensio/framework-extra-bundle": "~3.0",
+        "sensio/generator-bundle": "2.3.*",
+        "sensiolabs/connect": "dev-master",
+        "sensiolabs/connect-bundle": "dev-master",
+        "sensiolabs/connect-internal": "dev-master",
+        "sensiolabs/connect-internal-bundle": "dev-master",
+        "symfony/assetic-bundle": "2.3.*",
+        "symfony/monolog-bundle": "~2.4",
+        "symfony/swiftmailer-bundle": "2.3.*",
+        "symfony/symfony": "~2.4",
+        "twig/extensions": "1.0.*",
+        "doctrine/doctrine-migrations-bundle": "2.1.x-dev"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+        ],
+        "post-update-cmd": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+        ]
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "minimum-stability": "alpha",
+    "extra": {
+        "symfony-app-dir": "app",
+        "symfony-web-dir": "web",
+        "symfony-assets-install": "symlink",
+        "incenteev-parameters": {
+            "file": "app/config/parameters.yml",
+            "env-map": {
+                "database_name"                   : "DATABASE_NAME",
+                "database_user"                   : "DATABASE_USER",
+                "database_password"               : "DATABASE_PASSWORD"
+            }
+        }
+    }
+}

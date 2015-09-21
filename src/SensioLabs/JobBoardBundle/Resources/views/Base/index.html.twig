@@ -1,0 +1,110 @@
+{% extends "SensioLabsJobBoardBundle::layout.html.twig" %}
+
+{% block page_class 'home' %}
+
+{% block splash %}
+    <div id="splash">
+        <div class="section">
+            <article>
+                <img src="{{ asset('bundles/sensiolabsjobboard/images/home/megaphone.png') }}" alt="Job !" class="megaphone" />
+                <p class="description">
+                    The 1<sup>st</sup> jobboard 100% devoted to the <strong>Symfony</strong> community.<br />
+                    <strong>Recruiters</strong> The definitive source for Symfony talent.<br />
+                    <strong>Developers</strong> Find the project, the company, or the job of your dreams.
+                </p>
+            </article>
+        </div>
+    </div>
+{% endblock %}
+
+{% block metadata %}
+    {{ parent() }}
+    <link rel="alternate" type="application/rss+xml"  href="#" title="Jobs RSS feed" />
+{% endblock %}
+
+{% block content %}
+    <div id="left">
+        <div class="filter">
+            <span class="title"><img class="sprite-icon-location" alt=">" src="{{ asset('bundles/sensiolabsjobboard/images/blank.png') }}"/>Location</span>
+            <ul>
+                <li class="active">
+                    <a href="#">All countries</a>
+                </li>
+                {% set i = 1 %}
+                {% for i in 0..5 %}
+                    <li {% if i > 3 %}style="display:none"{% endif %}>
+                        <a href="#">France (7)</a>
+                    {% set i = i + 1 %}
+                {% endfor %}
+
+                {% set i = 5 %}
+                {% if i > 4 %}
+                    <li>
+                        <a href="#" class="filter-action"><img class="sprite-icon-dark-arrow-up" src="{{ asset('bundles/sensiolabsjobboard/images/blank.png') }}" alt="^" /> Less </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+        <div class="filter">
+            <span class="title"><img class="sprite-icon-paperclip" alt=">" src="{{ asset('bundles/sensiolabsjobboard/images/blank.png') }}"/> Type of contract </span>
+            <ul>
+                <li class="active">
+                    <a href="#">All types of contracts</a>
+                </li>
+                {% set i = 1 %}
+                {% for i in 0..5 %}
+                    <li {% if i > 3 %}style="display:none"{% endif %}>
+                        <a href="#">Internship(4)</a>
+                    </li>
+                {% endfor %}
+
+                {% set i = 5 %}
+                {% if i > 4 %}
+                    <li>
+                        <a href="#" class="filter-action"><img class="sprite-icon-dark-arrow-up" src="{{ asset('bundles/sensiolabsjobboard/images/blank.png') }}" alt="^" /> Less</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+        <ul class="function">
+            <li>
+                <a href="{{ path('homepage') }}"><img class="sprite-icon-dark-arrow-right" src="{{ asset('bundles/sensiolabsjobboard/images/blank.png') }}" alt=">" /> All jobs</a>
+            </li>
+        </ul>
+        <div class="feed">
+            <a href="#">
+                <img src="{{ asset('bundles/sensiolabsjobboard/images/rss.png') }}" width="16" height="16" />
+                <span>Flux RSS</span>
+            </a>
+        </div>
+    </div>
+    <div id="right">
+        <div id="job-container">
+            {% include 'SensioLabsJobBoardBundle:Includes:job_container.html.twig' %}
+        </div>
+        <div
+            data-page="1"
+            data-url="#"
+            data-empty="<center>No more jobs to show.</center>"
+            id="loadmoreajaxloader"
+            style="display:none;"
+        >
+            <center><img src="{{ asset('bundles/sensiolabsjobboard/images/ajax-loader.gif') }}" height="16" /></center>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <script>
+        var seeMore = "More";
+        var seeLess = "Less";
+        var blank = "{{ asset('bundles/sensiolabsjobboard/images/blank.png') }}";
+    </script>
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    {% javascripts output='js/homepage.js'
+        '@SensioLabsJobBoardBundle/Resources/assets/homepage.js'
+    %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

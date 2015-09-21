@@ -1,0 +1,19 @@
+{% set route = app.request.attributes.get('_route') %}
+
+{% set add = route in ['job_post', 'job_preview', 'job_publish'] %}
+{% set manage = route in ['manage', 'job_update'] %}
+
+<nav class="menu">
+    <ul>
+        <li>
+            <a href="{{ path('job_post') }}"{{ add ? ' class="focus"' }}>
+                <span class="sprite-button-add{{ add ? '-focus' }}"></span> Post a job
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('manage') }}"{{ manage ? ' class="focus"' }}>
+                <span class="sprite-button-manage{{ manage ? '-focus' }}"></span> My jobs
+            </a>
+        </li>
+    </ul>
+</nav>

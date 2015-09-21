@@ -1,0 +1,9 @@
+{% macro breadcrumb(items) %}
+    <ul id="breadcrumb">
+        <li><a href="{{ path('homepage', {filter: ''}) }}">Home</a>
+        {% for name, url in items %}
+            <li>/</li>
+            <li{% if loop.last %} class="active"{% endif %}><a href="{{ url }}">{{ name }}</a>
+        {% endfor %}
+    </ul>
+{% endmacro %}

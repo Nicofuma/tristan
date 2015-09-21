@@ -1,0 +1,157 @@
+{% extends "SensioLabsJobBoardBundle::layout.html.twig" %}
+
+{% from 'SensioLabsJobBoardBundle:Includes:breadcrumb.html.twig' import breadcrumb %}
+
+{% block page_class 'manage' %}
+
+{% block title 'My jobs' %}
+
+{% block content %}
+    {{ breadcrumb({
+        ('My Jobs'): path('manage'),
+    }) }}
+
+    {% embed 'SensioLabsJobBoardBundle:Includes:box.html.twig' %}
+        {% block box_content %}
+            <div class="padding-table">
+                <h2 class="big-title">My jobs</h2>
+                <a href="{{ path('job_post') }}" class="add right"><img class="sprite-button-add-focus-grey-bg" src="{{ asset('bundles/sensiolabsjobboard/images/blank.png') }}" alt="+" /> Post a job </a>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th class="span5"> Title </th>
+                        <th class="span2"> Time left </th>
+                        <th class="span2"> Displays </th>
+                        <th class="span4"> Actions </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr><td colspan="5"> You have no jobs. </td></tr>
+
+                    <tr>
+                        <td>
+                            <a href="{{ path('job_preview') }}">
+                                Full Time in Paris &mdash; Developer
+                            </a>
+                        </td>
+
+                        <td style="color:orange"> Waiting payment </td>
+
+                        <td> 0 </td>
+
+                        <td class="action">
+                            <a href="#">Pay</a> /
+
+                            <a href="{{ path('job_update') }}"> Make changes </a> /
+
+                            <a href="#"> Delete </a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <a href="{{ path('job_preview') }}">
+                                Full Time in Paris &mdash; Developer
+                            </a>
+                        </td>
+
+                        <td style="color:orange"> Not online yet </td>
+
+                        <td> 0 </td>
+
+                        <td class="action">
+                            <a href="#"> Publish </a> /
+
+                            <a href="{{ path('job_update') }}"> Make changes </a> /
+
+                            <a href="#"> Delete </a>
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <a href="{{ path('job_preview') }}">
+                                Full Time in Paris &mdash; Developer
+                            </a>
+                        </td>
+
+                        <td>
+                            <abbr title="Expires on 31/12/2013">
+                                26 days
+                            </abbr>
+                        </td>
+
+                        <td> 190 </td>
+
+                        <td class="action">
+                            <a href="#"> Renew </a> /
+
+                            <a href="{{ path('job_update') }}"> Make changes </a> /
+
+                            <a href="#"> Archive </a> /
+
+                            <a href="#"> Delete </a>
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <a href="{{ path('job_preview') }}">
+                                Full Time in Paris &mdash; Developer
+                            </a>
+                        </td>
+
+                        <td style="color:pink"> Expired</td>
+
+                        <td> 190 </td>
+
+                        <td class="action">
+                            <a href="#"> Renew </a> /
+
+                            <a href="{{ path('job_update') }}"> Make changes </a> /
+
+                            <a href="#"> Delete </a>
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <a href="{{ path('job_preview') }}">
+                                Full Time in Paris &mdash; Developer
+                            </a>
+                        </td>
+
+                        <td style="color:green"> Archived </td>
+
+                        <td> 190 </td>
+
+                        <td class="action">
+                            <a href="#"> Unarchive </a> /
+
+                            <a href="#"> Delete </a>
+
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+                <div class="smallpagination right">
+                    <a href="#" class="left-icon"><img class="sprite-icon-green-arrow-left" src="{{ asset('bundles/sensiolabsjobboard/images/blank.png') }}" alt="<" /></a>
+
+                    <a href="#" class="active">1</a>
+                    <a href="#">2</a>
+
+                    <a href="#" class="right-icon"><img class="sprite-icon-green-arrow-right" src="{{ asset('bundles/sensiolabsjobboard/images/blank.png') }}" alt=">" /></a>
+                </div>
+                <div class="clear"></div>
+            </div>
+        {% endblock%}
+        {% block box_clear %}
+        {% endblock %}
+    {% endembed %}
+    <div class="clear"></div>
+{% endblock %}

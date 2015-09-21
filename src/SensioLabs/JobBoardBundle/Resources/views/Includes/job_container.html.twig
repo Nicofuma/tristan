@@ -1,0 +1,14 @@
+{% for i in 0..5 %}
+    {% embed 'SensioLabsJobBoardBundle:Includes:job.html.twig' %}
+        {% block job_header %}
+            {% include "SensioLabsJobBoardBundle:Includes:shortened_job_header.html.twig" %}
+        {% endblock %}
+
+        {% block job_description %}
+            <div class="padding description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In quis nulla augue. Phasellus enim eros, luctus a dapibus ut, auctor et urna. Donec eget egestas mi. Sed auctor semper elit, quis elementum orci pulvinar ut. Donec leo quam, elementum non vulputate ut, laoreet eu augue. Pellentesque tempus luctus porttitor. In id orci enim, quis gravida massa. Praesent consequat hendrerit consequat. Cras nulla elit, pulvinar a dapibus vitae, pellentesque...</div>
+        {% endblock %}
+
+        {% block job_apply %}
+        {% endblock %}
+    {% endembed %}
+{% endfor %}
