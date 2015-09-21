@@ -12,6 +12,7 @@
         }
     ],
     "require": {
+        "php": ">=5.4",
         "doctrine/data-fixtures": "1.0.*@dev",
         "doctrine/doctrine-bundle": "1.2.*",
         "doctrine/doctrine-fixtures-bundle": "2.1.*@dev",
@@ -23,12 +24,10 @@
         "sensio/generator-bundle": "2.3.*",
         "sensiolabs/connect": "dev-master",
         "sensiolabs/connect-bundle": "dev-master",
-        "sensiolabs/connect-internal": "dev-master",
-        "sensiolabs/connect-internal-bundle": "dev-master",
         "symfony/assetic-bundle": "2.3.*",
         "symfony/monolog-bundle": "~2.4",
         "symfony/swiftmailer-bundle": "2.3.*",
-        "symfony/symfony": "~2.4",
+        "symfony/symfony": "~2.7",
         "twig/extensions": "1.0.*",
         "doctrine/doctrine-migrations-bundle": "2.1.x-dev"
     },
