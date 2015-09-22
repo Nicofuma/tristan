@@ -72,7 +72,7 @@
         <div class="padding clearfix">
             <button class="green-button right" type="submit">
                 <span class="sprite-icon-light-arrow-right"></span>
-                <span>Preview</span>
+                <span>{{ (isUpdate is defined and isUpdate) ? 'Update' : 'Preview' }}</span>
             </button>
         </div>
     {{ form_end(form) }}

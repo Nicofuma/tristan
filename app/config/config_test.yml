@@ -21,3 +21,6 @@ doctrine:
 
 parameters:
 #     security.context_listener.class: SensioLabs\JobBoardBundle\TestsFunctional\Security\Http\Firewall\ContextListener
+
+liip_functional_test:
+    cache_sqlite_db: true
