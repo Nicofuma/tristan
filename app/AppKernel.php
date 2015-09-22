@@ -18,7 +18,6 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new SensioLabs\JobBoardBundle\SensioLabsJobBoardBundle(),
             new SensioLabs\Bundle\ConnectBundle\SensioLabsConnectBundle(),
-            new SensioLabs\Internal\Bundle\ConnectBundle\SensioLabsInternalConnectBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
         );
 
