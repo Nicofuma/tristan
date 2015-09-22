@@ -8,14 +8,14 @@
 
 {% block content %}
     {{ breadcrumb({
-        'Manage':   path('manage'),
-        'Preview':  path('job_preview'),
+        'Post a job':   path('manage'),
+        'Preview':  path('job_preview', {'country': job.country , 'contract': job.contractType, 'slug': job.slug }),
     }) }}
 
     {% embed 'SensioLabsJobBoardBundle:Includes:job.html.twig' %}
         {% block job_steps %}
             <div class="padding clearfix">
-                <a href="{{ path('job_update') }}" class="green-button left"><span class="sprite-icon-light-arrow-left"></span>
+                <a href="{{ path('job_update', {'country': job.country , 'contract': job.contractType, 'slug': job.slug }) }}" class="green-button left"><span class="sprite-icon-light-arrow-left"></span>
                     <span>Make changes</span>
                 </a>
                 <a href="#" class="green-button right"><img src="{{ asset('bundles/sensiolabsjobboard/images/blank.png') }}" class="sprite-icon-cloud-upload" />

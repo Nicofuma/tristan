@@ -72,3 +72,8 @@ sensio_labs_connect:
     scope:          %sensiolabs_connect.scope%
     oauth_endpoint: %sensiolabs_connect.oauth_endpoint%
     api_endpoint:   %sensiolabs_connect.api_endpoint%
+
+stof_doctrine_extensions:
+    orm:
+        default:
+            sluggable:   true
