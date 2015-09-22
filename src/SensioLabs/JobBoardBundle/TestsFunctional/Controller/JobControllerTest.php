@@ -1,21 +1,20 @@
 <?php
 
-namespace SensioLabs\JobBoardBundle\Tests\Controller;
+namespace SensioLabs\JobBoardBundle\TestsFunctional\Controller;
 
-use Liip\FunctionalTestBundle\Test\WebTestCase;
-use SensioLabs\JobBoardBundle\DataFixtures\ORM\SingleJob;
 use SensioLabs\JobBoardBundle\Entity\Job;
+use SensioLabs\JobBoardBundle\TestsFunctional\DataFixtures\ORM\SingleJobData;
+use SensioLabs\JobBoardBundle\TestsFunctional\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 class JobControllerTest extends WebTestCase
 {
     public function testUpdateAction()
     {
-        $fixtures = $this->loadFixtures([SingleJob::class])->getReferenceRepository();
+        $fixtures = $this->loadFixtures([SingleJobData::class])->getReferenceRepository();
 
-        $client = static::createClient();
-        $crawler = $client->request('GET', '/FR/full-time/foobar-job/update');
-        self::assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+        $crawler = $this->client->request('GET', '/FR/full-time/foobar-job/update');
+        self::assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
         $buttonCrawlerNode = $crawler->selectButton('Update');
         self::assertCount(1, $buttonCrawlerNode);
@@ -44,10 +43,10 @@ class JobControllerTest extends WebTestCase
             'job[company]' => 'New Company',
         ]);
 
-        $client->submit($form);
-        self::assertSame(Response::HTTP_FOUND, $client->getResponse()->getStatusCode());
+        $this->client->submit($form);
+        self::assertSame(Response::HTTP_FOUND, $this->client->getResponse()->getStatusCode());
 
-        $crawler = $client->followRedirect();
+        $crawler = $this->client->followRedirect();
         self::assertContains('Preview', $crawler->filter('#breadcrumb .active')->text());
         self::assertContains('New Title', $crawler->filter('h2 .title')->text());
     }

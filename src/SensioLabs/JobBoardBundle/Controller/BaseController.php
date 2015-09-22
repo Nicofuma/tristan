@@ -10,17 +10,25 @@ use Symfony\Component\HttpFoundation\Request;
 
 class BaseController extends Controller
 {
+    const NB_JOBS_PER_PAGE = 10;
+
     /**
      * @Route("/", name="homepage")
      * @Template()
      */
     public function indexAction(Request $request)
     {
+        $page = $request->query->get('page', 1);
+
+        $em = $this->getDoctrine()->getManager();
+        $jobs = $em->getRepository('SensioLabsJobBoardBundle:Job')
+            ->getAllWithBounds(($page - 1) * self::NB_JOBS_PER_PAGE, self::NB_JOBS_PER_PAGE);
+
         if ($request->isXmlHttpRequest()) {
-            return $this->render('SensioLabsJobBoardBundle:Includes:job_container.html.twig');
+            return $this->render('SensioLabsJobBoardBundle:Includes:job_container.html.twig', ['jobs' => $jobs]);
         }
 
-        return array();
+        return ['jobs' => $jobs];
     }
 
     /**
