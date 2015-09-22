@@ -2,6 +2,7 @@
 
 namespace SensioLabs\JobBoardBundle\Controller;
 
+use SensioLabs\JobBoardBundle\Entity\Job;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -28,7 +29,21 @@ class BaseController extends Controller
      */
     public function postAction(Request $request)
     {
-        return array();
+        $job = new Job();
+        $form = $this->createForm('job', $job);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($job);
+            $em->flush();
+
+            return $this->redirectToRoute('job_preview');
+        }
+
+        return [
+            'form' => $form->createView(),
+        ];
     }
 
     /**
