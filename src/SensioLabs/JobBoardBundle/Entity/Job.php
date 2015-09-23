@@ -3,6 +3,7 @@
 namespace SensioLabs\JobBoardBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -41,7 +42,7 @@ class Job
     private $title;
 
     /**
-     * @ORM\Column(name="country", type="string", length=255)
+     * @ORM\Column(name="country", type="string", length=2)
      *
      * @Assert\Country()
      * @Assert\NotBlank(message="Country should not be empty")
@@ -61,7 +62,7 @@ class Job
      *
      * @Assert\NotBlank(message="Contract must be selected")
      * @Assert\Length(max=15)
-     * @Assert\Choice(callback="getContractTypesValues")
+     * @Assert\Choice(callback="getContractTypes")
      */
     private $contractType;
 
@@ -85,9 +86,20 @@ class Job
      */
     private $company;
 
-    public static function getContractTypesValues()
+    /**
+     * @Gedmo\Slug(fields={"title"})
+     * @ORM\Column(length=255, unique=true)
+     */
+    private $slug;
+
+    public static function getContractTypes()
     {
         return array_keys(self::CONTRACTS_TYPES);
+    }
+
+    public static function getReadableContractTypes()
+    {
+        return self::CONTRACTS_TYPES;
     }
 
     /**
@@ -259,5 +271,28 @@ class Job
     public function getCompany()
     {
         return $this->company;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Job
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 }

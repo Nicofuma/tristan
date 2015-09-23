@@ -3,3 +3,8 @@ services:
         class: SensioLabs\JobBoardBundle\Form\Type\JobType
         tags:
             - { name: form.type, alias: job }
+
+    sensiolabs.jobboard.twig.extension:
+        class: SensioLabs\JobBoardBundle\Twig\JobBoardExtension
+        tags:
+            - { name: twig.extension }

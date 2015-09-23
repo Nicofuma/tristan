@@ -21,7 +21,7 @@ class JobType extends AbstractType
             ->add('company')
             ->add('description')
             ->add('contractType', 'choice', [
-                'choices' => Job::CONTRACTS_TYPES,
+                'choices' => Job::getReadableContractTypes(),
                 'empty_value' => 'Type of contract',
             ])
             ->add('howToApply', 'text')

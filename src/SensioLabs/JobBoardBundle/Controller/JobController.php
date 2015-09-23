@@ -2,6 +2,8 @@
 
 namespace SensioLabs\JobBoardBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use SensioLabs\JobBoardBundle\Entity\Job;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -19,19 +21,27 @@ class JobController extends Controller
     }
 
     /**
-     * @Route("/preview", name="job_preview")
+     * @Route(
+     *   name="job_preview",
+     *   path="/{country}/{contract}/{slug}/preview"
+     * )
+     * @ParamConverter("job", options={"mapping"={"country"="country","contract"="contractType","slug"="slug"}})
      * @Template()
      */
-    public function previewAction()
+    public function previewAction(Job $job)
     {
-        return array();
+        return ['job' => $job];
     }
 
     /**
-     * @Route("/update", name="job_update")
+     * @Route(
+     *   name="job_update",
+     *   path="/{country}/{contract}/{slug}/update"
+     * )
+     * @ParamConverter("job", options={"mapping"={"country"="country","contract"="contractType","slug"="slug"}})
      * @Template()
      */
-    public function updateAction(Request $request)
+    public function updateAction(Request $request, Job $job)
     {
         return array();
     }
