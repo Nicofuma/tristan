@@ -1,0 +1,79 @@
+{% block form_row %}
+    <div class="form_row">
+        {{ form_widget(form) }}
+    </div>
+{% endblock form_row %}
+
+{# Recursively display all errors (including from sub forms) #}
+{% block form_errors %}
+    {% spaceless %}
+        {%- if errors|length > 0 -%}
+            {%- for error in errors -%}
+                <li>{{ error.message }}</li>
+            {%- endfor -%}
+        {%- endif -%}
+        {% for children in form.children %}
+            {% if not children.vars.valid %}
+                {{ form_errors(children) }}
+            {% endif %}
+        {% endfor %}
+    {% endspaceless %}
+{% endblock form_errors %}
+
+{% block _job_widget %}
+    {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+        <div class="padding">
+            <div class="head clearfix">
+
+                {% if not form.vars.valid %}
+                <div class="errors">
+                    <h4> Errors:</h4>
+                    <ul>
+                    {{ form_errors(form) }}
+                    </ul>
+                </div>
+                {% endif %}
+
+                <div class="title-company">
+                    <div class="job-title">
+                        {{ form_widget(form.title, {attr: {placeholder: 'Job title', class: 'title-input'}}) }}
+                    </div>
+
+                    <div class="company-label">
+                        {{ form_label(form.company, '@', {label_attr: {class: 'label'}} ) }}
+                        {{ form_widget(form.company, {attr: {placeholder: 'Company'}}) }}
+                    </div>
+                </div>
+
+                <div class="country-city-contract">
+                    <div class="country-city clearfix">
+                        <div class="city-input country-select">
+                            {{ form_widget(form.country) }}
+                        </div>
+                        <div class="city-input">
+                            {{ form_widget(form.city, {attr: {placeholder: 'City', class: 'location'}}) }}
+                        </div>
+                        <div>
+                            {{ form_widget(form.contractType, {attr: {class: 'type'}}) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    {{ form_widget(form.description, {attr: {rows: 20, class: 'job-description'}}) }}
+                </div>
+                <div class="how-to-apply">
+                    <h3>How to apply?'</h3><br />
+                    {{ form_widget(form.howToApply, {attr: {placeholder: 'Send your resume at ...', class: 'location'}}) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="padding clearfix">
+            <button class="green-button right" type="submit">
+                <span class="sprite-icon-light-arrow-right"></span>
+                <span>Preview</span>
+            </button>
+        </div>
+    {{ form_end(form) }}
+{% endblock %}

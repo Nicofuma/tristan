@@ -1,0 +1,5 @@
+services:
+    sensiolabs.jobboard.form.type.job:
+        class: SensioLabs\JobBoardBundle\Form\Type\JobType
+        tags:
+            - { name: form.type, alias: job }

@@ -5323,3 +5323,7 @@ span.non_extensible_button_01 {
 .box .errors ul {
     margin-bottom: 0;
 }
+
+.job-description {
+    width: 100%;
+}
