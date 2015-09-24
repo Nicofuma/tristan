@@ -5,9 +5,20 @@ namespace SensioLabs\JobBoardBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\QueryBuilder;
+use SensioLabs\JobBoardBundle\Entity\Job;
 
 class JobRepository extends EntityRepository
 {
+    const VIEW_LOCATION_HOMEPAGE = 'Homepage';
+    const VIEW_LOCATION_DETAILS = 'Details';
+    const VIEW_LOCATION_API = 'API';
+
+    const VIEW_LOCATIONS = [
+        self::VIEW_LOCATION_HOMEPAGE,
+        self::VIEW_LOCATION_DETAILS,
+        self::VIEW_LOCATION_API,
+    ];
+
     public function getAllFilteredQueryBuilder($filters)
     {
         $query = $this->createQueryBuilder('j')
@@ -82,5 +93,27 @@ class JobRepository extends EntityRepository
         }
 
         return new Expr\Andx($conditions);
+    }
+
+    /**
+     * @param Job[]  $jobs
+     * @param string $type type of view, must be in self::VIEW_TYPES
+     */
+    public function view(array $jobs, $type)
+    {
+        if (!in_array($type, self::VIEW_LOCATIONS, true)) {
+            throw new \InvalidArgumentException();
+        }
+
+        $builder = $this->createQueryBuilder('j');
+        $builder
+            ->update()
+            ->set('j.viewCount'.$type, 'j.viewCount'.$type.' + 1')
+            ->where('j IN (:jobs)')->setParameter('jobs', $jobs)
+            ->getQuery()
+            ->execute()
+        ;
+
+        // Note: the entities are not refreshed because we don't use the counters values in the same request
     }
 }

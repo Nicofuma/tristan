@@ -6,7 +6,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use SensioLabs\JobBoardBundle\Entity\Job;
 use SensioLabs\JobBoardBundle\Event\JobBoardEvents;
+use SensioLabs\JobBoardBundle\Event\JobsDisplayedEvent;
 use SensioLabs\JobBoardBundle\Event\JobUpdatedEvent;
+use SensioLabs\JobBoardBundle\Repository\JobRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -30,6 +32,11 @@ class JobController extends Controller
      */
     public function showAction(Job $job)
     {
+        $this->get('event_dispatcher')->dispatch(
+            JobBoardEvents::JOB_DISPLAYED,
+            new JobsDisplayedEvent([$job], JobRepository::VIEW_LOCATION_DETAILS)
+        );
+
         return ['job' => $job];
     }
 

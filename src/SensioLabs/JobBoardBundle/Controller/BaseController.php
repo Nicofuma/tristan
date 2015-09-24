@@ -3,6 +3,9 @@
 namespace SensioLabs\JobBoardBundle\Controller;
 
 use SensioLabs\JobBoardBundle\Entity\Job;
+use SensioLabs\JobBoardBundle\Event\JobBoardEvents;
+use SensioLabs\JobBoardBundle\Event\JobsDisplayedEvent;
+use SensioLabs\JobBoardBundle\Repository\JobRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -26,6 +29,11 @@ class BaseController extends Controller
             $query,
             $request->query->getInt('page', 1),
             self::NB_JOB_PER_PAGE_ON_INDEX
+        );
+
+        $this->get('event_dispatcher')->dispatch(
+            JobBoardEvents::JOB_DISPLAYED,
+            new JobsDisplayedEvent($jobs->getItems(), JobRepository::VIEW_LOCATION_HOMEPAGE)
         );
 
         if ($request->isXmlHttpRequest()) {

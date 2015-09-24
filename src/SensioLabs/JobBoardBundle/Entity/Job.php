@@ -99,6 +99,21 @@ class Job
      */
     private $userName;
 
+    /**
+     * @ORM\Column(name="viewCountHomepage", type="integer")
+     */
+    private $viewCountHomepage = 0;
+
+    /**
+     * @ORM\Column(name="viewCountDetails", type="integer")
+     */
+    private $viewCountDetails = 0;
+
+    /**
+     * @ORM\Column(name="viewCountAPI", type="integer")
+     */
+    private $viewCountAPI = 0;
+
     public static function getContractTypes()
     {
         return array_keys(self::CONTRACTS_TYPES);
@@ -341,5 +356,87 @@ class Job
     public function isValidated()
     {
         return true;
+    }
+
+    /**
+     * Set viewCountHomepage.
+     *
+     * @param int $viewCountHomepage
+     *
+     * @return Job
+     */
+    public function setViewCountHomepage($viewCountHomepage)
+    {
+        $this->viewCountHomepage = $viewCountHomepage;
+
+        return $this;
+    }
+
+    /**
+     * Get viewCountHomepage.
+     *
+     * @return int
+     */
+    public function getViewCountHomepage()
+    {
+        return $this->viewCountHomepage;
+    }
+
+    /**
+     * Set viewCountDetails.
+     *
+     * @param int $viewCountDetails
+     *
+     * @return Job
+     */
+    public function setViewCountDetails($viewCountDetails)
+    {
+        $this->viewCountDetails = $viewCountDetails;
+
+        return $this;
+    }
+
+    /**
+     * Get viewCountDetails.
+     *
+     * @return int
+     */
+    public function getViewCountDetails()
+    {
+        return $this->viewCountDetails;
+    }
+
+    /**
+     * Set viewCountAPI.
+     *
+     * @param int $viewCountAPI
+     *
+     * @return Job
+     */
+    public function setViewCountAPI($viewCountAPI)
+    {
+        $this->viewCountAPI = $viewCountAPI;
+
+        return $this;
+    }
+
+    /**
+     * Get viewCountAPI.
+     *
+     * @return int
+     */
+    public function getViewCountAPI()
+    {
+        return $this->viewCountAPI;
+    }
+
+    /**
+     * Get viewCountAPI + viewCountDetails + viewCountHomepage.
+     *
+     * @return int
+     */
+    public function getTotalViewCount()
+    {
+        return $this->getViewCountHomepage() + $this->getViewCountDetails() + $this->getViewCountAPI();
     }
 }

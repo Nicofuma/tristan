@@ -21,7 +21,7 @@
                     <tr>
                         <th class="span5"> Title </th>
                         {#<th class="span2"> Time left </th>#}
-                        {#<th class="span2"> Displays </th>#}
+                        <th class="span2"> Displays </th>
                         <th class="span4"> Actions </th>
                     </tr>
                     </thead>
@@ -34,7 +34,7 @@
                                 </a>
                             </td>
                             {#<td style="color:orange"> Waiting payment </td>#}
-                            {#<td> 0 </td>#}
+                            <td>{{ job.totalViewCount }}</td>
                             <td class="action">
                                 {#<a href="">Pay</a> /#}
                                 <a href="{{ path('job_update', {'country': job.country , 'contract': job.contractType, 'slug': job.slug }) }}"> Make changes </a>

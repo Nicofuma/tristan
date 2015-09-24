@@ -125,4 +125,37 @@ class JobControllerTest extends WebTestCase
         self::assertSame('/?country='.$reference->getCountry(), trim($crawler->filter('.box .details .filter a')->eq(0)->attr('href')));
         self::assertSame('/?country='.$reference->getCountry().'&contractType='.$reference->getContractType(), trim($crawler->filter('.box .details .filter a')->eq(1)->attr('href')));
     }
+
+    public function testJobViewCount()
+    {
+        $fixtures = $this->loadFixtures([SingleJobData::class])->getReferenceRepository();
+
+        /** @var Job $job */
+        $job = $fixtures->getReference('job');
+
+        self::assertSame(0, $job->getViewCountHomepage());
+        self::assertSame(0, $job->getViewCountDetails());
+        self::assertSame(0, $job->getViewCountAPI());
+        self::assertSame(0, $job->getTotalViewCount());
+
+        $this->client->request('GET', '/');
+        self::assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+
+        $this->getObjectManager()->refresh($job);
+
+        self::assertSame(1, $job->getViewCountHomepage());
+        self::assertSame(0, $job->getViewCountDetails());
+        self::assertSame(0, $job->getViewCountAPI());
+        self::assertSame(1, $job->getTotalViewCount());
+
+        $this->client->request('GET', '/FR/full-time/foobar-job');
+        self::assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+
+        $this->getObjectManager()->refresh($job);
+
+        self::assertSame(1, $job->getViewCountHomepage());
+        self::assertSame(1, $job->getViewCountDetails());
+        self::assertSame(0, $job->getViewCountAPI());
+        self::assertSame(2, $job->getTotalViewCount());
+    }
 }

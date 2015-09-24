@@ -27,8 +27,16 @@ services:
         class: SensioLabs\JobBoardBundle\EventListener\JobListener
         arguments:
             - @sensiolabs.jobboard.email_sender
+            - @sensiolabs.jobboard.doctrine.repository.job
         tags:
             - { name: 'kernel.event_subscriber' }
+
+    sensiolabs.jobboard.doctrine.repository.job:
+        class: SensioLabs\JobBoardBundle\Repository\JobRepository
+        factory_service: doctrine
+        factory_method: getRepository
+        arguments:
+            - SensioLabs\JobBoardBundle\Entity\Job
 
     sensiolabs.jobboard.logger.processor.exception:
         class: SensioLabs\JobBoardBundle\Logger\Processor\ExceptionProcessor
