@@ -68,14 +68,13 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div>
-                    {{ form_widget(form.description, {attr: {rows: 20, class: 'job-description'}}) }}
-                </div>
-                <div class="how-to-apply">
-                    <h3>How to apply?'</h3><br />
-                    {{ form_widget(form.howToApply, {attr: {placeholder: 'Send your resume at ...', class: 'location'}}) }}
-                </div>
+            {{ form_widget(form.description, {attr: {rows: 20, class: 'job-description'}}) }}
+
+            <div class="how-to-apply">
+                <h3>How to apply?'</h3><br />
+                {{ form_widget(form.howToApply, {attr: {placeholder: 'Send your resume at ...', class: 'location'}}) }}
             </div>
         </div>
 

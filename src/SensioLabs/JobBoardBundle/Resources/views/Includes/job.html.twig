@@ -8,7 +8,7 @@
     {% block job_description %}
         <div class="clear"></div>
         <div id="job-description" class="padding description">
-            {{ job.description }}
+            {{ job.description|raw|purify }}
         </div>
     {% endblock %}
 
@@ -16,7 +16,7 @@
         {% if job.howToApply is not empty %}
         <div class="padding how-to-apply">
             <h3>How to apply?</h3><br/>
-            <div id="howToApply">{{ job.howToApply }}</div>
+            <div id="howToApply">{{ job.howToApply|raw|purify }}</div>
         </div>
         <br/><br/>
         {% endif %}

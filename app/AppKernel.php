@@ -20,6 +20,9 @@ class AppKernel extends Kernel
             new SensioLabs\Bundle\ConnectBundle\SensioLabsConnectBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            new Trsteel\CkeditorBundle\TrsteelCkeditorBundle(),
+            new Dzango\Bundle\TwigTruncateBundle\TwigTruncateBundle(),
+            new Exercise\HTMLPurifierBundle\ExerciseHTMLPurifierBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

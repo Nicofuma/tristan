@@ -6,7 +6,7 @@
 
         {% block job_description %}
             <div class="padding description">
-                {{ job.description|truncate(420) }}
+                {{ job.description|raw|truncate(420)|purify }}
             </div>
         {% endblock %}
 

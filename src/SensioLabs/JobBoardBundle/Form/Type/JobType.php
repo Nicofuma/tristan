@@ -19,7 +19,7 @@ class JobType extends AbstractType
             ])
             ->add('city')
             ->add('company')
-            ->add('description')
+            ->add('description', 'ckeditor')
             ->add('contractType', 'choice', [
                 'choices' => Job::getReadableContractTypes(),
                 'empty_value' => 'Type of contract',

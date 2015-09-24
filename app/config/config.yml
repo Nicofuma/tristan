@@ -1,7 +1,6 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
-    - { resource: services.yml }
 
 framework:
     #esi:             ~
@@ -78,3 +77,23 @@ stof_doctrine_extensions:
     orm:
         default:
             sluggable:   true
+
+trsteel_ckeditor:
+    # The skin to load. It may be the name of the skin folder inside the editor installation path, or the name and the path separated by a comma.
+    skin:                 moono
+
+    # The default toolbar displayed on the editor.
+    toolbar:
+        - revert
+        - style
+        - paragraph
+        - links
+        - clipboard
+        - tools
+    toolbar_groups:
+        revert: ['Undo','Redo']
+        style: ['Bold','Italic','Underline','Strike','RemoveFormat']
+        paragraph: ['NumberedList','BulletedList','Outdent','Indent']
+        links: ['Link','Unlink']
+        clipboard: ['Cut','Copy','Paste','PasteText','PasteFromWord']
+        tools: ['Find','Replace']
