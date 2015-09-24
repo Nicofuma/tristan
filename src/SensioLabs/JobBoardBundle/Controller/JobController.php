@@ -15,12 +15,21 @@ use Symfony\Component\HttpFoundation\Request;
 class JobController extends Controller
 {
     /**
-     * @Route("/show", name="job_show")
-     * @Template()
+     * @Route(
+     *   name="job_show",
+     *   path="/{country}/{contract}/{slug}",
+     *   requirements={
+     *      "country": "[A-Z]{2}",
+     *      "contract": "[a-z-]+",
+     *      "slug": "[0-9a-z-]+",
+     *  }
+     * )
+     * @ParamConverter("job", options={"mapping"={"country"="country","contract"="contractType","slug"="slug"}})
+     * @Template(template="@SensioLabsJobBoard/Job/show.html.twig")
      */
-    public function showAction()
+    public function showAction(Job $job)
     {
-        return array();
+        return ['job' => $job];
     }
 
     /**

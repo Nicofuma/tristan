@@ -5327,3 +5327,23 @@ span.non_extensible_button_01 {
 .job-description {
     width: 100%;
 }
+
+.box {
+    position: relative;
+}
+
+.box .filter a, .box .description a, .box  a.title {
+    position: relative;
+    z-index: 2;
+}
+
+.box a .cover {
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    z-index: 1;
+    background-image: url('fancybox/empty.gif');
+}

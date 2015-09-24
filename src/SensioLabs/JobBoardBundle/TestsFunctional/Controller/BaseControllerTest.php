@@ -112,28 +112,30 @@ class BaseControllerTest extends WebTestCase
         $crawler->filter('.box .details .filter')->each(function ($node, $i) {
             self::assertNotContains('Alternance', $node->text());
         });
-        $link = $crawler->filter('.box .details .filter')->eq(0)->selectLink('Paris')->link();
-        self::assertSame('/?country='.$countryNames[0].'&contractType=full-time&city=Paris', $link->getNode()->getAttribute('href'));
 
-        // One country, one contract type and one city
-        $crawler = $this->client->click($link);
-        $crawler->filter('.box .details .filter')->each(function ($node, $i) {
-            self::assertNotContains('Toulouse', $node->text());
-        });
         $link = $crawler->selectLink('All countries')->link();
-        self::assertSame('/?contractType=full-time&city=Paris', $link->getNode()->getAttribute('href'));
+        self::assertSame('/?contractType=full-time', $link->getNode()->getAttribute('href'));
 
-        // One contract type and one city
+        // One contract type
         $crawler = $this->client->click($link);
         self::assertCount(2 + FilterJobsData::NB_COUNTRIES, $crawler->filter('#left .filter ul')->eq(0)->filter('li'), FilterJobsData::NB_COUNTRIES.' countries');
         self::assertCount(1 + 1, $crawler->filter('#left .filter ul')->eq(1)->filter('li'), '1 contract type selected');
         $link = $crawler->selectLink('All types of contracts')->link();
-        self::assertSame('/?city=Paris', $link->getNode()->getAttribute('href'));
+        self::assertSame('/', $link->getNode()->getAttribute('href'));
 
-        // one city
+        // No filter
         $crawler = $this->client->click($link);
         self::assertCount(2 + FilterJobsData::NB_COUNTRIES, $crawler->filter('#left .filter ul')->eq(0)->filter('li'), FilterJobsData::NB_COUNTRIES.' countries');
         self::assertCount(1 + 5, $crawler->filter('#left .filter ul')->eq(1)->filter('li'), '5 contract types');
+        $link = $crawler->selectLink(Intl::getRegionBundle()->getCountryName($countryNames[0]))->link();
+        self::assertSame('/?country='.$countryNames[0], $link->getNode()->getAttribute('href'));
+
+        // One country selected
+        $crawler = $this->client->click($link);
+        self::assertCount(1 + 1, $crawler->filter('#left .filter ul')->eq(0)->filter('li'), '1 country selected');
+        $link = $crawler->filter('#left .filter ul')->eq(1)->selectLink('Full Time')->link();
+        self::assertsame('Full Time ('.FilterJobsData::getNbJobsForCountryAndContractType($countryNames[0], 'full-time').')', $link->getNode()->textContent);
+        self::assertSame('/?country='.$countryNames[0].'&contractType=full-time', $link->getNode()->getAttribute('href'));
         $link = $crawler->selectLink('All jobs')->link();
         self::assertSame('/', $link->getNode()->getAttribute('href'));
 

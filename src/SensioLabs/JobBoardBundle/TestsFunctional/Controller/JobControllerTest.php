@@ -109,4 +109,20 @@ class JobControllerTest extends WebTestCase
         $this->client->request('GET', '/FR/full-time/foobar-job/update');
         self::assertSame(Response::HTTP_FORBIDDEN, $this->client->getResponse()->getStatusCode());
     }
+
+    public function testShowAction()
+    {
+        $fixtures = $this->loadFixtures([SingleJobData::class])->getReferenceRepository();
+
+        $crawler = $this->client->request('GET', '/FR/full-time/foobar-job');
+        self::assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+
+        /** @var Job $reference */
+        $reference = $fixtures->getReference('job');
+        self::assertSame($reference->getTitle(), trim($crawler->filter('.box h2 a.title')->text()));
+        self::assertSame('/FR/full-time/foobar-job', trim($crawler->filter('.box h2 a.title')->attr('href')));
+        self::assertSame($reference->getDescription(), trim($crawler->filter('#job-description')->text()));
+        self::assertSame('/?country='.$reference->getCountry(), trim($crawler->filter('.box .details .filter a')->eq(0)->attr('href')));
+        self::assertSame('/?country='.$reference->getCountry().'&contractType='.$reference->getContractType(), trim($crawler->filter('.box .details .filter a')->eq(1)->attr('href')));
+    }
 }
