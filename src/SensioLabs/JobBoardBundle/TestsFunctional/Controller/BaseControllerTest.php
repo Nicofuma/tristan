@@ -2,8 +2,8 @@
 
 namespace SensioLabs\JobBoardBundle\Tests\Controller;
 
+use Liip\FunctionalTestBundle\Test\WebTestCase;
 use SensioLabs\JobBoardBundle\Entity\Job;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 class BaseControllerTest extends WebTestCase
@@ -24,6 +24,8 @@ class BaseControllerTest extends WebTestCase
 
     public function testPostActionSucess()
     {
+        $this->loadFixtures([]);
+
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/post');

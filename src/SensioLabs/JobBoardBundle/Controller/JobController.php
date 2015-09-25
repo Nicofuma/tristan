@@ -43,6 +43,21 @@ class JobController extends Controller
      */
     public function updateAction(Request $request, Job $job)
     {
-        return array();
+        $form = $this->createForm('job', $job);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+
+            return $this->redirectToRoute('job_preview', [
+                'country'  => $job->getCountry(),
+                'contract' => $job->getContractType(),
+                'slug'     => $job->getSlug()]);
+        }
+
+        return [
+            'form' => $form->createView(),
+        ];
     }
 }
