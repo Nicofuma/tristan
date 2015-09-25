@@ -25,6 +25,19 @@ class JobController extends Controller
 
     /**
      * @Route(
+     *   name="job_pay",
+     *   path="/{country}/{contract}/{slug}/pay"
+     * )
+     * @ParamConverter("job", options={"mapping"={"country"="country","contract"="contractType","slug"="slug"}})
+     * @Template
+     */
+    public function payAction(Job $ĵob)
+    {
+        return [];
+    }
+
+    /**
+     * @Route(
      *   name="job_preview",
      *   path="/{country}/{contract}/{slug}/preview"
      * )

@@ -18,7 +18,7 @@
                 <a href="{{ path('job_update', {'country': job.country , 'contract': job.contractType, 'slug': job.slug }) }}" class="green-button left"><span class="sprite-icon-light-arrow-left"></span>
                     <span>Make changes</span>
                 </a>
-                <a href="#" class="green-button right"><img src="{{ asset('bundles/sensiolabsjobboard/images/blank.png') }}" class="sprite-icon-cloud-upload" />
+                <a href="{{ path('job_pay', {'country': job.country , 'contract': job.contractType, 'slug': job.slug }) }}" class="green-button right"><img src="{{ asset('bundles/sensiolabsjobboard/images/blank.png') }}" class="sprite-icon-cloud-upload" />
                     <span>Publish</span>
                 </a>
             </div>
