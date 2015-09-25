@@ -27,11 +27,11 @@
         <div class="filter">
             <span class="title"><img class="sprite-icon-location" alt=">" src="{{ asset('bundles/sensiolabsjobboard/images/blank.png') }}"/>Location</span>
             <ul>
-                <li class="active">
+                <li {% if not app.request.query.country is defined %}class="active" {% endif %}>
                     <a href="{{ path('homepage', app.request.query.all|merge({'country': null})) }}">All countries</a>
                 </li>
                 {% for location in locations %}
-                    <li {% if loop.index > 4 %}style="display:none"{% endif %}>
+                    <li {% if app.request.query.country is defined and app.request.query.country == location.country %}class="active" {% endif %}{% if loop.index > 4 %}style="display:none"{% endif %}>
                         <a href="{{ path('homepage', app.request.query.all|merge({'country': location.country})) }}">{{ location.country|country }} ({{ location.nb_jobs }})</a>
                     </li>
                 {% endfor %}
@@ -46,11 +46,11 @@
         <div class="filter">
             <span class="title"><img class="sprite-icon-paperclip" alt=">" src="{{ asset('bundles/sensiolabsjobboard/images/blank.png') }}"/> Type of contract </span>
             <ul>
-                <li class="active">
+                <li {% if not app.request.query.contractType is defined %}class="active" {% endif %}>
                     <a href="{{ path('homepage', app.request.query.all|merge({'contractType': null})) }}">All types of contracts</a>
                 </li>
                 {% for contractType in contractTypes %}
-                    <li {% if loop.index > 5 %}style="display:none"{% endif %}>
+                    <li {% if app.request.query.contractType is defined and app.request.query.contractType == contractType.contractType %}class="active" {% endif %}{% if loop.index > 5 %}style="display:none"{% endif %}>
                         <a href="{{ path('homepage', app.request.query.all|merge({'contractType': contractType.contractType})) }}">{{ contractType.contractType|contractType }} ({{ contractType.nb_jobs }})</a>
                     </li>
                 {% endfor %}
