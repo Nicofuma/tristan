@@ -8,3 +8,31 @@ services:
         class: SensioLabs\JobBoardBundle\Twig\JobBoardExtension
         tags:
             - { name: twig.extension }
+
+    sensiolabs.jobboard.security.voter.job_update:
+        class: SensioLabs\JobBoardBundle\Security\Voter\JobUpdateVoter
+        tags:
+            - { name: security.voter }
+
+    sensiolabs.jobboard.email_sender:
+        class: SensioLabs\JobBoardBundle\EmailSender
+        arguments:
+            - @mailer
+            - @twig
+            - %mailer_app_sender%
+            - %admin_email_address%
+            - @?logger
+
+    sensiolabs.jobboard.eventlistener.job:
+        class: SensioLabs\JobBoardBundle\EventListener\JobListener
+        arguments:
+            - @sensiolabs.jobboard.email_sender
+        tags:
+            - { name: 'kernel.event_subscriber' }
+
+    sensiolabs.jobboard.logger.processor.exception:
+        class: SensioLabs\JobBoardBundle\Logger\Processor\ExceptionProcessor
+        arguments:
+            - @sensiolabs.jobboard.email_sender
+        tags:
+            - { name: 'monolog.processor' }

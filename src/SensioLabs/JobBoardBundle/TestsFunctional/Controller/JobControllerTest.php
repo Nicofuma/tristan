@@ -5,6 +5,8 @@ namespace SensioLabs\JobBoardBundle\TestsFunctional\Controller;
 use SensioLabs\JobBoardBundle\Entity\Job;
 use SensioLabs\JobBoardBundle\TestsFunctional\DataFixtures\ORM\SingleJobData;
 use SensioLabs\JobBoardBundle\TestsFunctional\WebTestCase;
+use Swift_Message;
+use Symfony\Bundle\SwiftmailerBundle\DataCollector\MessageDataCollector;
 use Symfony\Component\HttpFoundation\Response;
 
 class JobControllerTest extends WebTestCase
@@ -13,8 +15,11 @@ class JobControllerTest extends WebTestCase
     {
         $fixtures = $this->loadFixtures([SingleJobData::class])->getReferenceRepository();
 
+        $this->signin();
         $crawler = $this->client->request('GET', '/FR/full-time/foobar-job/update');
         self::assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+
+        $this->client->enableProfiler();
 
         $buttonCrawlerNode = $crawler->selectButton('Update');
         self::assertCount(1, $buttonCrawlerNode);
@@ -46,8 +51,62 @@ class JobControllerTest extends WebTestCase
         $this->client->submit($form);
         self::assertSame(Response::HTTP_FOUND, $this->client->getResponse()->getStatusCode());
 
+        /** @var MessageDataCollector $mailCollector */
+        $mailCollector = $this->client->getProfile()->getCollector('swiftmailer');
+        self::assertEquals(1, $mailCollector->getMessageCount());
+
+        $collectedMessages = $mailCollector->getMessages();
+        /** @var Swift_Message $message */
+        $message = $collectedMessages[0];
+
+        self::assertInstanceOf('Swift_Message', $message);
+        self::assertEquals('A validated announcement has been updated', $message->getSubject());
+        self::assertEquals($this->getContainer()->getParameter('mailer_app_sender'), key($message->getFrom()));
+        self::assertEquals($this->getContainer()->getParameter('admin_email_address'), key($message->getTo()));
+        self::assertStringMatchesFormat(
+'%A
+<table>
+    <tr>
+        <td rowspan="2">BEFORE</td>
+        <td>Title: FooBar Job</td>
+    </tr>
+    <tr>
+        <td>Description:<br/>This is the description of an amazing job!</td>
+    </tr>
+
+    <tr>
+        <td rowspan="2">AFTER</td>
+        <td>Title: New Title</td>
+    </tr>
+    <tr>
+        <td>Description:<br/><br/>New Description</td>
+    </tr>
+</table>
+%A
+',
+            $message->getBody()
+        );
+
         $crawler = $this->client->followRedirect();
         self::assertContains('Preview', $crawler->filter('#breadcrumb .active')->text());
         self::assertContains('New Title', $crawler->filter('h2 .title')->text());
+    }
+
+    public function testUpdateActionNotAuthenticated()
+    {
+        $this->loadFixtures([SingleJobData::class])->getReferenceRepository();
+
+        $this->client->request('GET', '/FR/full-time/foobar-job/update');
+        self::assertSame(Response::HTTP_FOUND, $this->client->getResponse()->getStatusCode());
+        self::assertContains('https://connect.sensiolabs.com/oauth/authorize', $this->client->getResponse()->headers->get('Location'));
+    }
+
+    public function testUpdateActionWrongUser()
+    {
+        $this->loadFixtures([SingleJobData::class])->getReferenceRepository();
+
+        $this->signin('wrong-user');
+        $this->client->request('GET', '/FR/full-time/foobar-job/update');
+        self::assertSame(Response::HTTP_FORBIDDEN, $this->client->getResponse()->getStatusCode());
     }
 }

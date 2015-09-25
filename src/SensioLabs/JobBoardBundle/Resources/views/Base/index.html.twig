@@ -28,11 +28,11 @@
             <span class="title"><img class="sprite-icon-location" alt=">" src="{{ asset('bundles/sensiolabsjobboard/images/blank.png') }}"/>Location</span>
             <ul>
                 <li class="active">
-                    <a href="{{ path('homepage', filters|merge({'country': null})) }}">All countries</a>
+                    <a href="{{ path('homepage', app.request.query.all|merge({'country': null})) }}">All countries</a>
                 </li>
                 {% for location in locations %}
                     <li {% if loop.index > 4 %}style="display:none"{% endif %}>
-                        <a href="{{ path('homepage', filters|merge({'country': location.country})) }}">{{ location.country|country }} ({{ location.nb_jobs }})</a>
+                        <a href="{{ path('homepage', app.request.query.all|merge({'country': location.country})) }}">{{ location.country|country }} ({{ location.nb_jobs }})</a>
                     </li>
                 {% endfor %}
 
@@ -47,11 +47,11 @@
             <span class="title"><img class="sprite-icon-paperclip" alt=">" src="{{ asset('bundles/sensiolabsjobboard/images/blank.png') }}"/> Type of contract </span>
             <ul>
                 <li class="active">
-                    <a href="{{ path('homepage', filters|merge({'contractType': null})) }}">All types of contracts</a>
+                    <a href="{{ path('homepage', app.request.query.all|merge({'contractType': null})) }}">All types of contracts</a>
                 </li>
                 {% for contractType in contractTypes %}
                     <li {% if loop.index > 5 %}style="display:none"{% endif %}>
-                        <a href="{{ path('homepage', filters|merge({'contractType': contractType.contractType})) }}">{{ contractType.contractType|contractType }} ({{ contractType.nb_jobs }})</a>
+                        <a href="{{ path('homepage', app.request.query.all|merge({'contractType': contractType.contractType})) }}">{{ contractType.contractType|contractType }} ({{ contractType.nb_jobs }})</a>
                     </li>
                 {% endfor %}
 
@@ -80,7 +80,7 @@
         </div>
         <div
             data-page="1"
-            data-url="{{ path('homepage', filters) }}"
+            data-url="{{ path('homepage', app.request.query.all) }}"
             data-empty="<center>No more jobs to show.</center>"
             id="loadmoreajaxloader"
             style="display:none;"
