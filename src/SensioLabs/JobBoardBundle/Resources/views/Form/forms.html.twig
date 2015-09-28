@@ -1,3 +1,5 @@
+{% use 'form_div_layout.html.twig' with widget_attributes as base_widget_attributes %}
+
 {% block form_row %}
     <div class="form_row">
         {{ form_widget(form) }}
@@ -19,6 +21,14 @@
         {% endfor %}
     {% endspaceless %}
 {% endblock form_errors %}
+
+{%- block widget_attributes -%}
+    {%- if not form.vars.valid -%}
+        {%- set attr = attr|merge({"class" : "formError " ~ attr.class|default("")}) -%}
+    {% endif %}
+
+    {{- block('base_widget_attributes') -}}
+{%- endblock widget_attributes -%}
 
 {% block _job_widget %}
     {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
