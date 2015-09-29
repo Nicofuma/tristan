@@ -8,17 +8,23 @@ use Doctrine\ORM\QueryBuilder;
 
 class JobRepository extends EntityRepository
 {
-    public function getAllFilteredWithBounds(array $filters, $offset, $limit)
+    public function getAllFilteredQueryBuilder($filters)
     {
-        $builder = $this->createQueryBuilder('j')
+        $query = $this->createQueryBuilder('j')
             ->select('j')
-            ->setFirstResult($offset)
-            ->setMaxResults($limit)
+            ->orderBy('j.id', 'ASC')
         ;
+        $query->where($this->getFiltersExpression($query, $filters));
 
-        $builder->where($this->getFiltersExpression($builder, $filters));
+        return $query;
+    }
 
-        return $builder->getQuery()->execute();
+    public function getAllForUserQueryBuilder($userName)
+    {
+        return $this->createQueryBuilder('j')
+            ->select('j')
+            ->where('j.userName = :user_name')->setParameter('user_name', $userName)
+        ;
     }
 
     public function countFilteredJobsPerCountry(array $filters)
@@ -55,7 +61,7 @@ class JobRepository extends EntityRepository
      *
      * @return Expr
      */
-    private function getFiltersExpression(QueryBuilder $builder, array $filters)
+    public function getFiltersExpression(QueryBuilder $builder, array $filters)
     {
         $expr = $builder->expr();
         $conditions = [$expr->eq(true, true)];

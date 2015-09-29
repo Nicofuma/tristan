@@ -6,7 +6,7 @@ use SensioLabs\JobBoardBundle\Entity\Job;
 use Symfony\Component\Security\Core\Authorization\Voter\AbstractVoter;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class JobUpdateVoter extends AbstractVoter
+class JobVoter extends AbstractVoter
 {
     /**
      * {@inheritdoc}
@@ -21,7 +21,7 @@ class JobUpdateVoter extends AbstractVoter
      */
     protected function getSupportedAttributes()
     {
-        return ['JOB_UPDATE'];
+        return ['JOB_UPDATE', 'JOB_DELETE'];
     }
 
     /**

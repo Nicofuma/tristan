@@ -10,7 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class BaseController extends Controller
 {
-    const NB_JOBS_PER_PAGE = 10;
+    const NB_JOB_PER_PAGE_ON_INDEX = 10;
+    const NB_JOB_PER_PAGE_ON_MANAGE = 25;
 
     /**
      * @Route("/", name="homepage")
@@ -18,13 +19,14 @@ class BaseController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $page = $request->query->get('page', 1);
+        $repository = $this->getDoctrine()->getRepository('SensioLabsJobBoardBundle:Job');
+        $query = $repository->getAllFilteredQueryBuilder($request->query->all());
 
-        $repository = $this->getDoctrine()->getManager()->getRepository('SensioLabsJobBoardBundle:Job');
-        $jobs = $repository->getAllFilteredWithBounds(
-            $request->query->all(),
-            ($page - 1) * self::NB_JOBS_PER_PAGE,
-            self::NB_JOBS_PER_PAGE);
+        $jobs = $this->get('knp_paginator')->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            self::NB_JOB_PER_PAGE_ON_INDEX
+        );
 
         if ($request->isXmlHttpRequest()) {
             return $this->render('SensioLabsJobBoardBundle:Includes:job_container.html.twig', [
@@ -74,8 +76,17 @@ class BaseController extends Controller
      * @Route("/manage", name="manage")
      * @Template()
      */
-    public function manageAction()
+    public function manageAction(Request $request)
     {
-        return array();
+        $repository = $this->getDoctrine()->getRepository('SensioLabsJobBoardBundle:Job');
+        $query = $repository->getAllForUserQueryBuilder($this->getUser()->getUsername());
+
+        $jobs = $this->get('knp_paginator')->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            self::NB_JOB_PER_PAGE_ON_MANAGE
+        );
+
+        return ['jobs' => $jobs];
     }
 }

@@ -20,16 +20,31 @@
                     <thead>
                     <tr>
                         <th class="span5"> Title </th>
-                        <th class="span2"> Time left </th>
-                        <th class="span2"> Displays </th>
+                        {#<th class="span2"> Time left </th>#}
+                        {#<th class="span2"> Displays </th>#}
                         <th class="span4"> Actions </th>
                     </tr>
                     </thead>
                     <tbody>
-
-                    <tr><td colspan="5"> You have no jobs. </td></tr>
-
-                    <tr>
+                    {% for job in jobs %}
+                        <tr>
+                            <td>
+                                <a href="{{ path('job_preview', {'country': job.country , 'contract': job.contractType, 'slug': job.slug }) }}">
+                                    {{ job.contractType|contractType }} in {{ job.city }} &mdash; {{ job.title }}
+                                </a>
+                            </td>
+                            {#<td style="color:orange"> Waiting payment </td>#}
+                            {#<td> 0 </td>#}
+                            <td class="action">
+                                {#<a href="">Pay</a> /#}
+                                <a href="{{ path('job_update', {'country': job.country , 'contract': job.contractType, 'slug': job.slug }) }}"> Make changes </a>
+                                / <a href="{{ path('job_delete', {'country': job.country , 'contract': job.contractType, 'slug': job.slug, 'token': csrf_token('delete_job') }) }}"> Delete </a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr><td colspan="2"> You have no jobs. </td></tr>
+                    {%  endfor %}
+                    {#<tr>
                         <td>
                             <a href="{{ path('job_preview') }}">
                                 Full Time in Paris &mdash; Developer
@@ -135,17 +150,11 @@
                             <a href="#"> Delete </a>
 
                         </td>
-                    </tr>
-
+                    </tr>#}
                     </tbody>
                 </table>
                 <div class="smallpagination right">
-                    <a href="#" class="left-icon"><img class="sprite-icon-green-arrow-left" src="{{ asset('bundles/sensiolabsjobboard/images/blank.png') }}" alt="<" /></a>
-
-                    <a href="#" class="active">1</a>
-                    <a href="#">2</a>
-
-                    <a href="#" class="right-icon"><img class="sprite-icon-green-arrow-right" src="{{ asset('bundles/sensiolabsjobboard/images/blank.png') }}" alt=">" /></a>
+                    {{ knp_pagination_render(jobs) }}
                 </div>
                 <div class="clear"></div>
             </div>

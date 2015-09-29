@@ -146,4 +146,35 @@ class BaseControllerTest extends WebTestCase
         self::assertCount(1 + 5, $crawler->filter('#left .filter ul')->eq(1)->filter('li'), '5 contract types');
         self::assertCount(0, $crawler->filter('#left .filter ul')->eq(1)->filter('li[style="display:none"]'), 'No folded contract type');
     }
+
+    public function testManage()
+    {
+        $fixtures = $this->loadFixtures([FifteenJobsData::class])->getReferenceRepository();
+
+        /** @var Job $reference */
+        $reference = $fixtures->getReference('job-1');
+        $jobBaseUrl = '/'.$reference->getCountry().'/'.$reference->getContractType();
+
+        $this->signin('user-1');
+
+        $crawler = $this->client->request('GET', '/manage');
+        self::assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+        self::assertCount(1, $crawler->filter('.box table tbody tr'));
+
+        $previewLink = $crawler->filter('.box table tbody tr')->eq(0)->filter('a')->eq(0)->link();
+        self::assertSame($jobBaseUrl.'/'.$reference->getSlug().'/preview', $previewLink->getNode()->getAttribute('href'));
+
+        $makeChangesLink = $crawler->filter('.box table tbody tr')->eq(0)->filter('.action a')->eq(0)->link();
+        self::assertSame($jobBaseUrl.'/'.$reference->getSlug().'/update', $makeChangesLink->getNode()->getAttribute('href'));
+
+        $deleteLink = $crawler->filter('.box table tbody tr')->eq(0)->filter('.action a')->eq(1)->link();
+        self::assertRegExp('#^'.$jobBaseUrl.'/'.$reference->getSlug().'/delete-[0-9a-zA-Z_-]+$#', $deleteLink->getNode()->getAttribute('href'));
+
+        $this->client->click($deleteLink);
+        self::assertSame(Response::HTTP_FOUND, $this->client->getResponse()->getStatusCode());
+
+        $crawler = $this->client->followRedirect();
+        self::assertCount(1, $crawler->filter('.box table tbody tr'));
+        self::assertSame('You have no jobs.', trim($crawler->filter('.box table tbody tr')->eq(0)->filter('td')->eq(0)->text()));
+    }
 }

@@ -10,7 +10,7 @@ services:
             - { name: twig.extension }
 
     sensiolabs.jobboard.security.voter.job_update:
-        class: SensioLabs\JobBoardBundle\Security\Voter\JobUpdateVoter
+        class: SensioLabs\JobBoardBundle\Security\Voter\JobVoter
         tags:
             - { name: security.voter }
 

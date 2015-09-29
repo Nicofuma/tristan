@@ -78,3 +78,7 @@ stof_doctrine_extensions:
     orm:
         default:
             sluggable:   true
+
+knp_paginator:
+    template:
+        pagination: SensioLabsJobBoardBundle:Includes:pagination.html.twig

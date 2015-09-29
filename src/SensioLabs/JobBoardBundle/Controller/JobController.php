@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class JobController extends Controller
 {
@@ -56,6 +57,27 @@ class JobController extends Controller
     public function previewAction(Job $job)
     {
         return ['job' => $job];
+    }
+
+    /**
+     * @Route(
+     *   name="job_delete",
+     *   path="/{country}/{contract}/{slug}/delete-{token}"
+     * )
+     * @ParamConverter("job", options={"mapping"={"country"="country","contract"="contractType","slug"="slug"}})
+     * @Security("is_granted('JOB_DELETE', job)")
+     */
+    public function deleteAction(Job $job, $token)
+    {
+        if (!$this->isCsrfTokenValid('delete_job', $token)) {
+            throw new BadRequestHttpException('Invalid CSRF token');
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($job);
+        $em->flush();
+
+        return $this->redirectToRoute('manage');
     }
 
     /**

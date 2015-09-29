@@ -25,11 +25,12 @@ class FifteenJobsData extends AbstractFixture
                 ->setCompany('FooBar & Co')
                 ->setContractType($contractTypes[$i % 5])
                 ->setCity('Paris')
+                ->setUserName('user-'.$i)
                 ->setCountry($countries[$i % count($countries)])
                 ->setHowToApply('Send an email to jobs@foobar.com')
             ;
 
-            $this->setReference('job', $job);
+            $this->setReference('job-'.$i, $job);
 
             $manager->persist($job);
         }

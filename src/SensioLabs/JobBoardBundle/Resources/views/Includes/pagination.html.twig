@@ -1,0 +1,21 @@
+{% if pageCount > 1 %}
+    {% if previous is defined %}
+        <a href="{{ path(route, query|merge({(pageParameterName): previous})) }}" class="left-icon">
+            <img class="sprite-icon-green-arrow-left" src="{{ asset('bundles/sensiolabsjobboard/images/blank.png') }}" alt="<"/>
+        </a>
+    {% endif %}
+
+    {% for page in pagesInRange %}
+        <a href="{{ path(route, query|merge({(pageParameterName): page})) }}"{{- page == current  ? ' class="active"' -}}>{{ page }}</a>
+    {% endfor %}
+
+    {% if next is defined %}
+        <a href="{{ path(route, query|merge({(pageParameterName): next})) }}" class="right-icon">
+            <img class="sprite-icon-green-arrow-right" src="{{ asset('bundles/sensiolabsjobboard/images/blank.png') }}" alt=">"/>
+        </a>
+    {% else %}
+        <a href="{{ path(route, query|merge({(pageParameterName): 1})) }}" class="active">{{ 1 }}</a>
+    {% endif %}
+{% else %}
+    <a href="{{ path(route, query|merge({(pageParameterName): 1})) }}" class="active">{{ 1 }}</a>
+{% endif %}

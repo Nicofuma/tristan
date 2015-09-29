@@ -10,10 +10,12 @@
                 <span class="sprite-button-add{{ add ? '-focus' }}"></span> Post a job
             </a>
         </li>
+        {% if app.user %}
         <li>
             <a href="{{ path('manage') }}"{{ manage ? ' class="focus"' }}>
                 <span class="sprite-button-manage{{ manage ? '-focus' }}"></span> My jobs
             </a>
         </li>
+        {% endif %}
     </ul>
 </nav>
