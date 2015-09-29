@@ -18,7 +18,7 @@ class Job
     const CONTRACT_FREELANCE_TIME   = 'freelance';
     const CONTRACT_ALTERNANCE_TIME  = 'alternance';
 
-    CONST CONTRACTS_TYPES = [
+    const CONTRACTS_TYPES = [
         self::CONTRACT_FULL_TIME        => 'Full Time',
         self::CONTRACT_PART_TIME        => 'Part Time',
         self::CONTRACT_INTERNSHIP_TIME  => 'Internship',

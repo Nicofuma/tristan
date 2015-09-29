@@ -13,8 +13,7 @@ class FifteenJobsData extends AbstractFixture
      */
     public function load(ObjectManager $manager)
     {
-        for ($i = 0 ; $i < 15 ; $i++)
-        {
+        for ($i = 0; $i < 15; $i++) {
             $job = new Job();
             $job
                 ->setTitle("#$i - FooBar Job")
