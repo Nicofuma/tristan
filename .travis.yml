@@ -18,7 +18,8 @@ php:
 install:
   - composer self-update
   - DATABASE_DRIVER='pdo_sqlite' DATABASE_PATH='%kernel.root_dir%/app.sqlite' composer install --prefer-source --no-interaction
+  - curl http://get.sensiolabs.org/php-cs-fixer.phar -o php-cs-fixer
 
 script:
-  - php bin/phpcs -p --standard=PSR2 --extensions=php src
+  - php php-cs-fixer fix src/ --dry-run -vv
   - phpunit -c app/
