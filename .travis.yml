@@ -7,6 +7,8 @@ sudo: false
 #    - $HOME/.composer/cache
 
 matrix:
+  allow_failures:
+    - php: 7.0
   fast_finish: true
 
 php:
@@ -15,7 +17,7 @@ php:
 
 install:
   - composer self-update
-  - composer install --prefer-source --no-interaction
+  - DATABASE_DRIVER='pdo_sqlite' DATABASE_PATH='%kernel.root_dir%/app.sqlite' composer install --prefer-source --no-interaction
 
 script:
   - php bin/phpcs -p --standard=PSR2 --extensions=php src
