@@ -19,7 +19,7 @@ class JobBoardExtension extends \Twig_Extension
     }
 
     /**
-     * Replaces a country code by the country name
+     * Replaces a country code by the country name.
      *
      * @param string $code
      *
@@ -31,7 +31,7 @@ class JobBoardExtension extends \Twig_Extension
     }
 
     /**
-     * Replace a contract type code by it's pretty name
+     * Replace a contract type code by it's pretty name.
      *
      * @param string $contractType
      *

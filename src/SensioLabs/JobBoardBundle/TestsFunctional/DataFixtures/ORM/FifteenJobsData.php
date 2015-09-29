@@ -9,11 +9,11 @@ use SensioLabs\JobBoardBundle\Entity\Job;
 class FifteenJobsData extends AbstractFixture
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(ObjectManager $manager)
     {
-        for ($i = 0; $i < 15; $i++) {
+        for ($i = 0; $i < 15; ++$i) {
             $job = new Job();
             $job
                 ->setTitle("#$i - FooBar Job")

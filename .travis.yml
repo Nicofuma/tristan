@@ -2,9 +2,10 @@ language: php
 
 sudo: false
 
-#cache:
-#  directories:
-#    - $HOME/.composer/cache
+cache:
+  directories:
+    - $HOME/.composer/cache
+    - $HOME/.app_cache
 
 matrix:
   allow_failures:
@@ -15,11 +16,18 @@ php:
   - 5.6
   - 7.0
 
+before_install:
+  - mkdir -p $HOME/.app_cache
+
 install:
+  - mv $HOME/.app_cache/.php_cs.cache ./.php_cs.cache 2>/dev/null || true
   - composer self-update
   - DATABASE_DRIVER='pdo_sqlite' DATABASE_PATH='%kernel.root_dir%/app.sqlite' composer install --prefer-source --no-interaction
   - curl http://get.sensiolabs.org/php-cs-fixer.phar -o php-cs-fixer
 
 script:
-  - php php-cs-fixer fix src/ --dry-run -vv
-  - phpunit -c app/
+  - php php-cs-fixer fix --no-interaction --dry-run --diff -vvv
+  - php bin/phpunit -c app/
+
+after_script:
+  - mv ./.php_cs.cache $HOME/.app_cache/.php_cs.cache 2>/dev/null || true

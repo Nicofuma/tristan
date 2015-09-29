@@ -12,18 +12,18 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Job
 {
-    const CONTRACT_FULL_TIME        = 'full-time';
-    const CONTRACT_PART_TIME        = 'part-time';
-    const CONTRACT_INTERNSHIP_TIME  = 'internship';
-    const CONTRACT_FREELANCE_TIME   = 'freelance';
-    const CONTRACT_ALTERNANCE_TIME  = 'alternance';
+    const CONTRACT_FULL_TIME = 'full-time';
+    const CONTRACT_PART_TIME = 'part-time';
+    const CONTRACT_INTERNSHIP_TIME = 'internship';
+    const CONTRACT_FREELANCE_TIME = 'freelance';
+    const CONTRACT_ALTERNANCE_TIME = 'alternance';
 
     const CONTRACTS_TYPES = [
-        self::CONTRACT_FULL_TIME        => 'Full Time',
-        self::CONTRACT_PART_TIME        => 'Part Time',
-        self::CONTRACT_INTERNSHIP_TIME  => 'Internship',
-        self::CONTRACT_FREELANCE_TIME   => 'Freelance',
-        self::CONTRACT_ALTERNANCE_TIME  => 'Alternance',
+        self::CONTRACT_FULL_TIME => 'Full Time',
+        self::CONTRACT_PART_TIME => 'Part Time',
+        self::CONTRACT_INTERNSHIP_TIME => 'Internship',
+        self::CONTRACT_FREELANCE_TIME => 'Freelance',
+        self::CONTRACT_ALTERNANCE_TIME => 'Alternance',
     ];
 
     /**
@@ -103,9 +103,9 @@ class Job
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -113,9 +113,10 @@ class Job
     }
 
     /**
-     * Set title
+     * Set title.
      *
      * @param string $title
+     *
      * @return Job
      */
     public function setTitle($title)
@@ -126,7 +127,7 @@ class Job
     }
 
     /**
-     * Get title
+     * Get title.
      *
      * @return string
      */
@@ -136,9 +137,10 @@ class Job
     }
 
     /**
-     * Set country
+     * Set country.
      *
      * @param string $country
+     *
      * @return Job
      */
     public function setCountry($country)
@@ -149,7 +151,7 @@ class Job
     }
 
     /**
-     * Get country
+     * Get country.
      *
      * @return string
      */
@@ -159,9 +161,10 @@ class Job
     }
 
     /**
-     * Set city
+     * Set city.
      *
      * @param string $city
+     *
      * @return Job
      */
     public function setCity($city)
@@ -172,7 +175,7 @@ class Job
     }
 
     /**
-     * Get city
+     * Get city.
      *
      * @return string
      */
@@ -182,9 +185,10 @@ class Job
     }
 
     /**
-     * Set contractType
+     * Set contractType.
      *
      * @param string $contractType
+     *
      * @return Job
      */
     public function setContractType($contractType)
@@ -195,7 +199,7 @@ class Job
     }
 
     /**
-     * Get contractType
+     * Get contractType.
      *
      * @return string
      */
@@ -205,9 +209,10 @@ class Job
     }
 
     /**
-     * Set description
+     * Set description.
      *
      * @param string $description
+     *
      * @return Job
      */
     public function setDescription($description)
@@ -218,7 +223,7 @@ class Job
     }
 
     /**
-     * Get description
+     * Get description.
      *
      * @return string
      */
@@ -228,9 +233,10 @@ class Job
     }
 
     /**
-     * Set howToApply
+     * Set howToApply.
      *
      * @param string $howToApply
+     *
      * @return Job
      */
     public function setHowToApply($howToApply)
@@ -241,7 +247,7 @@ class Job
     }
 
     /**
-     * Get howToApply
+     * Get howToApply.
      *
      * @return string
      */
@@ -251,9 +257,10 @@ class Job
     }
 
     /**
-     * Set company
+     * Set company.
      *
      * @param string $company
+     *
      * @return Job
      */
     public function setCompany($company)
@@ -264,7 +271,7 @@ class Job
     }
 
     /**
-     * Get company
+     * Get company.
      *
      * @return string
      */
@@ -274,9 +281,10 @@ class Job
     }
 
     /**
-     * Set slug
+     * Set slug.
      *
      * @param string $slug
+     *
      * @return Job
      */
     public function setSlug($slug)
@@ -287,7 +295,7 @@ class Job
     }
 
     /**
-     * Get slug
+     * Get slug.
      *
      * @return string
      */

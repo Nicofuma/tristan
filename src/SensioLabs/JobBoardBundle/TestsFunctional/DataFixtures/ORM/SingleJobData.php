@@ -9,7 +9,7 @@ use SensioLabs\JobBoardBundle\Entity\Job;
 class SingleJobData extends AbstractFixture
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(ObjectManager $manager)
     {
