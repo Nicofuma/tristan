@@ -1,12 +1,12 @@
 <?php
 
-namespace SensioLabs\JobBoardBundle\DataFixtures\ORM;
+namespace SensioLabs\JobBoardBundle\TestsFunctional\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use SensioLabs\JobBoardBundle\Entity\Job;
 
-class SingleJob extends AbstractFixture
+class SingleJobData extends AbstractFixture
 {
     /**
      * {@inheritDoc}
@@ -16,7 +16,7 @@ class SingleJob extends AbstractFixture
         $job = new Job();
         $job
             ->setTitle('FooBar Job')
-            ->setDescription('This is the description of an amazinf job!')
+            ->setDescription('This is the description of an amazing job!')
             ->setCompany('FooBar & Co')
             ->setContractType(Job::CONTRACT_FULL_TIME)
             ->setCity('Paris')
