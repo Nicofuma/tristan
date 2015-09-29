@@ -1,0 +1,22 @@
+language: php
+
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+matrix:
+  fast_finish: true
+
+php:
+  - 5.6
+  - 7.0
+
+install:
+  - composer self-update
+  - composer install
+
+script:
+  - php bin/phpcs -p --standard=PSR2 --extensions=php src
+  - phpunit -c app/
