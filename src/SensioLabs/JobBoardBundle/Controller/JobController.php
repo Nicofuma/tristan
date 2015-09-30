@@ -51,9 +51,10 @@ class JobController extends Controller
             $em->flush();
 
             return $this->redirectToRoute('job_preview', [
-                'country'  => $job->getCountry(),
+                'country' => $job->getCountry(),
                 'contract' => $job->getContractType(),
-                'slug'     => $job->getSlug()]);
+                'slug' => $job->getSlug(),
+            ]);
         }
 
         return [
