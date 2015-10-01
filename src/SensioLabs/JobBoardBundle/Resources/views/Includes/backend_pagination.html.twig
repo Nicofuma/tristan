@@ -1,0 +1,33 @@
+{% if pageCount > 1 %}
+    <ul class="backend-pager">
+        {% if previous is defined %}
+            <li class="page">
+                <a href="{{ path(route, query|merge({(pageParameterName): previous})) }}" class="left-icon">
+                    <img class="sprite-icon-green-arrow-left" src="{{ asset('bundles/sensiolabsjobboard/images/blank.png') }}" alt="<"/>
+                </a>
+            </li>
+        {% endif %}
+
+        {% for page in pagesInRange %}
+            {% if page == current %}
+                <li class="page active">
+            {% else %}
+                <li class="page">
+            {% endif %}
+            <a href="{{ path(route, query|merge({(pageParameterName): page})) }}" class="active">{{ page }}</a>
+            </li>
+        {% endfor %}
+
+        {% if next is defined %}
+            <li class="page">
+                <a href="{{ path(route, query|merge({(pageParameterName): next})) }}" class="right-icon">
+                    <img class="sprite-icon-green-arrow-right" src="{{ asset('bundles/sensiolabsjobboard/images/blank.png') }}" alt=">"/>
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+{% else %}
+    <ul class="backend-pager">
+        <li class="page active"><a href="{{ path(route, query|merge({(pageParameterName): 1})) }}">1</a></li>
+    </ul>
+{% endif %}

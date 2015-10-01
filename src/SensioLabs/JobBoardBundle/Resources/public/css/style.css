@@ -4499,10 +4499,6 @@ nav.menu a {
 .box .padding {
     padding: 40px 60px;
 }
-.box .error {
-    min-height:200px;
-    padding-top:100px;
-}
 .box .padding-table {
     padding: 10px 30px;
 }

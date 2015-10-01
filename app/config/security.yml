@@ -25,3 +25,4 @@ security:
 
     access_control:
         - { path: ^/manage, roles: ROLE_CONNECT_USER }
+        - { path: ^/backend, roles: ROLE_ADMIN }

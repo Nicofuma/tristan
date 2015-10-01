@@ -30,6 +30,13 @@ class JobRepository extends EntityRepository
         return $query;
     }
 
+    public function getAllPublishedQueryBuilder()
+    {
+        return $this->createQueryBuilder('j')
+            ->select('j')
+            ;
+    }
+
     public function getAllForUserQueryBuilder($userName)
     {
         return $this->createQueryBuilder('j')

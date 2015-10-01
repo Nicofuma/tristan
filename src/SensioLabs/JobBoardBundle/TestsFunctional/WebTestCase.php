@@ -15,6 +15,8 @@ class WebTestCase extends BaseWebTestCase
 
     protected function setUp()
     {
+        // reset $_GET because it is used directly by KnpPaginator
+        $_GET = [];
         $this->client = static::createClient();
     }
 

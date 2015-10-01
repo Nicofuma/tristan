@@ -19,25 +19,27 @@
         {% block box_content %}
             <div class="padding-table">
                 <div id="backend-job-container">
-
                     <ul class="backend-flashes">
-                        <li class="error">Example of an error message</li>
-                        <li class="success">Example of an error message</li>
+                        {% for flashMessage in app.session.flashbag.get('error') %}
+                            <li class="error">{{ flashMessage }}</li>
+                        {% endfor %}
+                        {% for flashMessage in app.session.flashbag.get('sucess') %}
+                            <li class="success">{{ flashMessage }}</li>
+                        {% endfor %}
                     </ul>
-
                     <h2 class="big-title">Published ads</h2>
 
                     <table class="table table-striped backend-list">
                         <thead>
                             <tr>
                                 <th>
-                                    <a href="#"> Company </a> ▼
+                                    {{ knp_pagination_sortable(jobs, 'Company', 'j.company') }}
                                 </th>
                                 <th>
-                                    <a href="#"> Title </a> ▲
+                                    {{ knp_pagination_sortable(jobs, 'Title', 'j.title') }}
                                 </th>
-                                <th> 
-                                    <a href="#"> CreatedAt </a> 
+                                <th>
+                                    {{ knp_pagination_sortable(jobs, 'CreatedAt', 'j.createdAt') }}
                                 </th>
                                 <th>List Displays</th>
                                 <th>View Displays</th>
@@ -46,31 +48,30 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for i in 0..5 %}
-                                <tr>
-                                    <td> SensioLabs </td>
-                                    <td> Developer </td>
-                                    <td> 03/01/2014 </td>
-                                    <td> 100 </td>
-                                    <td> 60 </td>
-                                    <td> 40 </td>
-                                    <td>
-                                        <a href="{{ path('backend_edit') }}"> Edit </a>
-                                        <button> Delete </button>
-                                    </td>
-                                </tr>
-                            {% endfor %}
+                        {% for job in jobs %}
+                            <tr>
+                                <td> {{ job.company }} </td>
+                                <td> {{ job.title }} </td>
+                                <td> {{ job.createdAt|date('m/d/Y') }} </td>
+                                <td> {{ job.viewCountHomepage }} </td>
+                                <td> {{ job.viewCountDetails }} </td>
+                                <td> {{ job.viewCountAPI }} </td>
+                                <td>
+                                    <a href="{{ path('backend_edit', {'id': job.id}) }}">Edit</a>
+                                    <form action="{{ path('backend_delete') }}" method="post">
+                                        <input type="hidden" name="job_id" value="{{ job.id }}">
+                                        <input type="hidden" name="token" value="{{ csrf_token('delete_job') }}">
+                                        <input type="hidden" name="list_filters" value="{{ app.request.query.all|json_encode }}">
+                                        <input type="submit" value="Delete" />
+                                    </form>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr><td colspan="7">No jobs.</td></tr>
+                        {% endfor %}
                         </tbody>
                     </table>
-
-                    <ul class="backend-pager">
-                        <li class="page active">
-                            <a href="#"> 1 </a>
-                        </li>
-                        <li class="page">
-                            <a href="#"> 2 </a>
-                        </li>
-                    </ul>
+                    {{ knp_pagination_render(jobs) }}
                 </div>
                 <div class="clear"></div>
             </div>

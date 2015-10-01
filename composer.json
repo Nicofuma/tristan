@@ -31,7 +31,8 @@
         "twig/extensions": "1.0.*",
         "stof/doctrine-extensions-bundle": "^1.2",
         "doctrine/doctrine-migrations-bundle": "^1.1",
-        "knplabs/knp-paginator-bundle": "^2.5"
+        "knplabs/knp-paginator-bundle": "^2.5",
+        "knplabs/knp-components": "~1.2.0"
     },
     "scripts": {
         "post-install-cmd": [

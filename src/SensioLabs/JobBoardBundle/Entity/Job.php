@@ -114,6 +114,12 @@ class Job
      */
     private $viewCountAPI = 0;
 
+    /**
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="createdAt", type="datetime")
+     */
+    private $createdAt;
+
     public static function getContractTypes()
     {
         return array_keys(self::CONTRACTS_TYPES);
@@ -359,6 +365,14 @@ class Job
     }
 
     /**
+     * @return bool
+     */
+    public function isPublished()
+    {
+        return false;
+    }
+
+    /**
      * Set viewCountHomepage.
      *
      * @param int $viewCountHomepage
@@ -438,5 +452,25 @@ class Job
     public function getTotalViewCount()
     {
         return $this->getViewCountHomepage() + $this->getViewCountDetails() + $this->getViewCountAPI();
+    }
+
+    /**
+     * @return \Datetime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param \Datetime $createdAt
+     *
+     * @return Job
+     */
+    public function setCreatedAt(\DateTime $createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
     }
 }

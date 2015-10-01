@@ -77,7 +77,8 @@ sensio_labs_connect:
 stof_doctrine_extensions:
     orm:
         default:
-            sluggable:   true
+            sluggable:      true
+            timestampable:  true
 
 knp_paginator:
     template:

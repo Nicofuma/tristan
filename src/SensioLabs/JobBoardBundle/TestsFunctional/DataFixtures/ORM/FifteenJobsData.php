@@ -28,7 +28,7 @@ class FifteenJobsData extends AbstractFixture
                 ->setUserName('user-'.$i)
                 ->setCountry($countries[$i % count($countries)])
                 ->setHowToApply('Send an email to jobs@foobar.com')
-            ;
+                ->setCreatedAt(new \DateTime('+'.$i.' month'));
 
             $this->setReference('job-'.$i, $job);
 
