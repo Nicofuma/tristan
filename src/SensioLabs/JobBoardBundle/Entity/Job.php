@@ -7,10 +7,12 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(
- *     indexes={@ORM\Index(columns={"user_name"})}
- * )
+ * @ORM\Table
  * @ORM\Entity(repositoryClass="SensioLabs\JobBoardBundle\Repository\JobRepository")
+ * @Assert\Expression(
+ *      "!this.isValidated() or (this.getEndedAt() > this.getPublishedAt())",
+ *      message="If the job is validated, the end date must be posterior to the published date."
+ * )
  */
 class Job
 {
@@ -95,11 +97,6 @@ class Job
     private $slug;
 
     /**
-     * @ORM\Column(name="user_name", type="string", length=255, nullable=true)
-     */
-    private $userName;
-
-    /**
      * @ORM\Column(name="viewCountHomepage", type="integer")
      */
     private $viewCountHomepage = 0;
@@ -119,6 +116,29 @@ class Job
      * @ORM\Column(name="createdAt", type="datetime")
      */
     private $createdAt;
+
+    /**
+     * @ORM\Column(name="isValidated", type="boolean")
+     */
+    private $isValidated = false;
+
+    /**
+     * @ORM\Column(name="publishedAt", type="datetime", nullable=true)
+     * @Assert\DateTime
+     */
+    private $publishedAt;
+
+    /**
+     * @ORM\Column(name="endedAt", type="datetime", nullable=true)
+     * @Assert\DateTime
+     */
+    private $endedAt;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $user;
 
     public static function getContractTypes()
     {
@@ -333,27 +353,27 @@ class Job
     }
 
     /**
-     * Set username.
+     * Set user.
      *
-     * @param string $userName
+     * @param User $user
      *
      * @return Job
      */
-    public function setUserName($userName)
+    public function setUser(User $user)
     {
-        $this->userName = $userName;
+        $this->user = $user;
 
         return $this;
     }
 
     /**
-     * Get username.
+     * Get user.
      *
-     * @return string
+     * @return User
      */
-    public function getUserName()
+    public function getUser()
     {
-        return $this->userName;
+        return $this->user;
     }
 
     /**
@@ -361,7 +381,21 @@ class Job
      */
     public function isValidated()
     {
-        return true;
+        return $this->isValidated;
+    }
+
+    /**
+     * Validates (or invalidates) the job.
+     *
+     * @param bool $validate
+     *
+     * @return Job
+     */
+    public function setIsValidated($validate = true)
+    {
+        $this->isValidated = $validate;
+
+        return $this;
     }
 
     /**
@@ -472,5 +506,53 @@ class Job
         $this->createdAt = $createdAt;
 
         return $this;
+    }
+
+    /**
+     * Set visibleFrom.
+     *
+     * @param \DateTime $publishedAt
+     *
+     * @return Job
+     */
+    public function setPublishedAt($publishedAt)
+    {
+        $this->publishedAt = $publishedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get visibleFrom.
+     *
+     * @return \DateTime
+     */
+    public function getPublishedAt()
+    {
+        return $this->publishedAt;
+    }
+
+    /**
+     * Set visibleTo.
+     *
+     * @param \DateTime $endedAt
+     *
+     * @return Job
+     */
+    public function setEndedAt($endedAt)
+    {
+        $this->endedAt = $endedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get visibleTo.
+     *
+     * @return \DateTime
+     */
+    public function getEndedAt()
+    {
+        return $this->endedAt;
     }
 }

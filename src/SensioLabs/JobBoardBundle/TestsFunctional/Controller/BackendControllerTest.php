@@ -4,8 +4,13 @@ namespace SensioLabs\JobBoardBundle\TestsFunctional\Controller;
 
 use SensioLabs\JobBoardBundle\Entity\Job;
 use SensioLabs\JobBoardBundle\TestsFunctional\DataFixtures\ORM\FifteenJobsData;
+use SensioLabs\JobBoardBundle\TestsFunctional\DataFixtures\ORM\SingleJobData;
+use SensioLabs\JobBoardBundle\TestsFunctional\DataFixtures\ORM\SingleNotValidatedJobData;
 use SensioLabs\JobBoardBundle\TestsFunctional\WebTestCase;
+use Swift_Message;
+use Symfony\Bundle\SwiftmailerBundle\DataCollector\MessageDataCollector;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class BackendControllerTest extends WebTestCase
 {
@@ -19,6 +24,7 @@ class BackendControllerTest extends WebTestCase
         self::assertContains('https://connect.sensiolabs.com/oauth/authorize', $this->client->getResponse()->headers->get('Location'));
 
         // Not admin
+        $this->signup(['username' => 'user-1']);
         $this->signin('user-1');
         $this->client->request('GET', '/backend');
         self::assertSame(Response::HTTP_FORBIDDEN, $this->client->getResponse()->getStatusCode());
@@ -33,7 +39,8 @@ class BackendControllerTest extends WebTestCase
         /** @var Job $job14 */
         $job14 = $fixtures->getReference('job-14');
 
-        $this->signin('user-1', ['ROLE_ADMIN']);
+        $this->signup(['username' => 'user-admin', 'roles' => ['ROLE_ADMIN']]);
+        $this->signin('user-admin');
         $crawler = $this->client->request('GET', '/backend');
         self::assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
@@ -77,5 +84,115 @@ class BackendControllerTest extends WebTestCase
         self::assertCount(0, $crawler->filter('.backend-flashes .error'));
         self::assertCount(1, $crawler->filter('.backend-flashes .success'));
         self::assertCount(14, $crawler->filter('#backend-job-container table tbody tr'));
+    }
+
+    public function testEditActionValidateJob()
+    {
+        $fixtures = $this->loadFixtures([SingleNotValidatedJobData::class])->getReferenceRepository();
+
+        $this->signup(['username' => 'user-admin', 'roles' => ['ROLE_ADMIN']]);
+        $this->signin('user-admin');
+        $crawler = $this->client->request('GET', '/backend/1/edit');
+        self::assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+
+        $this->client->enableProfiler();
+
+        $buttonCrawlerNode = $crawler->selectButton('Update');
+        self::assertCount(1, $buttonCrawlerNode);
+
+        /** @var Job $reference */
+        $reference = $fixtures->getReference('job');
+
+        $form = $buttonCrawlerNode->form();
+        self::assertArraySubset([
+            'job_admin[title]' => $reference->getTitle(),
+            'job_admin[country]' => $reference->getCountry(),
+            'job_admin[city]' => $reference->getCity(),
+            'job_admin[contractType]' => $reference->getContractType(),
+            'job_admin[description]' => $reference->getDescription(),
+            'job_admin[howToApply]' => $reference->getHowToApply(),
+            'job_admin[company]' => $reference->getCompany(),
+        ], $form->getValues());
+
+        $form->setValues([
+            'job_admin[isValidated]' => true,
+            'job_admin[publishedAt]' => '10/05/2015',
+            'job_admin[endedAt]' => '10/05/2016',
+        ]);
+
+        $this->client->submit($form);
+        self::assertSame(Response::HTTP_FOUND, $this->client->getResponse()->getStatusCode());
+
+        /** @var MessageDataCollector $mailCollector */
+        $mailCollector = $this->client->getProfile()->getCollector('swiftmailer');
+        self::assertEquals(1, $mailCollector->getMessageCount());
+
+        $collectedMessages = $mailCollector->getMessages();
+        /** @var Swift_Message $message */
+        $message = $collectedMessages[0];
+
+        self::assertInstanceOf('Swift_Message', $message);
+        self::assertEquals('Your announcement is now online', $message->getSubject());
+        self::assertEquals($this->getContainer()->getParameter('mailer_app_sender'), key($message->getFrom()));
+        self::assertEquals($reference->getUser()->getEmail(), key($message->getTo()));
+
+        $baseUrl = $this->getContainer()->get('router')->generate('homepage', [], UrlGeneratorInterface::ABSOLUTE_URL);
+        self::assertStringMatchesFormat(
+            '<html>
+<body>
+Your announcement is now online and can been seen here:
+<a href="'.$baseUrl.'FR/full-time/foobar-job">
+    '.$baseUrl.'FR/full-time/foobar-job
+</a>
+</body>
+</html>',
+            $message->getBody()
+        );
+
+        $crawler = $this->client->followRedirect();
+        self::assertCount(0, $crawler->filter('.backend-flashes .error'));
+        self::assertCount(1, $crawler->filter('.backend-flashes .success'));
+        self::assertCount(1, $crawler->filter('#backend-job-container table tbody tr'));
+    }
+
+    public function testEditActionReValidateJob()
+    {
+        $fixtures = $this->loadFixtures([SingleJobData::class])->getReferenceRepository();
+
+        $this->signup(['username' => 'user-admin', 'roles' => ['ROLE_ADMIN']]);
+        $this->signin('user-admin');
+        $crawler = $this->client->request('GET', '/backend/1/edit');
+        self::assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+
+        $this->client->enableProfiler();
+
+        $buttonCrawlerNode = $crawler->selectButton('Update');
+        self::assertCount(1, $buttonCrawlerNode);
+
+        /** @var Job $reference */
+        $reference = $fixtures->getReference('job');
+
+        $form = $buttonCrawlerNode->form();
+        self::assertArraySubset([
+            'job_admin[title]' => $reference->getTitle(),
+            'job_admin[country]' => $reference->getCountry(),
+            'job_admin[city]' => $reference->getCity(),
+            'job_admin[contractType]' => $reference->getContractType(),
+            'job_admin[description]' => $reference->getDescription(),
+            'job_admin[howToApply]' => $reference->getHowToApply(),
+            'job_admin[company]' => $reference->getCompany(),
+        ], $form->getValues());
+
+        $this->client->submit($form);
+        self::assertSame(Response::HTTP_FOUND, $this->client->getResponse()->getStatusCode());
+
+        /** @var MessageDataCollector $mailCollector */
+        $mailCollector = $this->client->getProfile()->getCollector('swiftmailer');
+        self::assertEquals(0, $mailCollector->getMessageCount());
+
+        $crawler = $this->client->followRedirect();
+        self::assertCount(0, $crawler->filter('.backend-flashes .error'));
+        self::assertCount(1, $crawler->filter('.backend-flashes .success'));
+        self::assertCount(1, $crawler->filter('#backend-job-container table tbody tr'));
     }
 }

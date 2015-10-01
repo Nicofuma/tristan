@@ -30,11 +30,14 @@ class EmailSender
 
     public function send($templateName, array $context = [])
     {
+        $to = isset($context['to']) ? $context['to'] : $this->to;
+        $from = isset($context['from']) ? $context['from'] : $this->from;
+
         $template = $this->twig->loadTemplate($templateName);
         $message = \Swift_Message::newInstance()
             ->setSubject($template->renderBlock('subject', $context))
-            ->setFrom($this->from)
-            ->setTo($this->to)
+            ->setFrom($from)
+            ->setTo($to)
             ->setBody($template->renderBlock('body_html', $context), 'text/html')
             ->addPart($template->renderBlock('body_txt', $context), 'text/plain')
         ;

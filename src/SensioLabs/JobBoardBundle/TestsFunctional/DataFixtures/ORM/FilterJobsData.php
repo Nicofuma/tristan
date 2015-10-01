@@ -56,6 +56,9 @@ class FilterJobsData extends AbstractFixture
                         ->setCity($cities[$j % 2])
                         ->setCountry($country)
                         ->setHowToApply('Send an email to jobs@foobar.com')
+                        ->setIsValidated()
+                        ->setPublishedAt(new \DateTime())
+                        ->setEndedAt(new \DateTime('+1 year'))
                     ;
 
                     $manager->persist($job);

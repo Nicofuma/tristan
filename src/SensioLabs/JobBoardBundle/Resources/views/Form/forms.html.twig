@@ -30,7 +30,7 @@
     {{- block('base_widget_attributes') -}}
 {%- endblock widget_attributes -%}
 
-{% block _job_widget %}
+{% block job_widget %}
     {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
         <div class="padding">
             <div class="head clearfix">
@@ -68,14 +68,28 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div>
-                    {{ form_widget(form.description, {attr: {rows: 20, class: 'job-description'}}) }}
-                </div>
-                <div class="how-to-apply">
-                    <h3>How to apply?'</h3><br />
-                    {{ form_widget(form.howToApply, {attr: {placeholder: 'Send your resume at ...', class: 'location'}}) }}
-                </div>
+            {%- if isAdmin is defined and isAdmin %}
+            <div class="backend-job-dates">
+                Visible from
+                {{ form_widget(form.publishedAt, {attr: {class: 'span3 hasDatepicker'}}) }}
+                To
+                {{ form_widget(form.endedAt, {attr: {class: 'span3 hasDatepicker'}}) }}
+                (format: mm/dd/yyyy)
+            </div>
+            <span>
+                {{ form_label(form.isValidated, 'Validate the announcement', {label_attr: {class: 'label'}}) }}
+                {{ form_widget(form.isValidated) }}
+            </span>
+            {% endif -%}
+
+            <div>
+                {{ form_widget(form.description, {attr: {rows: 20, class: 'job-description'}}) }}
+            </div>
+            <div class="how-to-apply">
+                <h3>How to apply?'</h3><br />
+                {{ form_widget(form.howToApply, {attr: {placeholder: 'Send your resume at ...', class: 'location'}}) }}
             </div>
         </div>
 

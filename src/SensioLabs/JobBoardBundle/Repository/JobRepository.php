@@ -3,9 +3,9 @@
 namespace SensioLabs\JobBoardBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\QueryBuilder;
 use SensioLabs\JobBoardBundle\Entity\Job;
+use SensioLabs\JobBoardBundle\Entity\User;
 
 class JobRepository extends EntityRepository
 {
@@ -19,30 +19,36 @@ class JobRepository extends EntityRepository
         self::VIEW_LOCATION_API,
     ];
 
-    public function getAllFilteredQueryBuilder($filters)
+    public function findAllQb()
     {
-        $query = $this->createQueryBuilder('j')
-            ->select('j')
-            ->orderBy('j.id', 'ASC')
-        ;
-        $query->where($this->getFiltersExpression($query, $filters));
-
-        return $query;
+        return $this->createQueryBuilder('j')->select('j');
     }
 
-    public function getAllPublishedQueryBuilder()
+    public function addValidatedFilter(QueryBuilder $qb, $isValidated = true)
     {
-        return $this->createQueryBuilder('j')
-            ->select('j')
-            ;
+        return $qb->andWhere('j.isValidated = :isValidated')->setParameter('isValidated', $isValidated);
     }
 
-    public function getAllForUserQueryBuilder($userName)
+    public function addUserFilter(QueryBuilder $qb, User $user)
     {
-        return $this->createQueryBuilder('j')
-            ->select('j')
-            ->where('j.userName = :user_name')->setParameter('user_name', $userName)
-        ;
+        return $qb->andWhere('j.user = :user')->setParameter('user', $user);
+    }
+
+    public function addDynamicFilters(QueryBuilder $builder, array $filters)
+    {
+        if (isset($filters['country'])) {
+            $builder->andWhere('j.country = :country')->setParameter('country', $filters['country']);
+        }
+
+        if (isset($filters['contractType'])) {
+            $builder->andWhere('j.contractType = :contractType')->setParameter('contractType', $filters['contractType']);
+        }
+
+        if (isset($filters['city'])) {
+            $builder->andWhere('j.country = :city')->setParameter('city', $filters['city']);
+        }
+
+        return $builder;
     }
 
     public function countFilteredJobsPerCountry(array $filters)
@@ -53,7 +59,8 @@ class JobRepository extends EntityRepository
             ->orderBy('j.country')
         ;
 
-        $builder->where($this->getFiltersExpression($builder, $filters));
+        $this->addDynamicFilters($builder, $filters);
+        $this->addValidatedFilter($builder);
 
         return $builder->getQuery()->getArrayResult();
     }
@@ -66,40 +73,10 @@ class JobRepository extends EntityRepository
             ->orderBy('j.contractType')
         ;
 
-        $builder->where($this->getFiltersExpression($builder, $filters));
+        $this->addDynamicFilters($builder, $filters);
+        $this->addValidatedFilter($builder);
 
         return $builder->getQuery()->getArrayResult();
-    }
-
-    /**
-     * Returns the expression corresponding to the filters and add set the corresponding parameters.
-     *
-     * @param QueryBuilder $builder
-     * @param array        $filters
-     *
-     * @return Expr
-     */
-    public function getFiltersExpression(QueryBuilder $builder, array $filters)
-    {
-        $expr = $builder->expr();
-        $conditions = [$expr->eq(true, true)];
-
-        if (isset($filters['country'])) {
-            $conditions[] = $expr->eq('j.country', ':country');
-            $builder->setParameter('country', $filters['country']);
-        }
-
-        if (isset($filters['contractType'])) {
-            $conditions[] = $expr->eq('j.contractType', ':contractType');
-            $builder->setParameter('contractType', $filters['contractType']);
-        }
-
-        if (isset($filters['city'])) {
-            $conditions[] = $expr->eq('j.city', ':city');
-            $builder->setParameter('city', $filters['city']);
-        }
-
-        return new Expr\Andx($conditions);
     }
 
     /**

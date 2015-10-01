@@ -105,6 +105,7 @@ class JobControllerTest extends WebTestCase
     {
         $this->loadFixtures([SingleJobData::class])->getReferenceRepository();
 
+        $this->signup(['username' => 'wrong-user']);
         $this->signin('wrong-user');
         $this->client->request('GET', '/FR/full-time/foobar-job/update');
         self::assertSame(Response::HTTP_FORBIDDEN, $this->client->getResponse()->getStatusCode());

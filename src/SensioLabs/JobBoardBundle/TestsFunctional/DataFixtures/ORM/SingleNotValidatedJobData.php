@@ -7,7 +7,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use SensioLabs\JobBoardBundle\Entity\Job;
 use SensioLabs\JobBoardBundle\Entity\User;
 
-class SingleJobData extends AbstractFixture
+class SingleNotValidatedJobData extends AbstractFixture
 {
     /**
      * {@inheritdoc}
@@ -37,9 +37,6 @@ class SingleJobData extends AbstractFixture
             ->setCountry('FR')
             ->setUser($user)
             ->setHowToApply('Send an email to jobs@foobar.com')
-            ->setIsValidated()
-            ->setPublishedAt(new \DateTime())
-            ->setEndedAt(new \DateTime('+1 year'))
         ;
 
         $this->setReference('job', $job);

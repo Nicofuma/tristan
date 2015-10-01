@@ -1,0 +1,16 @@
+{% block subject %}Your announcement is now online{% endblock %}
+
+{% block body_txt %}
+Your announcement is now online and can been seen here: {{ path('job_show', {'country': new_job.country , 'contract': new_job.contractType, 'slug': new_job.slug }) }}
+{% endblock %}
+
+{% block body_html %}
+<html>
+<body>
+Your announcement is now online and can been seen here:
+<a href="{{ url('job_show', {'country': new_job.country , 'contract': new_job.contractType, 'slug': new_job.slug }) }}">
+    {{ url('job_show', {'country': new_job.country , 'contract': new_job.contractType, 'slug': new_job.slug }) }}
+</a>
+</body>
+</html>
+{% endblock %}

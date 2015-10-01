@@ -21,6 +21,7 @@ assetic:
 
 swiftmailer:
     delivery_address: %mailer_dev_recipient%
+    disable_delivery: true
 
 sensio_labs_connect:
     timeout: 30

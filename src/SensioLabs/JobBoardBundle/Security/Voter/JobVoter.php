@@ -3,8 +3,8 @@
 namespace SensioLabs\JobBoardBundle\Security\Voter;
 
 use SensioLabs\JobBoardBundle\Entity\Job;
+use SensioLabs\JobBoardBundle\Entity\User;
 use Symfony\Component\Security\Core\Authorization\Voter\AbstractVoter;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class JobVoter extends AbstractVoter
 {
@@ -29,10 +29,10 @@ class JobVoter extends AbstractVoter
      */
     protected function isGranted($attribute, $object, $user = null)
     {
-        if (!$user instanceof UserInterface) {
+        if (!$user instanceof User) {
             return false;
         }
 
-        return $user->getUsername() === $object->getUserName();
+        return $user->getUuid() === $object->getUser()->getUuid();
     }
 }

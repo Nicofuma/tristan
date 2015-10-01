@@ -2,6 +2,8 @@
 
 {% from 'SensioLabsJobBoardBundle:Includes:breadcrumb.html.twig' import breadcrumb %}
 
+{% form_theme form 'SensioLabsJobBoardBundle:Form:forms.html.twig' %}
+
 {% block title 'Backend - Edit' %}
 
 {% block content %}
@@ -10,17 +12,9 @@
         'Make changes on \'Developper\' announcement': null,
     }) }}
 
-    {% embed "SensioLabsJobBoardBundle:Includes:job_form.html.twig" %}
-        {% block admin_extra_fields %}
-            <div class="backend-job-dates">
-                Visible from
-                <input id="publishedAt" class="span3 hasDatepicker" type="datetime" value="01/06/2014" name="publishedAt">
-                To
-                <input id="endedAt" class="span3 hasDatepicker" type="datetime" value="01/06/2014" name="endedAt">
-                (format: mm/dd/yyyy) 
-            </div>
-        {% endblock %}
-    {% endembed %}
+    <div class="box" style="padding-bottom:15px">
+        {{ form(form, {attr: {novalidate: 'novalidate'}, isUpdate: true}) }}
+    </div>
 
     <div class="clear"></div>
 {% endblock %}

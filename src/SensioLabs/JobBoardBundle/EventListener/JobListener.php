@@ -22,10 +22,24 @@ class JobListener implements EventSubscriberInterface
 
     public function onJobUpdate(JobUpdatedEvent $event)
     {
-        if ($event->getOldJob()->isValidated()) {
+        if ($event->getUpdatedBy() === JobUpdatedEvent::BY_USER && $event->getOldJob()->isValidated()) {
             $this->emailSender->send(
                 '@SensioLabsJobBoard/Mail/updateNotification.html.twig',
                 [
+                    'old_job' => $event->getOldJob(),
+                    'new_job' => $event->getNewJob(),
+                ]
+            );
+        } elseif (
+            $event->getUpdatedBy() === JobUpdatedEvent::BY_ADMIN
+            && !$event->getOldJob()->isValidated()
+            && $event->getNewJob()->isValidated()
+            && $event->getOldJob()->getUser()
+        ) {
+            $this->emailSender->send(
+                '@SensioLabsJobBoard/Mail/validateNotification.html.twig',
+                [
+                    'to' => $event->getOldJob()->getUser()->getEmail(),
                     'old_job' => $event->getOldJob(),
                     'new_job' => $event->getNewJob(),
                 ]

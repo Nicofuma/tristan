@@ -104,7 +104,7 @@ class JobController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $this->get('event_dispatcher')->dispatch(JobBoardEvents::JOB_UPDATE, new JobUpdatedEvent($oldJob, $job));
+            $this->get('event_dispatcher')->dispatch(JobBoardEvents::JOB_UPDATE, new JobUpdatedEvent($oldJob, $job, JobUpdatedEvent::BY_USER));
 
             $em = $this->getDoctrine()->getManager();
             $em->flush();

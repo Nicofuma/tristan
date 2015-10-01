@@ -5,6 +5,8 @@ namespace SensioLabs\JobBoardBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use SensioLabs\JobBoardBundle\Entity\Job;
+use SensioLabs\JobBoardBundle\Event\JobBoardEvents;
+use SensioLabs\JobBoardBundle\Event\JobUpdatedEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -18,7 +20,7 @@ class BackendController extends Controller
     public function listAction(Request $request)
     {
         $repository = $this->getDoctrine()->getRepository('SensioLabsJobBoardBundle:Job');
-        $query = $repository->getAllPublishedQueryBuilder();
+        $query = $repository->findAllQb();
 
         $paginator = $this->get('knp_paginator')->paginate(
             $query,
@@ -43,7 +45,30 @@ class BackendController extends Controller
      */
     public function editAction(Request $request, Job $job)
     {
-        return array();
+        $oldJob = clone $job;
+
+        $form = $this->createForm('job_admin', $job);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $this->get('event_dispatcher')->dispatch(JobBoardEvents::JOB_UPDATE, new JobUpdatedEvent($oldJob, $job, JobUpdatedEvent::BY_ADMIN));
+
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+
+            $message = 'updated';
+            if ($job->isValidated() && $job->isValidated() !== $oldJob->isValidated()) {
+                $message = 'validated';
+            }
+
+            $this->addFlash('sucess', sprintf('Job %s %s.', $job->getTitle(), $message));
+
+            return $this->redirectToRoute('backend_list');
+        }
+
+        return [
+            'form' => $form->createView(),
+        ];
     }
 
     /**

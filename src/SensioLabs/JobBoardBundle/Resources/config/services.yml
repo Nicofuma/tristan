@@ -4,6 +4,11 @@ services:
         tags:
             - { name: form.type, alias: job }
 
+    sensiolabs.jobboard.form.type.job_admin:
+        class: SensioLabs\JobBoardBundle\Form\Type\JobAdminType
+        tags:
+            - { name: form.type, alias: job_admin }
+
     sensiolabs.jobboard.twig.extension:
         class: SensioLabs\JobBoardBundle\Twig\JobBoardExtension
         tags:
@@ -37,6 +42,21 @@ services:
         factory_method: getRepository
         arguments:
             - SensioLabs\JobBoardBundle\Entity\Job
+
+    sensiolabs.jobboard.doctrine.repository.user:
+        class: SensioLabs\JobBoardBundle\Repository\UserRepository
+        factory_service: doctrine
+        factory_method: getRepository
+        arguments:
+            - SensioLabs\JobBoardBundle\Entity\User
+
+    sensiolabs.jobboard.eventlistener.interactive_login:
+        class: SensioLabs\JobBoardBundle\EventListener\SecurityInteractiveLoginListener
+        arguments:
+            - @doctrine.orm.entity_manager
+            - %admin_connect_uuid%
+        tags:
+            - { name: 'kernel.event_subscriber' }
 
     sensiolabs.jobboard.logger.processor.exception:
         class: SensioLabs\JobBoardBundle\Logger\Processor\ExceptionProcessor

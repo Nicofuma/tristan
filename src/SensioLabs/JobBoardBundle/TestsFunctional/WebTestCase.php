@@ -4,9 +4,9 @@ namespace SensioLabs\JobBoardBundle\TestsFunctional;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase as BaseWebTestCase;
 use SensioLabs\Connect\Security\Authentication\Token\ConnectToken;
+use SensioLabs\JobBoardBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\BrowserKit\Cookie;
-use Symfony\Component\Security\Core\User\User;
 
 class WebTestCase extends BaseWebTestCase
 {
@@ -25,13 +25,41 @@ class WebTestCase extends BaseWebTestCase
         $this->client = null;
     }
 
-    protected function signin($user = 'user-1', $roles = ['ROLE_USER', 'ROLE_CONNECT_USER'], $scope = null, $providerKey = 'secured_area', $apiUser = null)
+    protected function signup(array $userInfo = array())
     {
-        if (!is_object($user)) {
-            $user = new User($user, 'password', $roles);
+        $em = $this->getContainer()->get('doctrine')->getManager();
+
+        $userData = [
+            'email' => 'john.doe@example.com',
+            'name' => 'John Doe',
+            'username' => 'john'.mt_rand(),
+            'roles' => ['USER_ROLE'],
+        ];
+        $userInfo = array_replace($userData, $userInfo);
+
+        $user = new User(self::UUIDGeneratorV4());
+        $user
+            ->setEmail($userInfo['email'])
+            ->setName($userInfo['name'])
+            ->setUsername($userInfo['username'])
+            ->setRoles($userInfo['roles'])
+        ;
+        $em->persist($user);
+        $em->flush();
+
+        return $user;
+    }
+
+    protected function signin($username = 'user-1', $scope = null, $providerKey = 'secured_area', $apiUser = null)
+    {
+        $em = $this->client->getContainer()->get('doctrine')->getManager();
+        $user = $em->getRepository('SensioLabsJobBoardBundle:User')->findOneByUsername($username);
+
+        if (!$user) {
+            throw new \LogicException(sprintf('The user "%s" does not have an account.', $username));
         }
 
-        $token = new ConnectToken($user, null, $apiUser, $providerKey, $scope, $roles);
+        $token = new ConnectToken($user, null, $apiUser, $providerKey, $scope, $user->getRoles());
 
         $this->getContainer()->get('security.token_storage')->setToken($token);
 
@@ -54,5 +82,32 @@ class WebTestCase extends BaseWebTestCase
         $session->save();
 
         $this->getContainer()->get('security.token_storage')->setToken(null);
+    }
+
+    protected static function UUIDGeneratorV4()
+    {
+        if (extension_loaded('uuid')) {
+            return strtolower(uuid_create(UUID_TYPE_RANDOM));
+        }
+
+        return sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+            // 32 bits for "time_low"
+            mt_rand(0, 0xffff), mt_rand(0, 0xffff),
+
+            // 16 bits for "time_mid"
+            mt_rand(0, 0xffff),
+
+            // 16 bits for "time_hi_and_version",
+            // four most significant bits holds version number 4
+            mt_rand(0, 0x0fff) | 0x4000,
+
+            // 16 bits, 8 bits for "clk_seq_hi_res",
+            // 8 bits for "clk_seq_low",
+            // two most significant bits holds zero and one for variant DCE1.1
+            mt_rand(0, 0x3fff) | 0x8000,
+
+            // 48 bits for "node"
+            mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
+        );
     }
 }

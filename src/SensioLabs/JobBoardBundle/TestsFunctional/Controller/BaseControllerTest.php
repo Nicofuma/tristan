@@ -5,6 +5,7 @@ namespace SensioLabs\JobBoardBundle\TestsFunctional\Controller;
 use SensioLabs\JobBoardBundle\Entity\Job;
 use SensioLabs\JobBoardBundle\TestsFunctional\DataFixtures\ORM\FifteenJobsData;
 use SensioLabs\JobBoardBundle\TestsFunctional\DataFixtures\ORM\FilterJobsData;
+use SensioLabs\JobBoardBundle\TestsFunctional\DataFixtures\ORM\SingleNotValidatedJobData;
 use SensioLabs\JobBoardBundle\TestsFunctional\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Intl\Intl;
@@ -58,6 +59,16 @@ class BaseControllerTest extends WebTestCase
 
         self::assertCount(10, $crawler->filter('#job-container .box'));
         self::assertContains('#0 - FooBar Job', $crawler->filter('#job-container .box .title')->eq(0)->text());
+    }
+
+    public function testIndexActionOnlyValidatedJobs()
+    {
+        $this->loadFixtures([SingleNotValidatedJobData::class]);
+
+        $crawler = $this->client->request('GET', '/');
+        self::assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+
+        self::assertCount(0, $crawler->filter('#job-container .box'));
     }
 
     public function testIndexActionPage2()

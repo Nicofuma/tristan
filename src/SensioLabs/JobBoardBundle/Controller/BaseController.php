@@ -23,7 +23,9 @@ class BaseController extends Controller
     public function indexAction(Request $request)
     {
         $repository = $this->getDoctrine()->getRepository('SensioLabsJobBoardBundle:Job');
-        $query = $repository->getAllFilteredQueryBuilder($request->query->all());
+        $query = $repository->findAllQb();
+        $repository->addValidatedFilter($query);
+        $repository->addDynamicFilters($query, $request->query->all());
 
         $jobs = $this->get('knp_paginator')->paginate(
             $query,
@@ -61,7 +63,7 @@ class BaseController extends Controller
 
         if ($form->isValid()) {
             if ($user = $this->getUser()) {
-                $job->setUserName($user->getUsername());
+                $job->setUser($user);
             }
 
             $em = $this->getDoctrine()->getManager();
@@ -87,7 +89,8 @@ class BaseController extends Controller
     public function manageAction(Request $request)
     {
         $repository = $this->getDoctrine()->getRepository('SensioLabsJobBoardBundle:Job');
-        $query = $repository->getAllForUserQueryBuilder($this->getUser()->getUsername());
+        $query = $repository->findAllQb();
+        $repository->addUserFilter($query, $this->getUser());
 
         $jobs = $this->get('knp_paginator')->paginate(
             $query,
