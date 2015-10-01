@@ -18,6 +18,7 @@ swiftmailer:
 doctrine:
     dbal:
         dbname:   %database_name%_test
+        path:   %database_path%_test
 
 parameters:
 #     security.context_listener.class: SensioLabs\JobBoardBundle\TestsFunctional\Security\Http\Firewall\ContextListener

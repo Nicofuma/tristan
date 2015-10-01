@@ -21,14 +21,26 @@ class BaseController extends Controller
         $page = $request->query->get('page', 1);
 
         $em = $this->getDoctrine()->getManager();
-        $jobs = $em->getRepository('SensioLabsJobBoardBundle:Job')
-            ->getAllWithBounds(($page - 1) * self::NB_JOBS_PER_PAGE, self::NB_JOBS_PER_PAGE);
+
+        $repository = $em->getRepository('SensioLabsJobBoardBundle:Job');
+        $jobs = $repository->getAllFilteredWithBounds(
+            $request->query->all(),
+            ($page - 1) * self::NB_JOBS_PER_PAGE,
+            self::NB_JOBS_PER_PAGE);
 
         if ($request->isXmlHttpRequest()) {
-            return $this->render('SensioLabsJobBoardBundle:Includes:job_container.html.twig', ['jobs' => $jobs]);
+            return $this->render('SensioLabsJobBoardBundle:Includes:job_container.html.twig', [
+                'jobs' => $jobs,
+                'filters' => $request->query->all(),
+            ]);
         }
 
-        return ['jobs' => $jobs];
+        return [
+            'filters' => $request->query->all(),
+            'locations' => $repository->getFilteredCountriesCount($request->query->all()),
+            'contractTypes' => $repository->getFilteredContractsTypesCount($request->query->all()),
+            'jobs' => $jobs,
+        ];
     }
 
     /**
