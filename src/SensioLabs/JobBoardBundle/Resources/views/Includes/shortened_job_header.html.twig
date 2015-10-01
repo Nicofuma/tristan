@@ -3,7 +3,7 @@
         <a href="{{ path('homepage', filters|merge({'city': job.city})) }}">{{ job.city }}</a>, <a href="{{ path('homepage', filters|merge({'country': job.country})) }}">{{ job.country|country }}</a> /
         <a href="{{ path('homepage', filters|merge({'contractType': job.contractType})) }}">{{ job.contractType|contractType }}</a>
 
-        <br/><span class="archived">Archived since 12/12/2013</span>
+        {#<br/><span class="archived">Archived since 12/12/2013</span>#}
 
     </span>
 </div>
