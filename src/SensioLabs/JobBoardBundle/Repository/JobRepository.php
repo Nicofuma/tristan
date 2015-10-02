@@ -21,7 +21,7 @@ class JobRepository extends EntityRepository
         return $builder->getQuery()->execute();
     }
 
-    public function getFilteredCountriesCount(array $filters)
+    public function countFilteredJobsPerCountry(array $filters)
     {
         $builder = $this->createQueryBuilder('j')
             ->select('j.country', 'COUNT(j.id) AS nb_jobs')
@@ -34,7 +34,7 @@ class JobRepository extends EntityRepository
         return $builder->getQuery()->getArrayResult();
     }
 
-    public function getFilteredContractsTypesCount(array $filters)
+    public function countFilteredJobsPerContractType(array $filters)
     {
         $builder = $this->createQueryBuilder('j')
             ->select('j.contractType', 'COUNT(j.id) AS nb_jobs')

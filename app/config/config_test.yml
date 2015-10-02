@@ -6,13 +6,14 @@ framework:
     session:
         storage_id: session.storage.mock_file
     profiler:
-        enabled: false
+        collect: false
 
 web_profiler:
     toolbar: false
     intercept_redirects: false
 
 swiftmailer:
+    delivery_address: ~
     disable_delivery: true
 
 doctrine:

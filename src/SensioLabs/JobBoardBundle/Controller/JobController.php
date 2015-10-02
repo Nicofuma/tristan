@@ -3,7 +3,10 @@
 namespace SensioLabs\JobBoardBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use SensioLabs\JobBoardBundle\Entity\Job;
+use SensioLabs\JobBoardBundle\Event\JobBoardEvents;
+use SensioLabs\JobBoardBundle\Event\JobUpdatedEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -39,14 +42,19 @@ class JobController extends Controller
      *   path="/{country}/{contract}/{slug}/update"
      * )
      * @ParamConverter("job", options={"mapping"={"country"="country","contract"="contractType","slug"="slug"}})
+     * @Security("is_granted('JOB_UPDATE', job)")
      * @Template()
      */
     public function updateAction(Request $request, Job $job)
     {
+        $oldJob = clone $job;
+
         $form = $this->createForm('job', $job);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            $this->get('event_dispatcher')->dispatch(JobBoardEvents::JOB_UPDATE, new JobUpdatedEvent($oldJob, $job));
+
             $em = $this->getDoctrine()->getManager();
             $em->flush();
 

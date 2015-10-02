@@ -21,6 +21,7 @@ class SingleJobData extends AbstractFixture
             ->setContractType(Job::CONTRACT_FULL_TIME)
             ->setCity('Paris')
             ->setCountry('FR')
+            ->setUserName('user-1')
             ->setHowToApply('Send an email to jobs@foobar.com')
         ;
 

@@ -7,7 +7,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table()
+ * @ORM\Table(
+ *     indexes={@ORM\Index(columns={"user_name"})}
+ * )
  * @ORM\Entity(repositoryClass="SensioLabs\JobBoardBundle\Repository\JobRepository")
  */
 class Job
@@ -91,6 +93,11 @@ class Job
      * @ORM\Column(length=255, unique=true)
      */
     private $slug;
+
+    /**
+     * @ORM\Column(name="user_name", type="string", length=255, nullable=true)
+     */
+    private $userName;
 
     public static function getContractTypes()
     {
@@ -302,5 +309,37 @@ class Job
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    /**
+     * Set username.
+     *
+     * @param string $userName
+     *
+     * @return Job
+     */
+    public function setUserName($userName)
+    {
+        $this->userName = $userName;
+
+        return $this;
+    }
+
+    /**
+     * Get username.
+     *
+     * @return string
+     */
+    public function getUserName()
+    {
+        return $this->userName;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isValidated()
+    {
+        return true;
     }
 }

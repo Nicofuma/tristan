@@ -7,7 +7,7 @@ security:
         sensiolabs_connect:
             connect_memory:
                 users:
-                    36221b12-f362-4dca-8724-4da82ef2ba49: "ROLE_ADMIN" # Sarah Khalil
+                    %admin_connect_uuid%: "ROLE_ADMIN"
     firewalls:
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/

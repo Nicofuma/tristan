@@ -24,3 +24,7 @@ parameters:
     sensiolabs_connect.oauth_endpoint: https://connect.sensiolabs.com
     sensiolabs_connect.api_endpoint: https://connect.sensiolabs.com/api
     sensiolabs_connect.sln_js: https://connect.sensiolabs.com/sln.js
+
+    mailer_app_sender: no-reply@jobs.sensiolabs.com
+    admin_email_address: admin@jobs.sensiolabs.com
+    admin_connect_uuid: 00000000-0000-0000-0000-000000000000
