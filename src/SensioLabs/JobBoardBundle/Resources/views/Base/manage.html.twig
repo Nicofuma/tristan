@@ -20,7 +20,7 @@
                     <thead>
                     <tr>
                         <th class="span5"> Title </th>
-                        {#<th class="span2"> Time left </th>#}
+                        <th class="span2"> Time left </th>
                         <th class="span2"> Displays </th>
                         <th class="span4"> Actions </th>
                     </tr>
@@ -33,7 +33,13 @@
                                     {{ job.contractType|contractType }} in {{ job.city }} &mdash; {{ job.title }}
                                 </a>
                             </td>
-                            {#<td style="color:orange"> Waiting payment </td>#}
+                            {% if job.status.value == 'new' %}
+                                <td style="color:orange"> Waiting payment </td>
+                            {% elseif job.status.value == 'published' %}
+                                <td style="color:orange"> Not online yet </td>
+                            {% else %}
+                              <td style="color:red"> Unsupported status </td>
+                            {% endif %}
                             <td>{{ job.totalViewCount }}</td>
                             <td class="action">
                                 {#<a href="">Pay</a> /#}

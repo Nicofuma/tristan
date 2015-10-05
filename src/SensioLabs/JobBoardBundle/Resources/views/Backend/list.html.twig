@@ -4,11 +4,11 @@
 
 {% block content %}
     <ul id="breadcrumb">
-            <li class="active">
-                <a href="#">Published ads</a> |
+            <li {% if app.request.query.all.status|default('published') == 'published' %}class="active"{% endif %}>
+                <a href="{{ path('backend_list', app.request.query.all|merge({'status': 'published'})) }}">Published ads</a> |
             </li>
-            <li>
-                <a href="#">Archived ads</a> |
+            <li {% if app.request.query.all.status|default('published') == 'archived' %}class="active"{% endif %}>
+                <a href="{{ path('backend_list', app.request.query.all|merge({'status': 'archived'})) }}">Archived ads</a> |
             </li>
             <li>
                 <a href="#">Deleted ads</a>
@@ -27,7 +27,7 @@
                             <li class="success">{{ flashMessage }}</li>
                         {% endfor %}
                     </ul>
-                    <h2 class="big-title">Published ads</h2>
+                    <h2 class="big-title">{{ app.request.query.all.status|default('published')|humanize }} ads</h2>
 
                     <table class="table table-striped backend-list">
                         <thead>

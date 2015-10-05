@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "622a844ffa657c9746a0810646c7ddeb",
-    "content-hash": "cc6809a3881f336cd434dad90007098f",
+    "hash": "444edb565599e31ebfde1dc1b65daac9",
+    "content-hash": "f14c1cc3deb9e9b7221d51b90f55c5d9",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -2236,6 +2236,65 @@
                 "templating"
             ],
             "time": "2015-09-22 13:59:32"
+        },
+        {
+            "name": "yethee/enum-bundle",
+            "version": "v1.2.0",
+            "target-dir": "Biplane/EnumBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yethee/BiplaneEnumBundle.git",
+                "reference": "124f5e7c30e54ddfa2d7a9b6a3e0c353ec4ea83e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yethee/BiplaneEnumBundle/zipball/124f5e7c30e54ddfa2d7a9b6a3e0c353ec4ea83e",
+                "reference": "124f5e7c30e54ddfa2d7a9b6a3e0c353ec4ea83e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "symfony/form": "~2.1",
+                "symfony/framework-bundle": "~2.1"
+            },
+            "conflict": {
+                "jms/serializer": "<0.12",
+                "jms/serializer-bundle": "<0.11"
+            },
+            "require-dev": {
+                "jms/serializer-bundle": "0.12.*",
+                "symfony/serializer": "~2.1"
+            },
+            "suggest": {
+                "jms/serializer-bundle": "provides the handler for the JMSSerializer",
+                "symfony/serializer": "provides the normalizer for the Symfony's Serializer"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Biplane\\EnumBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Denis Vasilev",
+                    "email": "liquid.yethee@hotmail.com"
+                }
+            ],
+            "description": "This bundle provides a typed enumeration for Symfony2 applications",
+            "keywords": [
+                "typed enumeration"
+            ],
+            "time": "2013-10-04 08:56:16"
         }
     ],
     "packages-dev": [

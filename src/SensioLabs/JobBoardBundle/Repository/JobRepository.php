@@ -34,6 +34,11 @@ class JobRepository extends EntityRepository
         return $qb->andWhere('j.user = :user')->setParameter('user', $user);
     }
 
+    public function addStatusFilter(QueryBuilder $qb, $status)
+    {
+        return $qb->andWhere('j.status = :status')->setParameter('status', $status);
+    }
+
     public function addDynamicFilters(QueryBuilder $builder, array $filters)
     {
         if (isset($filters['country'])) {

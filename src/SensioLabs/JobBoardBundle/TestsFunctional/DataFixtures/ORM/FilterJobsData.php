@@ -5,6 +5,7 @@ namespace SensioLabs\JobBoardBundle\TestsFunctional\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use SensioLabs\JobBoardBundle\Entity\Job;
+use SensioLabs\JobBoardBundle\Entity\JobStatus;
 use Symfony\Component\Intl\Intl;
 
 class FilterJobsData extends AbstractFixture
@@ -59,6 +60,7 @@ class FilterJobsData extends AbstractFixture
                         ->setIsValidated()
                         ->setPublishedAt(new \DateTime())
                         ->setEndedAt(new \DateTime('+1 year'))
+                        ->setStatus(JobStatus::create(JobStatus::PUBLISHED))
                     ;
 
                     $manager->persist($job);

@@ -5,6 +5,7 @@ namespace SensioLabs\JobBoardBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use SensioLabs\JobBoardBundle\Entity\Job;
+use SensioLabs\JobBoardBundle\Entity\JobStatus;
 use SensioLabs\JobBoardBundle\Event\JobBoardEvents;
 use SensioLabs\JobBoardBundle\Event\JobUpdatedEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -21,6 +22,7 @@ class BackendController extends Controller
     {
         $repository = $this->getDoctrine()->getRepository('SensioLabsJobBoardBundle:Job');
         $query = $repository->findAllQb();
+        $repository->addStatusFilter($query, $request->query->get('status', JobStatus::PUBLISHED));
 
         $paginator = $this->get('knp_paginator')->paginate(
             $query,
@@ -97,8 +99,8 @@ class BackendController extends Controller
             }
 
             $job = $em->find(Job::class, $jobId);
-            if ($job->isPublished()) {
-                $this->addFlash('error', sprintf('You cannot delete %s, it must not be published.', $job->getTitle()));
+            if (in_array($job->getStatus()->getValue(), [JobStatus::PUBLISHED, JobStatus::ARCHIVED], true)) {
+                $this->addFlash('error', sprintf('You cannot delete %s, it must not be %s.', $job->getTitle(), $job->getStatus()->getReadable()));
             } else {
                 $em->remove($job);
                 $em->flush();

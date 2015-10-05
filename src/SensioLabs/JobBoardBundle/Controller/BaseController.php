@@ -3,6 +3,7 @@
 namespace SensioLabs\JobBoardBundle\Controller;
 
 use SensioLabs\JobBoardBundle\Entity\Job;
+use SensioLabs\JobBoardBundle\Entity\JobStatus;
 use SensioLabs\JobBoardBundle\Event\JobBoardEvents;
 use SensioLabs\JobBoardBundle\Event\JobsDisplayedEvent;
 use SensioLabs\JobBoardBundle\Repository\JobRepository;
@@ -26,6 +27,7 @@ class BaseController extends Controller
         $query = $repository->findAllQb();
         $repository->addValidatedFilter($query);
         $repository->addDynamicFilters($query, $request->query->all());
+        $repository->addStatusFilter($query, JobStatus::PUBLISHED);
 
         $jobs = $this->get('knp_paginator')->paginate(
             $query,

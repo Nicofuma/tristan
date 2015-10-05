@@ -8,7 +8,7 @@ use SensioLabs\JobBoardBundle\Entity\Job;
 use SensioLabs\JobBoardBundle\Entity\JobStatus;
 use SensioLabs\JobBoardBundle\Entity\User;
 
-class SingleNotValidatedJobData extends AbstractFixture
+class MixedStatusData extends AbstractFixture
 {
     /**
      * {@inheritdoc}
@@ -28,22 +28,26 @@ class SingleNotValidatedJobData extends AbstractFixture
 
         $manager->persist($user);
 
-        $job = new Job();
-        $job
-            ->setTitle('FooBar Job')
-            ->setDescription('This is the description of an amazing job!')
-            ->setCompany('FooBar & Co')
-            ->setContractType(Job::CONTRACT_FULL_TIME)
-            ->setCity('Paris')
-            ->setCountry('FR')
-            ->setUser($user)
-            ->setHowToApply('Send an email to jobs@foobar.com')
-            ->setStatus(JobStatus::create(JobStatus::NEW_JOB))
-        ;
+        foreach (JobStatus::getPossibleValues() as $status) {
+            $job = new Job();
+            $job
+                ->setTitle($status.' Job')
+                ->setDescription('This is the description of an amazing job!')
+                ->setCompany('FooBar & Co')
+                ->setContractType(Job::CONTRACT_FULL_TIME)
+                ->setCity('Paris')
+                ->setCountry('FR')
+                ->setUser($user)
+                ->setHowToApply('Send an email to jobs@foobar.com')
+                ->setIsValidated()
+                ->setPublishedAt(new \DateTime())
+                ->setEndedAt(new \DateTime('+1 year'))
+                ->setStatus(JobStatus::create($status))
+            ;
 
-        $this->setReference('job', $job);
+            $manager->persist($job);
+        }
 
-        $manager->persist($job);
         $manager->flush();
     }
 }

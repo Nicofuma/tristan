@@ -4,6 +4,7 @@ namespace SensioLabs\JobBoardBundle\TestsFunctional\Controller;
 
 use SensioLabs\JobBoardBundle\Entity\Job;
 use SensioLabs\JobBoardBundle\TestsFunctional\DataFixtures\ORM\FifteenJobsData;
+use SensioLabs\JobBoardBundle\TestsFunctional\DataFixtures\ORM\MixedStatusData;
 use SensioLabs\JobBoardBundle\TestsFunctional\DataFixtures\ORM\SingleJobData;
 use SensioLabs\JobBoardBundle\TestsFunctional\DataFixtures\ORM\SingleNotValidatedJobData;
 use SensioLabs\JobBoardBundle\TestsFunctional\WebTestCase;
@@ -72,6 +73,16 @@ class BackendControllerTest extends WebTestCase
 
         $editLink = $crawler->filter('#backend-job-container table tbody tr')->eq(0)->filter('td')->eq(6)->filter('a')->link();
         self::assertSame('/backend/15/edit', $editLink->getNode()->getAttribute('href'));
+    }
+
+    public function testDeleteActionPublishedJob()
+    {
+        $this->loadFixtures([SingleJobData::class]);
+
+        $this->signup(['username' => 'user-admin', 'roles' => ['ROLE_ADMIN']]);
+        $this->signin('user-admin');
+        $crawler = $this->client->request('GET', '/backend');
+        self::assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
         $deleteButton = $crawler->filter('#backend-job-container table tbody tr')->eq(0)->selectButton('Delete');
         self::assertCount(1, $deleteButton);
@@ -81,9 +92,47 @@ class BackendControllerTest extends WebTestCase
 
         $crawler = $this->client->followRedirect();
         self::assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-        self::assertCount(0, $crawler->filter('.backend-flashes .error'));
-        self::assertCount(1, $crawler->filter('.backend-flashes .success'));
-        self::assertCount(14, $crawler->filter('#backend-job-container table tbody tr'));
+        self::assertCount(1, $crawler->filter('.backend-flashes .error'));
+        self::assertCount(0, $crawler->filter('.backend-flashes .success'));
+        self::assertCount(1, $crawler->filter('#backend-job-container table tbody tr'));
+        self::assertNotSame('No jobs.', trim($crawler->filter('#backend-job-container table tbody tr')->text()));
+    }
+
+    public function testListActionArchived()
+    {
+        $this->loadFixtures([MixedStatusData::class]);
+
+        $this->signup(['username' => 'user-admin', 'roles' => ['ROLE_ADMIN']]);
+        $this->signin('user-admin');
+        $crawler = $this->client->request('GET', '/backend?status=archived');
+        self::assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+
+        self::assertContains('Archived ads', trim($crawler->filter('#breadcrumb .active')->text()));
+        self::assertCount(1, $crawler->filter('#backend-job-container table tbody tr'));
+        self::assertSame('archived Job', trim($crawler->filter('#backend-job-container table tbody tr')->eq(0)->filter('td')->eq(1)->text()));
+    }
+
+    public function testDeleteActionArchivedJob()
+    {
+        $this->loadFixtures([MixedStatusData::class]);
+
+        $this->signup(['username' => 'user-admin', 'roles' => ['ROLE_ADMIN']]);
+        $this->signin('user-admin');
+        $crawler = $this->client->request('GET', '/backend?status=archived');
+        self::assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+
+        $deleteButton = $crawler->filter('#backend-job-container table tbody tr')->eq(0)->selectButton('Delete');
+        self::assertCount(1, $deleteButton);
+        $form = $deleteButton->form();
+        $this->client->submit($form);
+        self::assertSame(Response::HTTP_FOUND, $this->client->getResponse()->getStatusCode());
+
+        $crawler = $this->client->followRedirect();
+        self::assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+        self::assertCount(1, $crawler->filter('.backend-flashes .error'));
+        self::assertCount(0, $crawler->filter('.backend-flashes .success'));
+        self::assertCount(1, $crawler->filter('#backend-job-container table tbody tr'));
+        self::assertNotSame('No jobs.', trim($crawler->filter('#backend-job-container table tbody tr')->text()));
     }
 
     public function testEditActionValidateJob()

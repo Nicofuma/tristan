@@ -140,6 +140,11 @@ class Job
      */
     private $user;
 
+    /**
+     * @ORM\Column(name="status", type="string")
+     */
+    private $status = JobStatus::NEW_JOB;
+
     public static function getContractTypes()
     {
         return array_keys(self::CONTRACTS_TYPES);
@@ -403,7 +408,7 @@ class Job
      */
     public function isPublished()
     {
-        return false;
+        return $this->status === JobStatus::PUBLISHED;
     }
 
     /**
@@ -554,5 +559,25 @@ class Job
     public function getEndedAt()
     {
         return $this->endedAt;
+    }
+
+    /**
+     * @return JobStatus
+     */
+    public function getStatus()
+    {
+        return JobStatus::create($this->status);
+    }
+
+    /**
+     * @param JobStatus $status
+     *
+     * @return Job
+     */
+    public function setStatus(JobStatus $status)
+    {
+        $this->status = $status->getValue();
+
+        return $this;
     }
 }
