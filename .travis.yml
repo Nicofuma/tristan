@@ -24,10 +24,12 @@ install:
   - composer self-update
   - DATABASE_DRIVER='pdo_sqlite' DATABASE_PATH='%kernel.root_dir%/app.sqlite' composer install --prefer-source --no-interaction
   - curl http://get.sensiolabs.org/php-cs-fixer.phar -o php-cs-fixer
+  - wget https://scrutinizer-ci.com/ocular.phar
 
 script:
   - php php-cs-fixer fix --no-interaction --dry-run --diff -vvv
-  - php bin/phpunit -c app/
+  - php bin/phpunit -c app/  --coverage-clover=coverage.clover
 
 after_script:
   - mv ./.php_cs.cache $HOME/.app_cache/.php_cs.cache 2>/dev/null || true
+  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
