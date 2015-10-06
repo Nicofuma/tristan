@@ -29,8 +29,8 @@
                     {% for job in jobs %}
                         <tr>
                             <td>
-                                <a href="{{ path('job_preview', {'country': job.country , 'contract': job.contractType, 'slug': job.slug }) }}">
-                                    {{ job.contractType|contractType }} in {{ job.city }} &mdash; {{ job.title }}
+                                <a href="{{ path('job_preview', {'country': job.company.country , 'contract': job.contractType, 'slug': job.slug }) }}">
+                                    {{ job.contractType|contractType }} in {{ job.company.city }} &mdash; {{ job.title }}
                                 </a>
                             </td>
                             {% if job.status.value == 'new' %}
@@ -43,8 +43,8 @@
                             <td>{{ job.totalViewCount }}</td>
                             <td class="action">
                                 {#<a href="">Pay</a> /#}
-                                <a href="{{ path('job_update', {'country': job.country , 'contract': job.contractType, 'slug': job.slug }) }}"> Make changes </a>
-                                / <a href="{{ path('job_delete', {'country': job.country , 'contract': job.contractType, 'slug': job.slug, 'token': csrf_token('delete_job') }) }}"> Delete </a>
+                                <a href="{{ path('job_update', {'country': job.company.country , 'contract': job.contractType, 'slug': job.slug }) }}"> Make changes </a>
+                                / <a href="{{ path('job_delete', {'country': job.company.country , 'contract': job.contractType, 'slug': job.slug, 'token': csrf_token('delete_job') }) }}"> Delete </a>
                             </td>
                         </tr>
                     {% else %}

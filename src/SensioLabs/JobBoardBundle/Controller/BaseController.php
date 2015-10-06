@@ -73,7 +73,7 @@ class BaseController extends Controller
             $em->flush();
 
             return $this->redirectToRoute('job_preview', [
-                'country' => $job->getCountry(),
+                'country' => $job->getCompany()->getCountry(),
                 'contract' => $job->getContractType(),
                 'slug' => $job->getSlug(),
             ]);

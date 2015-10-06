@@ -30,22 +30,22 @@ class JobControllerTest extends WebTestCase
         $form = $buttonCrawlerNode->form();
         self::assertArraySubset([
             'job[title]' => $reference->getTitle(),
-            'job[country]' => $reference->getCountry(),
-            'job[city]' => $reference->getCity(),
+            'job[company][country]' => $reference->getCompany()->getCountry(),
+            'job[company][city]' => $reference->getCompany()->getCity(),
             'job[contractType]' => $reference->getContractType(),
             'job[description]' => $reference->getDescription(),
             'job[howToApply]' => $reference->getHowToApply(),
-            'job[company]' => $reference->getCompany(),
+            'job[company][name]' => $reference->getCompany()->getName(),
         ], $form->getValues());
 
         $form->setValues([
             'job[title]' => 'New Title',
-            'job[country]' => 'GB',
-            'job[city]' => 'New City',
+            'job[company][country]' => 'GB',
+            'job[company][city]' => 'New City',
             'job[contractType]' => Job::CONTRACT_ALTERNANCE_TIME,
             'job[description]' => 'New Description',
             'job[howToApply]' => 'New HTA',
-            'job[company]' => 'New Company',
+            'job[company][name]' => 'New Company',
         ]);
 
         $this->client->submit($form);
@@ -123,8 +123,8 @@ class JobControllerTest extends WebTestCase
         self::assertSame($reference->getTitle(), trim($crawler->filter('.box h2 a.title')->text()));
         self::assertSame('/FR/full-time/foobar-job', trim($crawler->filter('.box h2 a.title')->attr('href')));
         self::assertSame($reference->getDescription(), trim($crawler->filter('#job-description')->text()));
-        self::assertSame('/?country='.$reference->getCountry(), trim($crawler->filter('.box .details .filter a')->eq(0)->attr('href')));
-        self::assertSame('/?country='.$reference->getCountry().'&contractType='.$reference->getContractType(), trim($crawler->filter('.box .details .filter a')->eq(1)->attr('href')));
+        self::assertSame('/?country='.$reference->getCompany()->getCountry(), trim($crawler->filter('.box .details .filter a')->eq(0)->attr('href')));
+        self::assertSame('/?country='.$reference->getCompany()->getCountry().'&contractType='.$reference->getContractType(), trim($crawler->filter('.box .details .filter a')->eq(1)->attr('href')));
     }
 
     public function testJobViewCount()

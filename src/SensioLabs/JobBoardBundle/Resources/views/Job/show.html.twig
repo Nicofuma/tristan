@@ -2,12 +2,12 @@
 {% from 'SensioLabsJobBoardBundle:Includes:breadcrumb.html.twig' import breadcrumb %}
 
 {% block page_class 'preview' %}
-{% block title job.title ~ ' @ ' ~ job.company %}
+{% block title job.title ~ ' @ ' ~ job.company.name %}
 
 {% block content %}
     {{ breadcrumb({
-        (job.country|country):    path('homepage', {'country': job.country}),
-        (job.contractType|contractType): path('homepage', {'country': job.country, 'contractType': job.contractType}),
+        (job.company.country|country):    path('homepage', {'country': job.company.country}),
+        (job.contractType|contractType): path('homepage', {'country': job.company.country, 'contractType': job.contractType}),
         (job.title): null,
     }) }}
 

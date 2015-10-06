@@ -9,16 +9,16 @@
 {% block content %}
     {{ breadcrumb({
         'Post a job':   path('manage'),
-        'Preview':  path('job_preview', {'country': job.country , 'contract': job.contractType, 'slug': job.slug }),
+        'Preview':  path('job_preview', {'country': job.company.country , 'contract': job.contractType, 'slug': job.slug }),
     }) }}
 
     {% embed 'SensioLabsJobBoardBundle:Includes:job.html.twig' %}
         {% block job_steps %}
             <div class="padding clearfix">
-                <a href="{{ path('job_update', {'country': job.country , 'contract': job.contractType, 'slug': job.slug }) }}" class="green-button left"><span class="sprite-icon-light-arrow-left"></span>
+                <a href="{{ path('job_update', {'country': job.company.country , 'contract': job.contractType, 'slug': job.slug }) }}" class="green-button left"><span class="sprite-icon-light-arrow-left"></span>
                     <span>Make changes</span>
                 </a>
-                <a href="{{ path('job_pay', {'country': job.country , 'contract': job.contractType, 'slug': job.slug }) }}" class="green-button right"><img src="{{ asset('bundles/sensiolabsjobboard/images/blank.png') }}" class="sprite-icon-cloud-upload" />
+                <a href="{{ path('job_pay', {'country': job.company.country , 'contract': job.contractType, 'slug': job.slug }) }}" class="green-button right"><img src="{{ asset('bundles/sensiolabsjobboard/images/blank.png') }}" class="sprite-icon-cloud-upload" />
                     <span>Publish</span>
                 </a>
             </div>

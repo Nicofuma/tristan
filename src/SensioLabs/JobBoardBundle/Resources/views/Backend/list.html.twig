@@ -34,7 +34,7 @@
                         <thead>
                             <tr>
                                 <th>
-                                    {{ knp_pagination_sortable(jobs, 'Company', 'j.company') }}
+                                    {{ knp_pagination_sortable(jobs, 'Company', 'c.name') }}
                                 </th>
                                 <th>
                                     {{ knp_pagination_sortable(jobs, 'Title', 'j.title') }}
@@ -51,7 +51,7 @@
                         <tbody>
                         {% for job in jobs %}
                             <tr>
-                                <td> {{ job.company }} </td>
+                                <td> {{ job.company.name }} </td>
                                 <td> {{ job.title }} </td>
                                 <td> {{ job.createdAt|date('m/d/Y') }} </td>
                                 <td> {{ job.viewCountHomepage }} </td>

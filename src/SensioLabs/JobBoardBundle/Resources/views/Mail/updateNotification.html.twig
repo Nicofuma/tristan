@@ -1,7 +1,7 @@
 {% block subject %}A validated announcement has been updated{% endblock %}
 
 {% block body_txt %}
-Source: {{ url('job_show', {'country': new_job.country , 'contract': new_job.contractType, 'slug': new_job.slug }) }}
+Source: {{ url('job_show', {'country': new_job.company.country , 'contract': new_job.contractType, 'slug': new_job.slug }) }}
 
 ---- BEFORE ----
 Title: {{ old_job.title }}
@@ -19,7 +19,7 @@ Description:
 <body>
 Source:
 <a href="{{ url('backend_edit', {'id': old_job.id}) }}">
-    {{ url('job_show', {'country': new_job.country , 'contract': new_job.contractType, 'slug': new_job.slug }) }}
+    {{ url('job_show', {'country': new_job.company.country , 'contract': new_job.contractType, 'slug': new_job.slug }) }}
 </a><br/>
 <br/>
 <table>

@@ -194,12 +194,12 @@ class BackendControllerTest extends WebTestCase
         $form = $buttonCrawlerNode->form();
         self::assertArraySubset([
             'job_admin[title]' => $reference->getTitle(),
-            'job_admin[country]' => $reference->getCountry(),
-            'job_admin[city]' => $reference->getCity(),
+            'job_admin[company][country]' => $reference->getCompany()->getCountry(),
+            'job_admin[company][city]' => $reference->getCompany()->getCity(),
             'job_admin[contractType]' => $reference->getContractType(),
             'job_admin[description]' => $reference->getDescription(),
             'job_admin[howToApply]' => $reference->getHowToApply(),
-            'job_admin[company]' => $reference->getCompany(),
+            'job_admin[company][name]' => $reference->getCompany()->getName(),
         ], $form->getValues());
 
         $form->setValues([
@@ -263,12 +263,12 @@ Your announcement is now online and can been seen here:
         $form = $buttonCrawlerNode->form();
         self::assertArraySubset([
             'job_admin[title]' => $reference->getTitle(),
-            'job_admin[country]' => $reference->getCountry(),
-            'job_admin[city]' => $reference->getCity(),
+            'job_admin[company][country]' => $reference->getCompany()->getCountry(),
+            'job_admin[company][city]' => $reference->getCompany()->getCity(),
             'job_admin[contractType]' => $reference->getContractType(),
             'job_admin[description]' => $reference->getDescription(),
             'job_admin[howToApply]' => $reference->getHowToApply(),
-            'job_admin[company]' => $reference->getCompany(),
+            'job_admin[company][name]' => $reference->getCompany()->getName(),
         ], $form->getValues());
 
         $this->client->submit($form);

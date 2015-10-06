@@ -2,7 +2,6 @@
 
 namespace SensioLabs\JobBoardBundle\TestsFunctional\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use SensioLabs\JobBoardBundle\Entity\Job;
 use SensioLabs\JobBoardBundle\Entity\JobStatus;
@@ -52,10 +51,8 @@ class FilterJobsData extends AbstractFixture
                     $job
                         ->setTitle("#$i-$j - $country - $contractType - FooBar Job")
                         ->setDescription('This is the description of an amazing job!')
-                        ->setCompany('FooBar & Co')
+                        ->setCompany($this->getCompany($manager, 'SensioLabs', $country, $cities[$j % 2]))
                         ->setContractType($contractType)
-                        ->setCity($cities[$j % 2])
-                        ->setCountry($country)
                         ->setHowToApply('Send an email to jobs@foobar.com')
                         ->setIsValidated()
                         ->setPublishedAt(new \DateTime())

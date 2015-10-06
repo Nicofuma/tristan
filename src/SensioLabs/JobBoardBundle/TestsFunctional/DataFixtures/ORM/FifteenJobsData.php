@@ -2,11 +2,9 @@
 
 namespace SensioLabs\JobBoardBundle\TestsFunctional\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use SensioLabs\JobBoardBundle\Entity\Job;
 use SensioLabs\JobBoardBundle\Entity\JobStatus;
-use SensioLabs\JobBoardBundle\Entity\User;
 use Symfony\Component\Intl\Intl;
 
 class FifteenJobsData extends AbstractFixture
@@ -24,11 +22,9 @@ class FifteenJobsData extends AbstractFixture
             $job
                 ->setTitle("#$i - FooBar Job")
                 ->setDescription('This is the description of an amazing job!')
-                ->setCompany('FooBar & Co')
+                ->setCompany($this->getCompany($manager, 'SensioLabs', $countries[$i % count($countries)]))
                 ->setContractType($contractTypes[$i % 5])
-                ->setCity('Paris')
                 ->setUser($this->getUser($manager, $i))
-                ->setCountry($countries[$i % count($countries)])
                 ->setHowToApply('Send an email to jobs@foobar.com')
                 ->setCreatedAt(new \DateTime('+'.$i.' month'))
                 ->setIsValidated()
@@ -43,28 +39,5 @@ class FifteenJobsData extends AbstractFixture
         }
 
         $manager->flush();
-    }
-
-    private function getUser(ObjectManager $manager, $id)
-    {
-        $user = $manager->getRepository(User::class)->findOneByUsername('user-'.$id);
-
-        if (!$user) {
-            $connectUser = new \SensioLabs\Connect\Api\Entity\User();
-            $connectUser
-                ->set('email', 'user-'.$id.'@example.org')
-                ->set('username', 'user-'.$id)
-                ->set('name', 'User '.$id)
-                ->set('uuid', sprintf('%08d-1234-1234-1234-123456789012', $id));
-
-            $user = new User($connectUser->get('uuid'));
-            $user->updateFromConnect($connectUser);
-
-            $this->setReference('user-'.$id, $user);
-
-            $manager->persist($user);
-        }
-
-        return $user;
     }
 }

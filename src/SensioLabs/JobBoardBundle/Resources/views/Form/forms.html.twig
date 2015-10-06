@@ -50,18 +50,18 @@
                     </div>
 
                     <div class="company-label">
-                        {{ form_label(form.company, '@', {label_attr: {class: 'label'}} ) }}
-                        {{ form_widget(form.company, {attr: {placeholder: 'Company'}}) }}
+                        {{ form_label(form.company.name, '@', {label_attr: {class: 'label'}} ) }}
+                        {{ form_widget(form.company.name, {attr: {placeholder: 'Company'}}) }}
                     </div>
                 </div>
 
                 <div class="country-city-contract">
                     <div class="country-city clearfix">
                         <div class="city-input country-select">
-                            {{ form_widget(form.country) }}
+                            {{ form_widget(form.company.country) }}
                         </div>
                         <div class="city-input">
-                            {{ form_widget(form.city, {attr: {placeholder: 'City', class: 'location'}}) }}
+                            {{ form_widget(form.company.city, {attr: {placeholder: 'City', class: 'location'}}) }}
                         </div>
                         <div>
                             {{ form_widget(form.contractType, {attr: {class: 'type'}}) }}

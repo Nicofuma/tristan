@@ -9,6 +9,13 @@ services:
         tags:
             - { name: form.type, alias: job_admin }
 
+    sensiolabs.jobboard.form.type.company:
+        class: SensioLabs\JobBoardBundle\Form\Type\CompanyType
+        arguments:
+            - @doctrine.orm.entity_manager
+        tags:
+            - { name: form.type, alias: company }
+
     sensiolabs.jobboard.twig.extension:
         class: SensioLabs\JobBoardBundle\Twig\JobBoardExtension
         tags:

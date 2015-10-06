@@ -21,7 +21,10 @@ class JobRepository extends EntityRepository
 
     public function findAllQb()
     {
-        return $this->createQueryBuilder('j')->select('j');
+        return $this->createQueryBuilder('j')
+            ->select('j')
+            ->leftJoin('j.company', 'c')
+        ;
     }
 
     public function addValidatedFilter(QueryBuilder $qb, $isValidated = true)
@@ -42,7 +45,7 @@ class JobRepository extends EntityRepository
     public function addDynamicFilters(QueryBuilder $builder, array $filters)
     {
         if (isset($filters['country'])) {
-            $builder->andWhere('j.country = :country')->setParameter('country', $filters['country']);
+            $builder->andWhere('c.country = :country')->setParameter('country', $filters['country']);
         }
 
         if (isset($filters['contractType'])) {
@@ -50,7 +53,7 @@ class JobRepository extends EntityRepository
         }
 
         if (isset($filters['city'])) {
-            $builder->andWhere('j.country = :city')->setParameter('city', $filters['city']);
+            $builder->andWhere('c.city = :city')->setParameter('city', $filters['city']);
         }
 
         return $builder;
@@ -59,9 +62,10 @@ class JobRepository extends EntityRepository
     public function countFilteredJobsPerCountry(array $filters)
     {
         $builder = $this->createQueryBuilder('j')
-            ->select('j.country', 'COUNT(j.id) AS nb_jobs')
-            ->groupBy('j.country')
-            ->orderBy('j.country')
+            ->leftJoin('j.company', 'c')
+            ->select('c.country', 'COUNT(j.id) AS nb_jobs')
+            ->groupBy('c.country')
+            ->orderBy('c.country')
         ;
 
         $this->addDynamicFilters($builder, $filters);
@@ -73,6 +77,7 @@ class JobRepository extends EntityRepository
     public function countFilteredJobsPerContractType(array $filters)
     {
         $builder = $this->createQueryBuilder('j')
+            ->leftJoin('j.company', 'c')
             ->select('j.contractType', 'COUNT(j.id) AS nb_jobs')
             ->groupBy('j.contractType')
             ->orderBy('j.contractType')

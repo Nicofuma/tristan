@@ -46,22 +46,6 @@ class Job
     private $title;
 
     /**
-     * @ORM\Column(name="country", type="string", length=2)
-     *
-     * @Assert\Country()
-     * @Assert\NotBlank(message="Country should not be empty")
-     */
-    private $country;
-
-    /**
-     * @ORM\Column(name="city", type="string", length=80)
-     *
-     * @Assert\Length(max=80)
-     * @Assert\NotBlank(message="City should not be empty")
-     */
-    private $city;
-
-    /**
      * @ORM\Column(name="contractType", type="string", length=15)
      *
      * @Assert\NotBlank(message="Contract must be selected")
@@ -81,14 +65,6 @@ class Job
      * @ORM\Column(name="howToApply", type="text", nullable=true)
      */
     private $howToApply;
-
-    /**
-     * @ORM\Column(name="name", type="string", length=255)
-     *
-     * @Assert\Length(max=255)
-     * @Assert\NotBlank(message="Company should not be empty")
-     */
-    private $company;
 
     /**
      * @Gedmo\Slug(fields={"title"})
@@ -135,15 +111,22 @@ class Job
     private $endedAt;
 
     /**
+     * @ORM\Column(name="status", type="string")
+     */
+    private $status = JobStatus::NEW_JOB;
+
+    /**
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
 
     /**
-     * @ORM\Column(name="status", type="string")
+     * @ORM\ManyToOne(targetEntity="Company")
+     * @ORM\JoinColumn(name="company_id", referencedColumnName="id")
+     * @Assert\Valid()
      */
-    private $status = JobStatus::NEW_JOB;
+    private $company;
 
     public static function getContractTypes()
     {
@@ -187,54 +170,6 @@ class Job
     public function getTitle()
     {
         return $this->title;
-    }
-
-    /**
-     * Set country.
-     *
-     * @param string $country
-     *
-     * @return Job
-     */
-    public function setCountry($country)
-    {
-        $this->country = $country;
-
-        return $this;
-    }
-
-    /**
-     * Get country.
-     *
-     * @return string
-     */
-    public function getCountry()
-    {
-        return $this->country;
-    }
-
-    /**
-     * Set city.
-     *
-     * @param string $city
-     *
-     * @return Job
-     */
-    public function setCity($city)
-    {
-        $this->city = $city;
-
-        return $this;
-    }
-
-    /**
-     * Get city.
-     *
-     * @return string
-     */
-    public function getCity()
-    {
-        return $this->city;
     }
 
     /**
@@ -312,11 +247,11 @@ class Job
     /**
      * Set company.
      *
-     * @param string $company
+     * @param Company $company
      *
      * @return Job
      */
-    public function setCompany($company)
+    public function setCompany(Company $company)
     {
         $this->company = $company;
 
@@ -326,7 +261,7 @@ class Job
     /**
      * Get company.
      *
-     * @return string
+     * @return Company
      */
     public function getCompany()
     {

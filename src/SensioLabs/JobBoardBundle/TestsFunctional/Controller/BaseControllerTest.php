@@ -35,12 +35,12 @@ class BaseControllerTest extends WebTestCase
         $buttonCrawlerNode = $crawler->selectButton('Preview');
         $form = $buttonCrawlerNode->form([
             'job[title]' => 'Test Job',
-            'job[country]' => 'FR',
-            'job[city]' => 'Bar',
+            'job[company][country]' => 'FR',
+            'job[company][city]' => 'Bar',
             'job[contractType]' => Job::CONTRACT_FULL_TIME,
             'job[description]' => 'This is a description',
             'job[howToApply]' => 'How to apply?',
-            'job[company]' => 'FooBar',
+            'job[company][name]' => 'FooBar',
         ]);
         $this->client->submit($form);
         self::assertSame(Response::HTTP_FOUND, $this->client->getResponse()->getStatusCode());
@@ -164,7 +164,7 @@ class BaseControllerTest extends WebTestCase
 
         /** @var Job $reference */
         $reference = $fixtures->getReference('job-1');
-        $jobBaseUrl = '/'.$reference->getCountry().'/'.$reference->getContractType();
+        $jobBaseUrl = '/'.$reference->getCompany()->getCountry().'/'.$reference->getContractType();
 
         $this->signin('user-1');
 

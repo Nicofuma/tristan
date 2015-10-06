@@ -13,12 +13,7 @@ class JobType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('company')
-            ->add('country', 'country', [
-                'empty_value' => 'Select a country',
-            ])
-            ->add('city')
-            ->add('company')
+            ->add('company', 'company')
             ->add('description')
             ->add('contractType', 'choice', [
                 'choices' => Job::getReadableContractTypes(),
