@@ -5,10 +5,12 @@ namespace SensioLabs\JobBoardBundle\TestsFunctional\Controller;
 use SensioLabs\JobBoardBundle\Entity\Job;
 use SensioLabs\JobBoardBundle\TestsFunctional\DataFixtures\ORM\FifteenJobsData;
 use SensioLabs\JobBoardBundle\TestsFunctional\DataFixtures\ORM\FilterJobsData;
+use SensioLabs\JobBoardBundle\TestsFunctional\DataFixtures\ORM\RSSData;
 use SensioLabs\JobBoardBundle\TestsFunctional\DataFixtures\ORM\SingleNotValidatedJobData;
 use SensioLabs\JobBoardBundle\TestsFunctional\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Intl\Intl;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class BaseControllerTest extends WebTestCase
 {
@@ -187,5 +189,43 @@ class BaseControllerTest extends WebTestCase
         $crawler = $this->client->followRedirect();
         self::assertCount(1, $crawler->filter('.box table tbody tr'));
         self::assertSame('You have no jobs.', trim($crawler->filter('.box table tbody tr')->eq(0)->filter('td')->eq(0)->text()));
+    }
+
+    public function testRSSAction()
+    {
+        $this->loadFixtures([RSSData::class]);
+        $baseUrl = $this->getContainer()->get('router')->generate('homepage', [], UrlGeneratorInterface::ABSOLUTE_URL);
+
+        $crawler = $this->client->request('GET', '/rss');
+        self::assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+        self::assertCount(2, $crawler->filterXPath('//item'));
+
+        self::assertStringMatchesFormat("%A
+%A  <item>
+      <title><![CDATA[Job OK]]></title>
+      <description><![CDATA[This is the description of an amazing job!]]></description>
+      <link>{$baseUrl}FR/full-time/job-ok</link>
+      <pubDate>%A</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Job Later]]></title>
+      <description><![CDATA[This is the description of an amazing job!]]></description>
+      <link>{$baseUrl}US/full-time/job-later</link>
+      <pubDate>%A</pubDate>
+    </item>
+%A", $this->client->getResponse()->getContent());
+
+        $crawler = $this->client->request('GET', '/rss?country=FR');
+        self::assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+        self::assertCount(1, $crawler->filterXPath('//item'));
+
+        self::assertStringMatchesFormat("%A
+%A  <item>
+      <title><![CDATA[Job OK]]></title>
+      <description><![CDATA[This is the description of an amazing job!]]></description>
+      <link>{$baseUrl}FR/full-time/job-ok</link>
+      <pubDate>%A</pubDate>
+    </item>
+%A", $this->client->getResponse()->getContent());
     }
 }

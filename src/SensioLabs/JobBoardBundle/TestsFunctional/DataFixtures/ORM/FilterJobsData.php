@@ -55,7 +55,7 @@ class FilterJobsData extends AbstractFixture
                         ->setContractType($contractType)
                         ->setHowToApply('Send an email to jobs@foobar.com')
                         ->setIsValidated()
-                        ->setPublishedAt(new \DateTime())
+                        ->setPublishedAt(new \DateTime('-'.($i * self::NB_COUNTRIES + $j).' day'))
                         ->setEndedAt(new \DateTime('+1 year'))
                         ->setStatus(JobStatus::create(JobStatus::PUBLISHED))
                     ;

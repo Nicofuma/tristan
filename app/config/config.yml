@@ -83,3 +83,13 @@ stof_doctrine_extensions:
 knp_paginator:
     template:
         pagination: SensioLabsJobBoardBundle:Includes:pagination.html.twig
+
+eko_feed:
+    feeds:
+        jobs:
+            title: 'Job announcements'
+            description: 'Available job announcements'
+            link:
+                route_name: homepage
+            encoding: 'utf-8'
+            author: ~'

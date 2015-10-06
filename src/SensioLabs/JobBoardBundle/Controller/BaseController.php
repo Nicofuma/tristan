@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class BaseController extends Controller
 {
@@ -101,5 +102,27 @@ class BaseController extends Controller
         );
 
         return ['jobs' => $jobs];
+    }
+
+    /**
+     * @Route("/rss")
+     */
+    public function feedAction(Request $request)
+    {
+        $repository = $this->getDoctrine()->getRepository('SensioLabsJobBoardBundle:Job');
+
+        $qb = $repository->findAllQb();
+        $repository->addValidatedFilter($qb);
+        $repository->addDynamicFilters($qb, $request->query->all());
+        $repository->addStatusFilter($qb, JobStatus::PUBLISHED);
+        $repository->addDateFilter($qb, new \DateTime());
+        $repository->addOrderByPubishedDate($qb, 'DESC');
+
+        $jobs = $qb->getQuery()->execute();
+
+        $feed = $this->get('eko_feed.feed.manager')->get('jobs');
+        $feed->addFromArray($jobs);
+
+        return new Response($feed->render('rss'));
     }
 }

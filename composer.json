@@ -33,7 +33,8 @@
         "doctrine/doctrine-migrations-bundle": "^1.1",
         "knplabs/knp-paginator-bundle": "^2.5",
         "knplabs/knp-components": "~1.2.0",
-        "yethee/enum-bundle": "^1.2"
+        "yethee/enum-bundle": "^1.2",
+        "eko/feedbundle": "^1.2"
     },
     "scripts": {
         "post-install-cmd": [

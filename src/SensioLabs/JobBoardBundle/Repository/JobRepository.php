@@ -42,6 +42,20 @@ class JobRepository extends EntityRepository
         return $qb->andWhere('j.status = :status')->setParameter('status', $status);
     }
 
+    public function addDateFilter(QueryBuilder $qb, \DateTime $date)
+    {
+        return $qb
+            ->andWhere('j.publishedAt <= :date')
+            ->andWhere('j.endedAt > :date')
+            ->setParameter('date', $date)
+        ;
+    }
+
+    public function addOrderByPubishedDate(QueryBuilder $qb, $order)
+    {
+        return $qb->addOrderBy('j.publishedAt', $order);
+    }
+
     public function addDynamicFilters(QueryBuilder $builder, array $filters)
     {
         if (isset($filters['country'])) {

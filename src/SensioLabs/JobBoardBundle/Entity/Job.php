@@ -3,6 +3,7 @@
 namespace SensioLabs\JobBoardBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Eko\FeedBundle\Item\Writer\RoutedItemInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -14,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      message="If the job is validated, the end date must be posterior to the published date."
  * )
  */
-class Job
+class Job implements RoutedItemInterface
 {
     const CONTRACT_FULL_TIME = 'full-time';
     const CONTRACT_PART_TIME = 'part-time';
@@ -514,5 +515,39 @@ class Job
         $this->status = $status->getValue();
 
         return $this;
+    }
+
+    public function getFeedItemTitle()
+    {
+        return $this->getTitle();
+    }
+
+    public function getFeedItemDescription()
+    {
+        return $this->getDescription();
+    }
+
+    public function getFeedItemRouteName()
+    {
+        return 'job_show';
+    }
+
+    public function getFeedItemRouteParameters()
+    {
+        return [
+            'country' => $this->getCompany()->getCountry(),
+            'contract' => $this->getContractType(),
+            'slug' => $this->getSlug(),
+        ];
+    }
+
+    public function getFeedItemUrlAnchor()
+    {
+        return '';
+    }
+
+    public function getFeedItemPubDate()
+    {
+        return $this->publishedAt;
     }
 }
