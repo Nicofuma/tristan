@@ -82,6 +82,10 @@
                 {{ form_label(form.isValidated, 'Validate the announcement', {label_attr: {class: 'label'}}) }}
                 {{ form_widget(form.isValidated) }}
             </span>
+             <span>
+                {{ form_label(form.status, 'Status', {label_attr: {class: 'label'}}) }}
+                {{ form_widget(form.status) }}
+            </span>
             {% endif -%}
 
             <div>

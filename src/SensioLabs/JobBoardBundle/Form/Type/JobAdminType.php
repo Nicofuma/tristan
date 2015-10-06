@@ -3,6 +3,7 @@
 namespace SensioLabs\JobBoardBundle\Form\Type;
 
 use SensioLabs\JobBoardBundle\Entity\Job;
+use SensioLabs\JobBoardBundle\Entity\JobStatus;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
@@ -24,6 +25,9 @@ class JobAdminType extends AbstractType
                 'format' => 'MM/dd/yyyy',
             ])
             ->add('isValidated')
+            ->add('status', 'biplane_enum', [
+                'enum_class' => JobStatus::class,
+            ])
         ;
     }
 
