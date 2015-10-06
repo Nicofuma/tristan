@@ -3,6 +3,7 @@
 namespace SensioLabs\JobBoardBundle\TestsFunctional\Controller;
 
 use SensioLabs\JobBoardBundle\Entity\Job;
+use SensioLabs\JobBoardBundle\Entity\JobStatus;
 use SensioLabs\JobBoardBundle\TestsFunctional\DataFixtures\ORM\FifteenJobsData;
 use SensioLabs\JobBoardBundle\TestsFunctional\DataFixtures\ORM\MixedStatusData;
 use SensioLabs\JobBoardBundle\TestsFunctional\DataFixtures\ORM\SingleJobData;
@@ -133,6 +134,44 @@ class BackendControllerTest extends WebTestCase
         self::assertCount(0, $crawler->filter('.backend-flashes .success'));
         self::assertCount(1, $crawler->filter('#backend-job-container table tbody tr'));
         self::assertNotSame('No jobs.', trim($crawler->filter('#backend-job-container table tbody tr')->text()));
+    }
+
+    public function testListActionDeleted()
+    {
+        $this->loadFixtures([MixedStatusData::class]);
+
+        $this->signup(['username' => 'user-admin', 'roles' => ['ROLE_ADMIN']]);
+        $this->signin('user-admin');
+        $crawler = $this->client->request('GET', '/backend?status=deleted');
+        self::assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+
+        self::assertContains('Deleted ads', trim($crawler->filter('#breadcrumb .active')->text()));
+        self::assertCount(1, $crawler->filter('#backend-job-container table tbody tr'));
+        self::assertSame('deleted Job', trim($crawler->filter('#backend-job-container table tbody tr')->eq(0)->filter('td')->eq(1)->text()));
+    }
+
+    public function testRestoreActionDeletedJob()
+    {
+        $fixtures = $this->loadFixtures([MixedStatusData::class])->getReferenceRepository();
+
+        $this->signup(['username' => 'user-admin', 'roles' => ['ROLE_ADMIN']]);
+        $this->signin('user-admin');
+        $crawler = $this->client->request('GET', '/backend?status=deleted');
+        self::assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+
+        $restoreButton = $crawler->filter('#backend-job-container table tbody tr')->eq(0)->selectButton('Restore');
+        self::assertCount(1, $restoreButton);
+        $form = $restoreButton->form();
+        $this->client->submit($form);
+        self::assertSame(Response::HTTP_FOUND, $this->client->getResponse()->getStatusCode());
+
+        $crawler = $this->client->followRedirect();
+        self::assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+        self::assertCount(0, $crawler->filter('.backend-flashes .error'));
+        self::assertCount(1, $crawler->filter('.backend-flashes .success'));
+        self::assertCount(1, $crawler->filter('#backend-job-container table tbody tr'));
+        self::assertSame('No jobs.', trim($crawler->filter('#backend-job-container table tbody tr')->text()));
+        self::assertSame(JobStatus::RESTORED, $fixtures->getReference(JobStatus::DELETED)->getStatus()->getValue());
     }
 
     public function testEditActionValidateJob()

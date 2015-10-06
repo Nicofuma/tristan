@@ -3,16 +3,17 @@
 {% block title 'Backend - List' %}
 
 {% block content %}
+    {% set statusFilter = app.request.query.all.status|default('published') %}
     <ul id="breadcrumb">
-            <li {% if app.request.query.all.status|default('published') == 'published' %}class="active"{% endif %}>
-                <a href="{{ path('backend_list', app.request.query.all|merge({'status': 'published'})) }}">Published ads</a> |
-            </li>
-            <li {% if app.request.query.all.status|default('published') == 'archived' %}class="active"{% endif %}>
-                <a href="{{ path('backend_list', app.request.query.all|merge({'status': 'archived'})) }}">Archived ads</a> |
-            </li>
-            <li>
-                <a href="#">Deleted ads</a>
-            </li>
+        <li {% if statusFilter == 'published' %}class="active"{% endif %}>
+            <a href="{{ path('backend_list', app.request.query.all|merge({'status': 'published'})) }}">Published ads</a> |
+        </li>
+        <li {% if statusFilter == 'archived' %}class="active"{% endif %}>
+            <a href="{{ path('backend_list', app.request.query.all|merge({'status': 'archived'})) }}">Archived ads</a> |
+        </li>
+        <li {% if statusFilter == 'deleted' %}class="active"{% endif %}>
+            <a href="{{ path('backend_list', app.request.query.all|merge({'status': 'deleted'})) }}">Deleted ads</a>
+        </li>
     </ul>
 
     {% embed 'SensioLabsJobBoardBundle:Includes:box.html.twig' %}
@@ -58,11 +59,11 @@
                                 <td> {{ job.viewCountAPI }} </td>
                                 <td>
                                     <a href="{{ path('backend_edit', {'id': job.id}) }}">Edit</a>
-                                    <form action="{{ path('backend_delete') }}" method="post">
+                                    <form action="{{ statusFilter == 'deleted' ? path('backend_restore') : path('backend_delete') }}" method="post">
                                         <input type="hidden" name="job_id" value="{{ job.id }}">
-                                        <input type="hidden" name="token" value="{{ csrf_token('delete_job') }}">
+                                        <input type="hidden" name="token" value="{{ csrf_token(statusFilter == 'deleted' ? 'restore_job' : 'delete_job') }}">
                                         <input type="hidden" name="list_filters" value="{{ app.request.query.all|json_encode }}">
-                                        <input type="submit" value="Delete" />
+                                        <input type="submit" value="{{ statusFilter == 'deleted' ? 'Restore' : 'Delete' }}" />
                                     </form>
                                 </td>
                             </tr>

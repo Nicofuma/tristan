@@ -45,6 +45,7 @@ class MixedStatusData extends AbstractFixture
                 ->setStatus(JobStatus::create($status))
             ;
 
+            $this->setReference($status, $job);
             $manager->persist($job);
         }
 
