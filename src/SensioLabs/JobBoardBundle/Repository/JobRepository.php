@@ -124,4 +124,24 @@ class JobRepository extends EntityRepository
 
         // Note: the entities are not refreshed because we don't use the counters values in the same request
     }
+
+    /**
+     * @return Job
+     */
+    public function findOneRandom()
+    {
+        $jobsIds = $this->createQueryBuilder('j')
+            ->select('j.id')
+            ->getQuery()
+            ->getScalarResult()
+        ;
+
+        $job = $jobsIds[mt_rand(0, count($jobsIds) - 1)];
+
+        return $this->createQueryBuilder('j')
+            ->select('j')
+            ->where('j.id = :id')->setParameter('id', $job['id'])
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

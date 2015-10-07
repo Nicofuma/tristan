@@ -26,5 +26,6 @@ security:
             anonymous:       true
 
     access_control:
+        #- { path: /api/random, host: [symfony\.com, sensiolabs\.com], ip: [127.0.0.1, 178.21.181.96/27, 10.0.0.0/8]}
         - { path: ^/manage, roles: ROLE_USER }
         - { path: ^/backend, roles: ROLE_ADMIN }

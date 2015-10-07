@@ -228,4 +228,17 @@ class BaseControllerTest extends WebTestCase
     </item>
 %A", $this->client->getResponse()->getContent());
     }
+
+    public function testApiRandomAction()
+    {
+        $this->loadFixtures([FifteenJobsData::class]);
+        $baseUrl = $this->getContainer()->get('router')->generate('homepage', [], UrlGeneratorInterface::ABSOLUTE_URL);
+
+        $this->client->request('GET', '/api/random');
+        self::assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+        $response = json_decode($this->client->getResponse()->getContent(), true);
+
+        self::assertArraySubset(['title', 'company', 'city', 'country_name', 'country_code', 'contract', 'url'], array_keys($response));
+        self::assertStringStartsWith($baseUrl, $response['url']);
+    }
 }

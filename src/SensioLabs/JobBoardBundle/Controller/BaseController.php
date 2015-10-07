@@ -10,8 +10,11 @@ use SensioLabs\JobBoardBundle\Repository\JobRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Intl\Intl;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class BaseController extends Controller
 {
@@ -124,5 +127,32 @@ class BaseController extends Controller
         $feed->addFromArray($jobs);
 
         return new Response($feed->render('rss'));
+    }
+
+    /**
+     * @Route(
+     *      pattern="/api/random",
+     *      name="api_action"
+     * )
+     */
+    public function apiRandomAction(Request $request)
+    {
+        $repository = $this->getDoctrine()->getRepository('SensioLabsJobBoardBundle:Job');
+
+        $job = $repository->findOneRandom();
+
+        return new JsonResponse([
+            'title' => $job->getTitle(),
+            'company' => $job->getCompany()->getName(),
+            'city' => $job->getCompany()->getCity(),
+            'country_name' => Intl::getRegionBundle()->getCountryName($job->getCompany()->getCountry()),
+            'country_code' => $job->getCompany()->getCountry(),
+            'contract' => $job->getContractType(),
+            'url' => $this->generateUrl('job_show', [
+                'contract' => $job->getContractType(),
+                'country' => $job->getCompany()->getCountry(),
+                'slug' => $job->getSlug(),
+            ], UrlGeneratorInterface::ABSOLUTE_URL),
+        ]);
     }
 }
