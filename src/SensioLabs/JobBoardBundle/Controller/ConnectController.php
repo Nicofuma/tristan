@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ConnectController extends Controller
 {
     /**
-     * @Route("/login", name="login")
+     * @Route("/login", name="login", options={"i18n":false})
      */
     public function loginAction(Request $request)
     {
@@ -18,7 +18,7 @@ class ConnectController extends Controller
     }
 
     /**
-     * @Route("/sln_customizer.js", name="sln_customizer")
+     * @Route("/sln_customizer.js", name="sln_customizer", options={"i18n":false})
      * @Template("SensioLabsJobBoardBundle:Connect:customizer.js.twig")
      */
     public function customizationAction()
@@ -27,14 +27,14 @@ class ConnectController extends Controller
     }
 
     /**
-     * @Route("/session/callback", name="session_callback")
+     * @Route("/session/callback", name="session_callback", options={"i18n":false})
      */
     public function sessionCallbackAction()
     {
     }
 
     /**
-     * @Route("/logout", name="logout")
+     * @Route("/logout", name="logout", options={"i18n":false})
      */
     public function logoutAction()
     {

@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
+  <file date="2015-10-07T16:34:36Z" source-language="en" target-language="en" datatype="plaintext" original="not.available">
+    <header>
+      <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
+      <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
+    </header>
+    <body>
+      <trans-unit id="ae46033a669c6a64001a127c56514b8575379f42" resname="                    The 1&lt;sup&gt;st&lt;/sup&gt; jobboard 100% devoted to the &lt;strong&gt;Symfony&lt;/strong&gt; community.&lt;br /&gt;&#10;                    &lt;strong&gt;Recruiters&lt;/strong&gt; The definitive source for Symfony talent.&lt;br /&gt;&#10;                    &lt;strong&gt;Developers&lt;/strong&gt; Find the project, the company, or the job of your dreams.&#10;                    ">
+        <source><![CDATA[                    The 1<sup>st</sup> jobboard 100% devoted to the <strong>Symfony</strong> community.<br />
+                    <strong>Recruiters</strong> The definitive source for Symfony talent.<br />
+                    <strong>Developers</strong> Find the project, the company, or the job of your dreams.
+                    ]]></source>
+        <target><![CDATA[                    The 1<sup>st</sup> jobboard 100% devoted to the <strong>Symfony</strong> community.<br />
+                    <strong>Recruiters</strong> The definitive source for Symfony talent.<br />
+                    <strong>Developers</strong> Find the project, the company, or the job of your dreams.
+                    ]]></target>
+        <jms:reference-file line="11">views/Base/index.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="c3cd636a585b20c40ac2df5ffb403e83cb2eef51" resname="Actions">
+        <source>Actions</source>
+        <target>Actions</target>
+        <jms:reference-file line="48">views/Backend/list.html.twig</jms:reference-file>
+        <jms:reference-file line="25">views/Base/manage.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="b5fccc286fd775edb032b2123bfb71a01cac0b96" resname="All countries">
+        <source>All countries</source>
+        <target>Publish</target>
+        <jms:reference-file line="33">views/Base/index.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="d2262656d78d6c79fc787ec41329007c523a4a70" resname="All jobs">
+        <source>All jobs</source>
+        <target>All jobs</target>
+        <jms:reference-file line="69">views/Base/index.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="839e57260ee066e7ca0e562d7a50e788a6a5694f" resname="All types of contracts">
+        <source>All types of contracts</source>
+        <target>All types of contracts</target>
+        <jms:reference-file line="52">views/Base/index.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="65fbabc2c6fe84f764747b1c062098bfc3502397" resname="Alternance">
+        <source>Alternance</source>
+        <target>Alternance</target>
+      </trans-unit>
+      <trans-unit id="eddc813f35b12589c4e5493a8a8e500ddb10c57e" resname="Archived">
+        <source>Archived</source>
+        <target>Archived</target>
+      </trans-unit>
+      <trans-unit id="4e449bdb80cbfb7b3368be9e306c2e79d03c8f9f" resname="Archived ads">
+        <source>Archived ads</source>
+        <target>Archived ads</target>
+        <jms:reference-file line="12">views/Backend/list.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="e758ca64563fdd62965a2b97b76d555b1a70d938" resname="Backend">
+        <source>Backend</source>
+        <target>Backend</target>
+        <jms:reference-file line="13">views/Connect/customizer.js.twig</jms:reference-file>
+        <jms:reference-file line="11">views/Backend/edit.html.twig</jms:reference-file>
+        <jms:reference-file line="3">views/Backend/layout.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="4271627f4f0bef6104a95cca7bb21cda4d74503e" resname="City">
+        <source>City</source>
+        <target>City</target>
+      </trans-unit>
+      <trans-unit id="7a1994999d181deea68e4304b3346e78f838ecb7" resname="Company">
+        <source>Company</source>
+        <target>Company</target>
+        <jms:reference-file line="37">views/Backend/list.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="b37456c4530be810dc040f50da72eda09addfb0a" resname="Contact">
+        <source>Contact</source>
+        <target>Contact</target>
+        <jms:reference-file line="53">Resources/views/layout.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="3ddfd92eb67eca80fb32b1354910dd3af1cb8f5a" resname="CreatedAt">
+        <source>CreatedAt</source>
+        <target>CreatedAt</target>
+        <jms:reference-file line="43">views/Backend/list.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="f6fdbe48dc54dd86f63097a03bd24094dedd713a" resname="Delete">
+        <source>Delete</source>
+        <target>Delete</target>
+        <jms:reference-file line="66">views/Backend/list.html.twig</jms:reference-file>
+        <jms:reference-file line="47">views/Base/manage.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="441bda6cd85689e476ebe10440f27967faef61a6" resname="Deleted">
+        <source>Deleted</source>
+        <target>Deleted</target>
+      </trans-unit>
+      <trans-unit id="d2013335453f5047de952b567769088e98ab135d" resname="Deleted ads">
+        <source>Deleted ads</source>
+        <target>Deleted ads</target>
+        <jms:reference-file line="15">views/Backend/list.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="7e08ebec5e6f80a136fa4076e041dd0c811a5e70" resname="Developer">
+        <source>Developer</source>
+        <target>Developer</target>
+        <jms:reference-file line="12">views/Job/update.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="98d15207871175e87be0df39ac430bc2af5f6a8c" resname="Displays">
+        <source>Displays</source>
+        <target>Displays</target>
+        <jms:reference-file line="24">views/Base/manage.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="5301648dcf6b53cefc9ed52999aaa92d4603cae0" resname="Edit">
+        <source>Edit</source>
+        <target>Edit</target>
+        <jms:reference-file line="61">views/Backend/list.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="36ae93e99cfae7fc91444159c5f9900f2d0ee5f0" resname="Edit my profile on Connect">
+        <source>Edit my profile on Connect</source>
+        <target>Edit my profile on Connect</target>
+        <jms:reference-file line="11">views/Connect/customizer.js.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="3cff546404a71bd1d4e73f5c37f5d137861cb1d6" resname="Errors:">
+        <source>Errors:</source>
+        <target>Errors:</target>
+        <jms:reference-file line="40">views/Form/forms.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="a689a999a5e62055bda8c21b1dbe92c119308def" resname="Expired">
+        <source>Expired</source>
+        <target>Expired</target>
+      </trans-unit>
+      <trans-unit id="bea5dea42feeef8823c6d932a5f6bd0618fc7b75" resname="Ext Displays">
+        <source>Ext Displays</source>
+        <target>Ext Displays</target>
+        <jms:reference-file line="47">views/Backend/list.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="3a1ed8da425f961c977ad2e22510d0916add6074" resname="Flux RSS">
+        <source>Flux RSS</source>
+        <target>Flux RSS</target>
+        <jms:reference-file line="75">views/Base/index.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="983d872cebab58a207e557a333aa4cca5477e332" resname="Freelance">
+        <source>Freelance</source>
+        <target>Freelance</target>
+      </trans-unit>
+      <trans-unit id="c8a83b01e302853eacfdb8a3e6215fcc2cc5dbff" resname="Full Time">
+        <source>Full Time</source>
+        <target>Full Time</target>
+      </trans-unit>
+      <trans-unit id="e92c138591fc6aef85278bc53446c697d662320c" resname="How to apply?">
+        <source>How to apply?</source>
+        <target>How to apply?</target>
+        <jms:reference-file line="18">views/Includes/job.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="0cbda923ab99f3324541a6d58e02b68ee6a989e0" resname="How to apply?'">
+        <source>How to apply?'</source>
+        <target>How to apply?'</target>
+        <jms:reference-file line="95">views/Form/forms.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="fa651b7210849bb5f1b66a81c0d67f0dc36ebc09" resname="Internship">
+        <source>Internship</source>
+        <target>Internship</target>
+      </trans-unit>
+      <trans-unit id="ea763025c339977824f976b1a593c10e86a01c2a" resname="Job &quot;%job_title%&quot; deleted.">
+        <source>Job "%job_title%" deleted.</source>
+        <target>Job "%job_title%" deleted.</target>
+        <jms:reference-file line="115">JobBoardBundle/Controller/BackendController.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="8b051cebd676a0e24a345f6f8a33ad0c032298c0" resname="Job &quot;%job_title%&quot; status successfully updated to « restored ».">
+        <source>Job "%job_title%" status successfully updated to « restored ».</source>
+        <target>Job "%job_title%" status successfully updated to « restored ».</target>
+        <jms:reference-file line="154">JobBoardBundle/Controller/BackendController.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="0d48a6cd8e9bc0101bd2774229e3eab6dbe0c656" resname="Job &quot;%job_title%&quot; updated">
+        <source>Job "%job_title%" updated</source>
+        <target>Job "%job_title%" updated</target>
+      </trans-unit>
+      <trans-unit id="0f58e310b21decf98e29d1d9b480d332c3247578" resname="Job &quot;%job_title%&quot; validated">
+        <source>Job "%job_title%" validated</source>
+        <target>Job "%job_title%" validated</target>
+      </trans-unit>
+      <trans-unit id="0e1d5b561f89f3b0c6f9f86295af78cfa8be9e77" resname="Job title">
+        <source>Job title</source>
+        <target>Job title</target>
+      </trans-unit>
+      <trans-unit id="0cd0faf84e222c7398a656a991b3ef3faafc3d52" resname="Jobs RSS feed">
+        <source>Jobs RSS feed</source>
+        <target>Jobs RSS feed</target>
+        <jms:reference-file line="24">views/Base/index.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="526cb7425ab8d8d55c981974917cba26fab9834e" resname="Less">
+        <source>Less</source>
+        <target>Less</target>
+        <jms:reference-file line="96">views/Base/index.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="fb85b59b41f593cca278a506f2d9521cdcfd357b" resname="List Displays">
+        <source>List Displays</source>
+        <target>List Displays</target>
+        <jms:reference-file line="45">views/Backend/list.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="d219c68101f532de10add2cf42fb9dbeca73d3be" resname="Location">
+        <source>Location</source>
+        <target>Location</target>
+        <jms:reference-file line="30">views/Base/index.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="a782cb7939e176a11a17c54d98e765e7c6020b8e" resname="Logout from SensioLabs Jobs">
+        <source>Logout from SensioLabs Jobs</source>
+        <target>Logout from SensioLabs Jobs</target>
+        <jms:reference-file line="15">views/Connect/customizer.js.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="00ccf4cd20ab990f4a633b9dc927028f2d909e9b" resname="Make changes">
+        <source>Make changes</source>
+        <target>Make changes</target>
+        <jms:reference-file line="19">views/Job/preview.html.twig</jms:reference-file>
+        <jms:reference-file line="46">views/Base/manage.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="7df9618dbfa3e4c52d1972be7b74053a65a942ba" resname="Make changes on '%job_title%' announcement">
+        <source>Make changes on '%job_title%' announcement</source>
+        <target>Make changes on '%job_title%' announcement</target>
+        <jms:reference-file line="12">views/Backend/edit.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="4bab2d8fe13fa6ab57f80098b414f0f734c5dd25" resname="More">
+        <source>More</source>
+        <target>More</target>
+        <jms:reference-file line="43">views/Base/index.html.twig</jms:reference-file>
+        <jms:reference-file line="62">views/Base/index.html.twig</jms:reference-file>
+        <jms:reference-file line="95">views/Base/index.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="919e73d99318c880d9b7b3ad7824d5f2c54ccb45" resname="My jobs">
+        <source>My jobs</source>
+        <target>My jobs</target>
+        <jms:reference-file line="16">views/Includes/menu.html.twig</jms:reference-file>
+        <jms:reference-file line="11">views/Job/update.html.twig</jms:reference-file>
+        <jms:reference-file line="7">views/Base/manage.html.twig</jms:reference-file>
+        <jms:reference-file line="11">views/Base/manage.html.twig</jms:reference-file>
+        <jms:reference-file line="17">views/Base/manage.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="6403f2b7eb2aaafe6de34cbf2a029b01afebc512" resname="New">
+        <source>New</source>
+        <target>New</target>
+      </trans-unit>
+      <trans-unit id="76710d30c270d11d764761cc1468a43601a4ea68" resname="No jobs.">
+        <source>No jobs.</source>
+        <target>No jobs.</target>
+        <jms:reference-file line="71">views/Backend/list.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="f3e952df249d37f3cbbfe48f56b3e6ae29e79c3a" resname="No more jobs to show.">
+        <source>No more jobs to show.</source>
+        <target>No more jobs to show.</target>
+        <jms:reference-file line="86">views/Base/index.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="a89053094dd14fd6752019dd106d3f7032796e05" resname="Not online yet">
+        <source>Not online yet</source>
+        <target>Not online yet</target>
+        <jms:reference-file line="39">views/Base/manage.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="c9dd3b77c90ceca338f52e6d34ba3a8ef1130c7b" resname="Ordered">
+        <source>Ordered</source>
+        <target>Ordered</target>
+      </trans-unit>
+      <trans-unit id="18cdf84af072cf51cabcfb79ee2d05f8413c405f" resname="Part Time">
+        <source>Part Time</source>
+        <target>Part Time</target>
+      </trans-unit>
+      <trans-unit id="66b0c507278a73e17a2be4f2d21099763283dd19" resname="Post a job">
+        <source>Post a job</source>
+        <target>Post a job</target>
+        <jms:reference-file line="10">views/Includes/menu.html.twig</jms:reference-file>
+        <jms:reference-file line="11">views/Job/preview.html.twig</jms:reference-file>
+        <jms:reference-file line="18">views/Base/manage.html.twig</jms:reference-file>
+        <jms:reference-file line="7">views/Base/post.html.twig</jms:reference-file>
+        <jms:reference-file line="10">views/Base/post.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="f1fbb2b43dca281d0138f4fcc92543ad143ef0b1" resname="Preview">
+        <source>Preview</source>
+        <target>Preview</target>
+        <jms:reference-file line="103">views/Form/forms.html.twig</jms:reference-file>
+        <jms:reference-file line="12">views/Job/preview.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="5656400564f25dcbe129f43deea78952060bee36" resname="Publish">
+        <source>Publish</source>
+        <target>Publish</target>
+        <jms:reference-file line="22">views/Job/preview.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="483bf2075c12023a5e849d12a42027be89c5e94b" resname="Published">
+        <source>Published</source>
+        <target>Published</target>
+      </trans-unit>
+      <trans-unit id="4ca8e9164a78333a5d021a108c90b4dfe9951ae3" resname="Published ads">
+        <source>Published ads</source>
+        <target>Published ads</target>
+        <jms:reference-file line="9">views/Backend/list.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="3cbe6d6b9a8d1596bb5bca12e14d81c9e108a1a3" resname="Restore">
+        <source>Restore</source>
+        <target>Restore</target>
+        <jms:reference-file line="66">views/Backend/list.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="b54d624624973900072c913477b4987cdfa9ec25" resname="Restored">
+        <source>Restored</source>
+        <target>Restored</target>
+      </trans-unit>
+      <trans-unit id="69cc521201edbfec6a9da0636adf4fbffe23c1f3" resname="Select a country">
+        <source>Select a country</source>
+        <target>Select a country</target>
+        <jms:reference-file line="26">Form/Type/CompanyType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="5d381cf563ea21be959412bf70d5fb6a0a7c5382" resname="Send your resume at ...">
+        <source>Send your resume at ...</source>
+        <target>Send your resume at ...</target>
+        <jms:reference-file line="96">views/Form/forms.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="bae7d5be70820ed56467bd9a63744e23b47bd711" resname="Status">
+        <source>Status</source>
+        <target>Status</target>
+        <jms:reference-file line="86">views/Form/forms.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="99c94eb852d25f8caf4e9caedd4ec3e313f33ed9" resname="Time left">
+        <source>Time left</source>
+        <target>Time left</target>
+        <jms:reference-file line="23">views/Base/manage.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="768e0c1c69573fb588f61f1308a015c11468e05f" resname="Title">
+        <source>Title</source>
+        <target>Title</target>
+        <jms:reference-file line="40">views/Backend/list.html.twig</jms:reference-file>
+        <jms:reference-file line="22">views/Base/manage.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="ae79ea1e9c6391a9ed83a2e18a031b835feec0c9" resname="To">
+        <source>To</source>
+        <target>To</target>
+        <jms:reference-file line="77">views/Form/forms.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="04cb34580cdcffc1647e5cc0af6bba1886c1f99b" resname="Type of contract">
+        <source>Type of contract</source>
+        <target>Type of contract</target>
+        <jms:reference-file line="20">Form/Type/JobType.php</jms:reference-file>
+        <jms:reference-file line="49">views/Base/index.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="e2d84be7b3e9aabd6d8e3b300145c13449c9b6e2" resname="Unsupported status">
+        <source>Unsupported status</source>
+        <target>Unsupported status</target>
+        <jms:reference-file line="41">views/Base/manage.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="fb91e24fa52d8d2b32937bf04d843f730319a902" resname="Update">
+        <source>Update</source>
+        <target>Update</target>
+        <jms:reference-file line="103">views/Form/forms.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="e9bd54c17a72d6e1289e2fabf111b696ec87738c" resname="Validate the announcement">
+        <source>Validate the announcement</source>
+        <target>Validate the announcement</target>
+        <jms:reference-file line="82">views/Form/forms.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="a79e6d363af7fca4eb4f619f8697ae452ba6c80d" resname="View Displays">
+        <source>View Displays</source>
+        <target>View Displays</target>
+        <jms:reference-file line="46">views/Backend/list.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="fbbea1570ca13bdaad3d291dad814787b3621af1" resname="Visible from">
+        <source>Visible from</source>
+        <target>Visible from</target>
+        <jms:reference-file line="75">views/Form/forms.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="fbe1b7b824f8a105ccb17445cdc4a2b363e6d19d" resname="Waiting payment">
+        <source>Waiting payment</source>
+        <target>Waiting payment</target>
+        <jms:reference-file line="37">views/Base/manage.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="82c610f6f296a33d9f52983c806e84eb44bc5e10" resname="You cannot restore &quot;%job_title%&quot;, it must be deleted.">
+        <source>You cannot restore "%job_title%", it must be deleted.</source>
+        <target>You cannot restore "%job_title%", it must be deleted.</target>
+        <jms:reference-file line="149">JobBoardBundle/Controller/BackendController.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="4fd117b8909d94322e58791c15ba17d67e312821" resname="You have no jobs.">
+        <source>You have no jobs.</source>
+        <target>You have no jobs.</target>
+        <jms:reference-file line="51">views/Base/manage.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="843586397bc0fd2843980b295d2fd02352134871" resname="format: mm/dd/yyyy">
+        <source>format: mm/dd/yyyy</source>
+        <target>format: mm/dd/yyyy</target>
+        <jms:reference-file line="79">views/Form/forms.html.twig</jms:reference-file>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

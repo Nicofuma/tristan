@@ -23,6 +23,8 @@ class AppKernel extends Kernel
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new Biplane\EnumBundle\BiplaneEnumBundle(),
             new Eko\FeedBundle\EkoFeedBundle(),
+            new JMS\TranslationBundle\JMSTranslationBundle(),
+            new JMS\I18nRoutingBundle\JMSI18nRoutingBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

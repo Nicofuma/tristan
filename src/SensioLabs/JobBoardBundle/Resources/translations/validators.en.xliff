@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
+  <file date="2015-10-07T15:45:47Z" source-language="en" target-language="en" datatype="plaintext" original="not.available">
+    <header>
+      <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
+      <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
+    </header>
+    <body>
+      <trans-unit id="ebfb22a1b29e184e1f4d4eb9e8fa1455e1a07ee5" resname="City should not be empty">
+        <source>City should not be empty</source>
+        <target>City should not be empty</target>
+      </trans-unit>
+      <trans-unit id="672b60f42d70fa475f59fb54db0394bc77d82f5d" resname="Company should not be empty">
+        <source>Company should not be empty</source>
+        <target>Company should not be empty</target>
+      </trans-unit>
+      <trans-unit id="9d10d50fdfe72f98924e054ec0a66535f9bc55fb" resname="Contract must be selected">
+        <source>Contract must be selected</source>
+        <target>Contract must be selected</target>
+      </trans-unit>
+      <trans-unit id="672e24b43264a243643504a0e778d05eb3090841" resname="Country should not be empty">
+        <source>Country should not be empty</source>
+        <target>Country should not be empty</target>
+      </trans-unit>
+      <trans-unit id="fe257e28c491256bea9482cbcc023a286f26f131" resname="If the job is validated, the end date must be posterior to the published date.">
+        <source>If the job is validated, the end date must be posterior to the published date.</source>
+        <target>If the job is validated, the end date must be posterior to the published date.</target>
+      </trans-unit>
+      <trans-unit id="17cf647cf5b551bbe3a2b245e38920a7d34cae42" resname="Job title should not be empty">
+        <source>Job title should not be empty</source>
+        <target>Job title should not be empty</target>
+      </trans-unit>
+      <trans-unit id="69f8d745fe9da0e0cabb9289365f293c26b10b6f" resname="Your job offer must be longer.">
+        <source>Your job offer must be longer.</source>
+        <target>Your job offer must be longer.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

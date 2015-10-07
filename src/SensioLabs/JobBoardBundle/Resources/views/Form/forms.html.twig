@@ -37,7 +37,7 @@
 
                 {% if not form.vars.valid %}
                 <div class="errors">
-                    <h4> Errors:</h4>
+                    <h4> {% trans %}Errors:{% endtrans %}</h4>
                     <ul>
                     {{ form_errors(form) }}
                     </ul>
@@ -72,11 +72,11 @@
 
             {%- if isAdmin is defined and isAdmin %}
             <div class="backend-job-dates">
-                Visible from
+                {% trans %}Visible from{% endtrans %}
                 {{ form_widget(form.publishedAt, {attr: {class: 'span3 hasDatepicker'}}) }}
-                To
+                {% trans %}To{% endtrans %}
                 {{ form_widget(form.endedAt, {attr: {class: 'span3 hasDatepicker'}}) }}
-                (format: mm/dd/yyyy)
+                ({% trans %}format: mm/dd/yyyy{% endtrans %})
             </div>
             <span>
                 {{ form_label(form.isValidated, 'Validate the announcement', {label_attr: {class: 'label'}}) }}
@@ -92,7 +92,7 @@
                 {{ form_widget(form.description, {attr: {rows: 20, class: 'job-description'}}) }}
             </div>
             <div class="how-to-apply">
-                <h3>How to apply?'</h3><br />
+                <h3>{% trans %}How to apply?{% endtrans %}</h3><br />
                 {{ form_widget(form.howToApply, {attr: {placeholder: 'Send your resume at ...', class: 'location'}}) }}
             </div>
         </div>
@@ -100,7 +100,7 @@
         <div class="padding clearfix">
             <button class="green-button right" type="submit">
                 <span class="sprite-icon-light-arrow-right"></span>
-                <span>{{ (isUpdate is defined and isUpdate) ? 'Update' : 'Preview' }}</span>
+                <span>{{ (isUpdate is defined and isUpdate) ? 'Update'|trans : 'Preview'|trans }}</span>
             </button>
         </div>
     {{ form_end(form) }}

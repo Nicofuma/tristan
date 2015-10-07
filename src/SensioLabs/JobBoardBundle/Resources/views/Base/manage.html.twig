@@ -4,25 +4,25 @@
 
 {% block page_class 'manage' %}
 
-{% block title 'My jobs' %}
+{% block title 'My jobs'|trans %}
 
 {% block content %}
     {{ breadcrumb({
-        ('My Jobs'): path('manage'),
+        ('My jobs'|trans): path('manage'),
     }) }}
 
     {% embed 'SensioLabsJobBoardBundle:Includes:box.html.twig' %}
         {% block box_content %}
             <div class="padding-table">
-                <h2 class="big-title">My jobs</h2>
-                <a href="{{ path('job_post') }}" class="add right"><img class="sprite-button-add-focus-grey-bg" src="{{ asset('bundles/sensiolabsjobboard/images/blank.png') }}" alt="+" /> Post a job </a>
+                <h2 class="big-title">{% trans %}My jobs{% endtrans %}</h2>
+                <a href="{{ path('job_post') }}" class="add right"><img class="sprite-button-add-focus-grey-bg" src="{{ asset('bundles/sensiolabsjobboard/images/blank.png') }}" alt="+" /> {% trans %}Post a job{% endtrans %} </a>
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th class="span5"> Title </th>
-                        <th class="span2"> Time left </th>
-                        <th class="span2"> Displays </th>
-                        <th class="span4"> Actions </th>
+                        <th class="span5"> {% trans %}Title{% endtrans %} </th>
+                        <th class="span2"> {% trans %}Time left{% endtrans %} </th>
+                        <th class="span2"> {% trans %}Displays{% endtrans %} </th>
+                        <th class="span4"> {% trans %}Actions{% endtrans %} </th>
                     </tr>
                     </thead>
                     <tbody>
@@ -30,25 +30,25 @@
                         <tr>
                             <td>
                                 <a href="{{ path('job_preview', {'country': job.company.country , 'contract': job.contractType, 'slug': job.slug }) }}">
-                                    {{ job.contractType|contractType }} in {{ job.company.city }} &mdash; {{ job.title }}
+                                    {{ job.contractType|contractType|trans }} in {{ job.company.city }} &mdash; {{ job.title }}
                                 </a>
                             </td>
                             {% if job.status.value == 'new' %}
-                                <td style="color:orange"> Waiting payment </td>
+                                <td style="color:orange"> {% trans %}Waiting payment{% endtrans %} </td>
                             {% elseif job.status.value == 'published' %}
-                                <td style="color:orange"> Not online yet </td>
+                                <td style="color:orange"> {% trans %}Not online yet{% endtrans %} </td>
                             {% else %}
-                              <td style="color:red"> Unsupported status </td>
+                              <td style="color:red"> {% trans %}Unsupported status{% endtrans %} </td>
                             {% endif %}
                             <td>{{ job.totalViewCount }}</td>
                             <td class="action">
                                 {#<a href="">Pay</a> /#}
-                                <a href="{{ path('job_update', {'country': job.company.country , 'contract': job.contractType, 'slug': job.slug }) }}"> Make changes </a>
-                                / <a href="{{ path('job_delete', {'country': job.company.country , 'contract': job.contractType, 'slug': job.slug, 'token': csrf_token('delete_job') }) }}"> Delete </a>
+                                <a href="{{ path('job_update', {'country': job.company.country , 'contract': job.contractType, 'slug': job.slug }) }}"> {% trans %}Make changes{% endtrans %} </a>
+                                / <a href="{{ path('job_delete', {'country': job.company.country , 'contract': job.contractType, 'slug': job.slug, 'token': csrf_token('delete_job') }) }}"> {% trans %}Delete{% endtrans %} </a>
                             </td>
                         </tr>
                     {% else %}
-                        <tr><td colspan="2"> You have no jobs. </td></tr>
+                        <tr><td colspan="2"> {% trans %}You have no jobs.{% endtrans %} </td></tr>
                     {%  endfor %}
                     {#<tr>
                         <td>

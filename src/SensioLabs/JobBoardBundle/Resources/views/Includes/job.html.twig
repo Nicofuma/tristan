@@ -15,7 +15,7 @@
     {% block job_apply %}
         {% if job.howToApply is not empty %}
         <div class="padding how-to-apply">
-            <h3>How to apply?</h3><br/>
+            <h3>{% trans %}How to apply?{% endtrans %}</h3><br/>
             <div id="howToApply">{{ job.howToApply }}</div>
         </div>
         <br/><br/>

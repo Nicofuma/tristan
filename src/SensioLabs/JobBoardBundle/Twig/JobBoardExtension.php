@@ -3,10 +3,18 @@
 namespace SensioLabs\JobBoardBundle\Twig;
 
 use SensioLabs\JobBoardBundle\Entity\Job;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Intl\Intl;
 
 class JobBoardExtension extends \Twig_Extension
 {
+    private $requestStack;
+
+    public function __construct(RequestStack $requestStack)
+    {
+        $this->requestStack = $requestStack;
+    }
+
     /**
      * @return array
      */
@@ -27,7 +35,7 @@ class JobBoardExtension extends \Twig_Extension
      */
     public function filterCountry($code)
     {
-        return Intl::getRegionBundle()->getCountryName($code);
+        return Intl::getRegionBundle()->getCountryName($code, $this->requestStack->getCurrentRequest()->getLocale());
     }
 
     /**

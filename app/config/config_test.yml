@@ -21,8 +21,10 @@ doctrine:
         dbname:   %database_name%_test
         path:   %database_path%_test
 
-parameters:
-#     security.context_listener.class: SensioLabs\JobBoardBundle\TestsFunctional\Security\Http\Firewall\ContextListener
-
 liip_functional_test:
     cache_sqlite_db: true
+
+jms_i18n_routing:
+    default_locale: en
+    locales: %supported_locales%
+    strategy: prefix_except_default

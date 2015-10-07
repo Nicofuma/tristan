@@ -34,6 +34,19 @@
             <header class="clearfix">
                 <div class="logo"><h1><a href="{{ path('homepage') }}">SensioLabs Jobs</a></h1></div>
                 {% include 'SensioLabsJobBoardBundle:Includes:menu.html.twig' %}
+                <div class="languages">
+                    {% set route = app.request.attributes.get('_route') %}
+                    {% set params = app.request.query.all|merge(app.request.attributes.get('_route_params')) %}
+
+                    {% for locale in locales %}
+                        {% if locale != app.request.attributes.get('_locale') %}
+                            <a href="{{ path(route, params|merge({'_locale': locale})) }}">
+                                <img src="{{ asset('bundles/sensiolabsjobboard/images/flag_icon_' ~ locale ~ '.png') }}" alt="{{ locale|upper }} version" height="22px">
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                </ul>
             </header>
 
             {% block splash '<div id="splash" class="empty-splash"></div>' %}
@@ -50,7 +63,7 @@
                 </div>
 
                 <section class="footer_contact">
-                    <h2 class="footer_title">Contact</h2>
+                    <h2 class="footer_title">{% trans %}Contact{% endtrans %}</h2>
 
                     <ul class="contact_list">
                         {% for email in ['contact@sensiolabs.com', 'sales@sensiolabs.com', 'job@sensiolabs.com'] %}

@@ -28,3 +28,4 @@ parameters:
     mailer_app_sender: no-reply@jobs.sensiolabs.com
     admin_email_address: admin@jobs.sensiolabs.com
     admin_connect_uuid: 00000000-0000-0000-0000-000000000000
+    supported_locales: [en, fr]

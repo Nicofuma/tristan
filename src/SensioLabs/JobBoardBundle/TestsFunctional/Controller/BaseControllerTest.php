@@ -241,4 +241,19 @@ class BaseControllerTest extends WebTestCase
         self::assertArraySubset(['title', 'company', 'city', 'country_name', 'country_code', 'contract', 'url'], array_keys($response));
         self::assertStringStartsWith($baseUrl, $response['url']);
     }
+
+    public function testTranslation()
+    {
+        $this->loadFixtures([]);
+
+        $crawler = $this->client->request('GET', '/');
+        self::assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+        self::assertContains('Post a job', $crawler->text());
+
+        $this->client->getCookieJar()->clear();
+
+        $crawler = $this->client->request('GET', '/fr/');
+        self::assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+        self::assertContains('Poster une offre', $crawler->text());
+    }
 }

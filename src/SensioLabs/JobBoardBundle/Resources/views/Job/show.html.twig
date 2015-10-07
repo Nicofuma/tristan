@@ -7,7 +7,7 @@
 {% block content %}
     {{ breadcrumb({
         (job.company.country|country):    path('homepage', {'country': job.company.country}),
-        (job.contractType|contractType): path('homepage', {'country': job.company.country, 'contractType': job.contractType}),
+        (job.contractType|contractType|trans): path('homepage', {'country': job.company.country, 'contractType': job.contractType}),
         (job.title): null,
     }) }}
 

@@ -16,7 +16,7 @@ framework:
     templating:
         engines: ['twig']
         #assets_version: SomeVersionScheme
-    default_locale:  "%locale%"
+    default_locale:  %locale%
     trusted_proxies: [127.0.0.1]
     session:
         save_path: %kernel.root_dir%/sessions
@@ -29,6 +29,7 @@ twig:
     strict_variables: %kernel.debug%
     globals:
         sln_js:       "%sensiolabs_connect.sln_js%"
+        locales: %supported_locales%
 
 # Assetic Configuration
 assetic:
@@ -93,3 +94,8 @@ eko_feed:
                 route_name: homepage
             encoding: 'utf-8'
             author: ~'
+
+jms_i18n_routing:
+    default_locale: en
+    locales: %supported_locales%
+    strategy: prefix

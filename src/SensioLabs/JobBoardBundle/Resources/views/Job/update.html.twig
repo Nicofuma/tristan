@@ -8,8 +8,8 @@
 
 {% block content %}
     {{ breadcrumb({
-        'My jobs': path('manage'),
-        'Developer': null,
+        ('My jobs'|trans): path('manage'),
+        (job.title): null,
     }) }}
 
     <div class="box" style="padding-bottom:15px">

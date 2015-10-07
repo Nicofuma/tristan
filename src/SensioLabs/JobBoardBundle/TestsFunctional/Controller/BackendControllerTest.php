@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class BackendControllerTest extends WebTestCase
 {
-    public function testAccessDenied()
+    public function testAccessDeniedAnonymous()
     {
         $this->loadFixtures([]);
 
@@ -24,11 +24,17 @@ class BackendControllerTest extends WebTestCase
         $this->client->request('GET', '/backend');
         self::assertSame(Response::HTTP_FOUND, $this->client->getResponse()->getStatusCode());
         self::assertContains('https://connect.sensiolabs.com/oauth/authorize', $this->client->getResponse()->headers->get('Location'));
+    }
+
+    public function testAccessDeniedNonAdmin()
+    {
+        $this->loadFixtures([]);
 
         // Not admin
         $this->signup(['username' => 'user-1']);
         $this->signin('user-1');
         $this->client->request('GET', '/backend');
+
         self::assertSame(Response::HTTP_FORBIDDEN, $this->client->getResponse()->getStatusCode());
     }
 

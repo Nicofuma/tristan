@@ -34,7 +34,9 @@
         "knplabs/knp-paginator-bundle": "^2.5",
         "knplabs/knp-components": "~1.2.0",
         "yethee/enum-bundle": "^1.2",
-        "eko/feedbundle": "^1.2"
+        "eko/feedbundle": "^1.2",
+        "jms/translation-bundle": "^1.1",
+        "jms/i18n-routing-bundle": "^1.1"
     },
     "scripts": {
         "post-install-cmd": [

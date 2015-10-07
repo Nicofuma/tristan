@@ -7,13 +7,13 @@
     <ul>
         <li>
             <a href="{{ path('job_post') }}"{{ add ? ' class="focus"' }}>
-                <span class="sprite-button-add{{ add ? '-focus' }}"></span> Post a job
+                <span class="sprite-button-add{{ add ? '-focus' }}"></span> {% trans %}Post a job{% endtrans %}
             </a>
         </li>
         {% if app.user %}
         <li>
             <a href="{{ path('manage') }}"{{ manage ? ' class="focus"' }}>
-                <span class="sprite-button-manage{{ manage ? '-focus' }}"></span> My jobs
+                <span class="sprite-button-manage{{ manage ? '-focus' }}"></span> {% trans %}My jobs{% endtrans %}
             </a>
         </li>
         {% endif %}

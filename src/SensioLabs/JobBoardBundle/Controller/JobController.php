@@ -117,6 +117,7 @@ class JobController extends Controller
         }
 
         return [
+            'job' => $job,
             'form' => $form->createView(),
         ];
     }

@@ -7,7 +7,7 @@
 <div class="details">
     <span class="filter">
         <a href="{{ path('homepage', {'country': job.company.country}) }}">{{ job.company.city }}, {{ job.company.country|country }}</a> /
-        <a href="{{ path('homepage', {'country': job.company.country, 'contractType': job.contractType}) }}">{{ job.contractType|contractType }}</a>
+        <a href="{{ path('homepage', {'country': job.company.country, 'contractType': job.contractType}) }}">{{ job.contractType|contractType|trans }}</a>
 
         {#<br/><span class="archived">Archived since 12/12/2013</span>#}
 

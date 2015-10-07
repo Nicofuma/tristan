@@ -5,3 +5,4 @@ sensio_labs_job_board:
 
 _sensiolabs_connect:
     resource: "@SensioLabsConnectBundle/Resources/config/routing.xml"
+    options: { i18n: false }

@@ -8,9 +8,11 @@
             <article>
                 <img src="{{ asset('bundles/sensiolabsjobboard/images/home/megaphone.png') }}" alt="Job !" class="megaphone" />
                 <p class="description">
+                    {% trans %}
                     The 1<sup>st</sup> jobboard 100% devoted to the <strong>Symfony</strong> community.<br />
                     <strong>Recruiters</strong> The definitive source for Symfony talent.<br />
                     <strong>Developers</strong> Find the project, the company, or the job of your dreams.
+                    {% endtrans %}
                 </p>
             </article>
         </div>
@@ -19,16 +21,16 @@
 
 {% block metadata %}
     {{ parent() }}
-    <link rel="alternate" type="application/rss+xml"  href="#" title="Jobs RSS feed" />
+    <link rel="alternate" type="application/rss+xml"  href="#" title="{% trans %}Jobs RSS feed{% endtrans %}" />
 {% endblock %}
 
 {% block content %}
     <div id="left">
         <div class="filter">
-            <span class="title"><img class="sprite-icon-location" alt=">" src="{{ asset('bundles/sensiolabsjobboard/images/blank.png') }}"/>Location</span>
+            <span class="title"><img class="sprite-icon-location" alt=">" src="{{ asset('bundles/sensiolabsjobboard/images/blank.png') }}"/>{% trans %}Location{% endtrans %}</span>
             <ul>
                 <li {% if not app.request.query.country is defined %}class="active" {% endif %}>
-                    <a href="{{ path('homepage', app.request.query.all|merge({'country': null})) }}">All countries</a>
+                    <a href="{{ path('homepage', app.request.query.all|merge({'country': null})) }}">{% trans %}All countries{% endtrans %}</a>
                 </li>
                 {% for location in locations %}
                     <li {% if app.request.query.country is defined and app.request.query.country == location.country %}class="active" {% endif %}{% if loop.index > 4 %}style="display:none"{% endif %}>
@@ -38,39 +40,39 @@
 
                 {% if locations|length > 4 %}
                     <li>
-                        <a href="#" class="filter-action"><img class="sprite-icon-dark-arrow-down" src="{{ asset('bundles/sensiolabsjobboard/images/blank.png') }}" alt="v" /> More </a>
+                        <a href="#" class="filter-action"><img class="sprite-icon-dark-arrow-down" src="{{ asset('bundles/sensiolabsjobboard/images/blank.png') }}" alt="v" /> {% trans %}More{% endtrans %} </a>
                     </li>
                 {% endif %}
             </ul>
         </div>
         <div class="filter">
-            <span class="title"><img class="sprite-icon-paperclip" alt=">" src="{{ asset('bundles/sensiolabsjobboard/images/blank.png') }}"/> Type of contract </span>
+            <span class="title"><img class="sprite-icon-paperclip" alt=">" src="{{ asset('bundles/sensiolabsjobboard/images/blank.png') }}"/> {% trans %}Type of contract{% endtrans %} </span>
             <ul>
                 <li {% if not app.request.query.contractType is defined %}class="active" {% endif %}>
-                    <a href="{{ path('homepage', app.request.query.all|merge({'contractType': null})) }}">All types of contracts</a>
+                    <a href="{{ path('homepage', app.request.query.all|merge({'contractType': null})) }}">{% trans %}All types of contracts{% endtrans %}</a>
                 </li>
                 {% for contractType in contractTypes %}
                     <li {% if app.request.query.contractType is defined and app.request.query.contractType == contractType.contractType %}class="active" {% endif %}{% if loop.index > 5 %}style="display:none"{% endif %}>
-                        <a href="{{ path('homepage', app.request.query.all|merge({'contractType': contractType.contractType})) }}">{{ contractType.contractType|contractType }} ({{ contractType.nb_jobs }})</a>
+                        <a href="{{ path('homepage', app.request.query.all|merge({'contractType': contractType.contractType})) }}">{{ contractType.contractType|contractType|trans }} ({{ contractType.nb_jobs }})</a>
                     </li>
                 {% endfor %}
 
                 {% if contractTypes|length > 5 %}
                     <li>
-                        <a href="#" class="filter-action"><img class="sprite-icon-dark-arrow-down" src="{{ asset('bundles/sensiolabsjobboard/images/blank.png') }}" alt="v" /> More </a>
+                        <a href="#" class="filter-action"><img class="sprite-icon-dark-arrow-down" src="{{ asset('bundles/sensiolabsjobboard/images/blank.png') }}" alt="v" /> {% trans %}More{% endtrans %} </a>
                     </li>
                 {% endif %}
             </ul>
         </div>
         <ul class="function">
             <li>
-                <a href="{{ path('homepage') }}"><img class="sprite-icon-dark-arrow-right" src="{{ asset('bundles/sensiolabsjobboard/images/blank.png') }}" alt=">" /> All jobs</a>
+                <a href="{{ path('homepage') }}"><img class="sprite-icon-dark-arrow-right" src="{{ asset('bundles/sensiolabsjobboard/images/blank.png') }}" alt=">" /> {% trans %}All jobs{% endtrans %}</a>
             </li>
         </ul>
         <div class="feed">
             <a href="#">
                 <img src="{{ asset('bundles/sensiolabsjobboard/images/rss.png') }}" width="16" height="16" />
-                <span>Flux RSS</span>
+                <span>{% trans %}Flux RSS{% endtrans %}</span>
             </a>
         </div>
     </div>
@@ -81,7 +83,7 @@
         <div
             data-page="1"
             data-url="{{ path('homepage', app.request.query.all) }}"
-            data-empty="<center>No more jobs to show.</center>"
+            data-empty="<center>{% trans %}No more jobs to show.{% endtrans %}</center>"
             id="loadmoreajaxloader"
             style="display:none;"
         >
@@ -90,8 +92,8 @@
     </div>
     <div class="clear"></div>
     <script>
-        var seeMore = "More";
-        var seeLess = "Less";
+        var seeMore = "{% trans %}More{% endtrans %}";
+        var seeLess = "{% trans %}Less{% endtrans %}";
         var blank = "{{ asset('bundles/sensiolabsjobboard/images/blank.png') }}";
     </script>
 {% endblock %}

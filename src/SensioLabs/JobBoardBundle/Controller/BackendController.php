@@ -3,6 +3,7 @@
 namespace SensioLabs\JobBoardBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use SensioLabs\JobBoardBundle\Entity\Job;
 use SensioLabs\JobBoardBundle\Entity\JobStatus;
@@ -12,6 +13,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
+/**
+ * @Security("is_granted('ROLE_ADMIN')")
+ */
 class BackendController extends Controller
 {
     /**
@@ -63,12 +67,13 @@ class BackendController extends Controller
                 $message = 'validated';
             }
 
-            $this->addFlash('sucess', sprintf('Job "%s" %s.', $job->getTitle(), $message));
+            $this->addFlash('sucess', $this->get('translator')->trans('Job "%job_title%" '.$message.'.', ['%job_title%' => $job->getTitle()]));
 
             return $this->redirectToRoute('backend_list');
         }
 
         return [
+            'job' => $job,
             'form' => $form->createView(),
         ];
     }
@@ -100,12 +105,18 @@ class BackendController extends Controller
 
             $job = $em->find(Job::class, $jobId);
             if (in_array($job->getStatus()->getValue(), [JobStatus::PUBLISHED, JobStatus::ARCHIVED], true)) {
-                $this->addFlash('error', sprintf('You cannot delete "%s", it must not be %s.', $job->getTitle(), $job->getStatus()->getReadable()));
+                $this->addFlash(
+                    'error',
+                    $this->get('translator')->trans(
+                        'You cannot delete "%job_title%", it must not be '.$job->getStatus()->getReadable().'.',
+                        ['job_title' => $job->getTitle()]
+                    )
+                );
             } else {
                 $em->remove($job);
                 $em->flush();
 
-                $this->addFlash('sucess', sprintf('Job "%s" deleted.', $job->getTitle()));
+                $this->addFlash('sucess', $this->get('translator')->trans('Job "%job_title%" deleted.', ['%job_title%' => $job->getTitle()]));
             }
         }
 
@@ -139,12 +150,12 @@ class BackendController extends Controller
             $job = $em->find(Job::class, $jobId);
 
             if ($job->getStatus()->getValue() !== JobStatus::DELETED) {
-                $this->addFlash('error', sprintf('You cannot restore "%s", it must be deleted.', $job->getTitle()));
+                $this->addFlash('error', $this->get('translator')->trans('You cannot restore "%job_title%", it must be deleted.', ['%job_title%' => $job->getTitle()]));
             } else {
                 $job->setStatus(JobStatus::create(JobStatus::RESTORED));
                 $em->flush();
 
-                $this->addFlash('sucess', sprintf('Job "%s" status successfully updated to « restored ».', $job->getTitle()));
+                $this->addFlash('sucess', $this->get('translator')->trans('Job "%job_title%" status successfully updated to « restored ».', ['%job_title%' => $job->getTitle()]));
             }
         }
 

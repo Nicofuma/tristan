@@ -18,6 +18,8 @@ services:
 
     sensiolabs.jobboard.twig.extension:
         class: SensioLabs\JobBoardBundle\Twig\JobBoardExtension
+        arguments:
+            - @request_stack
         tags:
             - { name: twig.extension }
 

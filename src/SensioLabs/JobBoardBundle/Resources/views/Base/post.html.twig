@@ -4,10 +4,10 @@
 {% form_theme form 'SensioLabsJobBoardBundle:Form:forms.html.twig' %}
 
 {% block page_class 'add' %}
-{% block title 'Post a Job' %}
+{% block title 'Post a job'|trans %}
 
 {% block content %}
-    {{ breadcrumb({'Post a job': path('job_post')}) }}
+    {{ breadcrumb({('Post a job'|trans): path('job_post')}) }}
 
     <div class="box" style="padding-bottom:15px">
         {{ form(form, {attr: {novalidate: 'novalidate'}}) }}

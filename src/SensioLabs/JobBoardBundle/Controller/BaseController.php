@@ -2,6 +2,7 @@
 
 namespace SensioLabs\JobBoardBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use SensioLabs\JobBoardBundle\Entity\Job;
 use SensioLabs\JobBoardBundle\Entity\JobStatus;
 use SensioLabs\JobBoardBundle\Event\JobBoardEvents;
@@ -90,6 +91,7 @@ class BaseController extends Controller
 
     /**
      * @Route("/manage", name="manage")
+     * @Security("is_granted('ROLE_USER')")
      * @Template()
      */
     public function manageAction(Request $request)
@@ -132,7 +134,8 @@ class BaseController extends Controller
     /**
      * @Route(
      *      pattern="/api/random",
-     *      name="api_action"
+     *      name="api_action",
+     *      options={"i18n":false}
      * )
      */
     public function apiRandomAction(Request $request)
