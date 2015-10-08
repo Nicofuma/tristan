@@ -40,6 +40,7 @@ class MixedStatusData extends AbstractFixture
                 ->setPublishedAt(new \DateTime())
                 ->setEndedAt(new \DateTime('+1 year'))
                 ->setStatus(JobStatus::create($status))
+                ->setStatusUpdatedAt(new \DateTime('-20 days'))
             ;
 
             $this->setReference($status, $job);

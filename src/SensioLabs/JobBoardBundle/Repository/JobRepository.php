@@ -5,6 +5,7 @@ namespace SensioLabs\JobBoardBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use SensioLabs\JobBoardBundle\Entity\Job;
+use SensioLabs\JobBoardBundle\Entity\JobStatus;
 use SensioLabs\JobBoardBundle\Entity\User;
 
 class JobRepository extends EntityRepository
@@ -143,5 +144,16 @@ class JobRepository extends EntityRepository
             ->where('j.id = :id')->setParameter('id', $job['id'])
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function deleteOldJobs()
+    {
+        return $this->createQueryBuilder('j')
+            ->delete()
+            ->where('j.status = :status')->setParameter('status', JobStatus::DELETED)
+            ->andWhere('j.statusUpdatedAt <= :date')->setParameter('date', new \DateTime('-20 days'))
+            ->getQuery()
+            ->execute()
+        ;
     }
 }

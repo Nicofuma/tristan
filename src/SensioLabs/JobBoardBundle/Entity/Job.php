@@ -117,6 +117,11 @@ class Job implements RoutedItemInterface
     private $status = JobStatus::NEW_JOB;
 
     /**
+     * @ORM\Column(name="statusUpdatedAt", type="datetime", nullable=true)
+     */
+    private $statusUpdatedAt;
+
+    /**
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
@@ -513,8 +518,29 @@ class Job implements RoutedItemInterface
     public function setStatus(JobStatus $status)
     {
         $this->status = $status->getValue();
+        $this->statusUpdatedAt = new \DateTime();
 
         return $this;
+    }
+
+    /**
+     * @param \Datetime $statusUpdatedAt
+     *
+     * @return Job
+     */
+    public function setStatusUpdatedAt(\Datetime $statusUpdatedAt)
+    {
+        $this->statusUpdatedAt = $statusUpdatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return \Datetime
+     */
+    public function getStatusUpdatedAt()
+    {
+        return $this->statusUpdatedAt;
     }
 
     public function getFeedItemTitle()
