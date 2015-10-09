@@ -1,0 +1,18 @@
+{% extends "SensioLabsJobBoardBundle::layout.html.twig" %}
+{% from 'SensioLabsJobBoardBundle:Includes:breadcrumb.html.twig' import breadcrumb %}
+
+{% block page_class 'preview' %}
+{% block title 'Developer @ SensioLabs' %}
+
+{% block content %}
+    {{ breadcrumb({
+        'France':    path('homepage'),
+        'Full Time': path('homepage'),
+        'Developer': null,
+        'Pay': null,
+    }) }}
+
+    <div class="box">
+        <h1>Payement page</h1>
+    </div>
+{% endblock %}
